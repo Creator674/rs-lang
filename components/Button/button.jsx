@@ -1,7 +1,8 @@
 import React from 'react'
 
-// import './button.less'
+import './button.less'
 
-export const Button = props => {
-	return <button {...props}>Click me</button>
+export const Button = (props) => {
+  const { children, ...restProps } = props
+  return <button {...restProps}>{children}</button>
 }
