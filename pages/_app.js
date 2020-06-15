@@ -1,8 +1,5 @@
 // import App from 'next/app'
 
-import 'reset-css'
-import '../styles/main.less'
-
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
 }

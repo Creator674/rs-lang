@@ -6,6 +6,7 @@
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-less": "^1.0.1",
+    "aos": "^3.0.0-beta.6",
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^1.8.0",
