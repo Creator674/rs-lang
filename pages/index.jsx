@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 
 import { AppLayout } from '../layouts'
-import { Button, Popup } from '../components'
+import { Button, Popup, SignIn, SignUp } from '../components'
 
 import './index.less'
 
 function Home() {
-  const [showPopup, togglePopup] = useState(false)
+  const [showSignUp, toggleSignUp] = useState(false)
+  const [showSignIn, toggleSignIn] = useState(false)
 
   return (
     <AppLayout>
@@ -15,10 +16,27 @@ function Home() {
       <Button className='danger' onClick={() => console.log('triggered')}>
         Danger button
       </Button>
-      <Button className='default' onClick={() => togglePopup(!showPopup)}>
-        Show popup
+      <Button className='default' onClick={() => toggleSignUp(!showSignUp)}>
+        Sign Up
       </Button>
-      {showPopup ? <Popup toggleClose={() => togglePopup(false)}>Some text here</Popup> : null}
+      <Button className='default' onClick={() => toggleSignIn(!showSignIn)}>
+        Sign In
+      </Button>
+      {showSignUp ? (
+        <Popup toggleClose={() => toggleSignUp(false)}>
+          <div className='register-form'>
+            <h2>Sign up</h2>
+            <SignUp />
+          </div>
+        </Popup>
+      ) : showSignIn ? (
+        <Popup toggleClose={() => toggleSignIn(false)}>
+          <div className='register-form'>
+            <h2>Sign in</h2>
+            <SignIn />
+          </div>
+        </Popup>
+      ) : null}
       <Link href='/account'>
         <a>Account</a>
       </Link>

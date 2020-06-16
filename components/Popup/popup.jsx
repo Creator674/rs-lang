@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import './popup.less'
 
 export const Popup = (props) => {
-  const { children, toggleClose } = props
+  const { children, toggleClose, className } = props
 
   useEffect(() => {
     document.addEventListener('keydown', closeModal)
@@ -21,8 +21,8 @@ export const Popup = (props) => {
   }
 
   return (
-    <div className='overlay' onClick={closeModal}>
-      <div className='modal' data-aos='fade-up' data-aos-delay='300'>
+    <div className='overlay' onMouseDown={closeModal}>
+      <div className={`modal ${className}`} data-aos='fade-up' data-aos-delay='300'>
         {children}
       </div>
     </div>
