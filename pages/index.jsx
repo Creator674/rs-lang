@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-
+import {PuzzleGame} from "../components/puzzleGame"
 import { AppLayout } from '../layouts'
 import { Button, Popup, SignIn, SignUp } from '../components'
 
@@ -12,6 +12,8 @@ function Home() {
 
   return (
     <AppLayout>
+      <PuzzleGame />
+
       <h1>Main page</h1>
       <Button className='danger' onClick={() => console.log('triggered')}>
         Danger button

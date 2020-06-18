@@ -1,0 +1,41 @@
+.row{
+   flex-direction: row;
+}
+
+
+
+
+
+.check_answer{
+   border-radius: 8px;
+   cursor: pointer;
+
+   &.dismissed {
+      color: #a7a7a7;
+      cursor: not-allowed;
+   }
+   &.hidden{
+      display: none;
+   }
+}
+
+
+.continue, .newGame{
+   display: inline-block;
+}
+.continue.dismissed, .newGame.dismissed{
+   display: none;
+}
+
+.idontKnow{
+   background-image: url(/img/idn.png);
+   background-size: contain;
+    height: 80px !important;
+    width: 120px !important;
+    background-repeat: no-repeat;
+    background-position: left;
+    
+}
+.idontKnow.dismissed{
+   display: none;
+}
