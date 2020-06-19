@@ -1,33 +1,60 @@
 import React, { useState } from 'react';
-import {Rating} from '../Rating/rating';
+import {Rating} from '../rating/rating';
 import './header.less';
  
 
 export function Header(props) {
 
-  
+   const state = {
+      level: "1",
+      pronosBtnClicked: false,
+      translBtnClicked: false,
+      pictureBtnClicked: false,
+      autopronBtnClicked: false,
+      page: 1,
+    }
+
+    function createOptions(){
+      const arrayOptions = [];
+      for(let i=1; i<61; i+=1){
+        const option = <option value={i}>{i}</option>;
+        arrayOptions.push(option);
+      }
+      return arrayOptions;
+    }
+
 
 
    return (
      <div className="header">
-
         <div className="header_column">
             <span className="header_title">Check Level</span>
             <Rating />
         </div>
 
-       <div className="column">
-           <span>Page</span>
-           <select className="select" name="" id="selectPage">
-               <option>60</option>
+        <div className="header_column">
+           <span className="page">Page</span>
+
+           <select className="select"    
+                   id="selectPage"
+                //    onChange={state.page: this.selected.value} 
+                   >
+            {createOptions()}
            </select>
-       </div>
-       
-       <div class="column row">
-           <button title="Prononsation-icon" className="prononsation clicked">pron</button>
-           <button title="Translate the phrase" className="translation clicked">trans</button>
-           <button title="Show the image" className="picture">pic</button>
-           <button title="Auto-prononsation" className="sentense-pron clicked activated">auto-pron</button>
+        </div>
+
+        <div className="header_column row">
+           <button title="Prononsation-icon" 
+                   className={`prononsation ${state.pronosBtnClicked? "clicked" : "" }`}> ♫</button>
+
+           <button title="Translate the phrase" 
+                   className={`translation ${state.translBtnClicked? "clicked" : "" }`}> ↔</button>
+
+           <button title="Show the image" 
+                   className={`picture ${state.pictureBtnClicked? "clicked" : "" }`}> 🎴</button>
+
+           <button title="Auto-prononsation" 
+                   className={`sentense-pron clicked ${state.autopronBtnClicked? "clicked" : ""}`}> 🔊</button>
         </div> 
      </div>
    );

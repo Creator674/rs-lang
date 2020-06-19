@@ -1,41 +1,59 @@
-.row{
-   flex-direction: row;
-}
-
-
-
-
-
-.check_answer{
-   border-radius: 8px;
-   cursor: pointer;
-
-   &.dismissed {
-      color: #a7a7a7;
-      cursor: not-allowed;
+.footer{
+   margin: 9rem auto 0;
+   display: flex;
+   align-items: center;
+ 
+   button{
+      border-radius: 40%;
+      border: none;
+      width: 5rem;
+      height: 5rem;
+      margin: 1.5rem 1rem 0 0; 
+      font-size: 3rem;
+      color: #FFFBF4; 
+      text-shadow: 0.2rem 0.2rem 1.8rem #81a29f;
+      background-color: #1F658A;
+      outline: none; 
+      text-align: center;
+      overflow: hidden;
+      cursor: pointer;
    }
-   &.hidden{
-      display: none;
-   }
-}
 
-
-.continue, .newGame{
-   display: inline-block;
-}
-.continue.dismissed, .newGame.dismissed{
-   display: none;
-}
-
-.idontKnow{
-   background-image: url(/img/idn.png);
-   background-size: contain;
-    height: 80px !important;
-    width: 120px !important;
-    background-repeat: no-repeat;
-    background-position: left;
+    .check_answer{ 
     
+      .dismissed{
+         color: #a7a7a7;
+         cursor: not-allowed;
+      }
+      .hidden{
+         display: none;
+      }
+    }
+
+    .continue, .newGame{
+       display: inline-block;
+    }
+    .continue.dismissed, .newGame.dismissed{
+       display: none;
+    }
+
+    .idontKnow{
+         background-image: url(../../../../public/images/puzzle/idn.png); 
+         background-size: cover;
+         height: 8rem !important;
+         width: 12rem !important;
+         background-repeat: no-repeat; 
+         background-position: center; 
+        
+       .dismissed{
+         display: none;
+       }
+    }
+
 }
-.idontKnow.dismissed{
-   display: none;
-}
+
+
+
+
+
+

@@ -1,1 +1,1 @@
-export * from './PuzzleGame'
+export * from './puzzleGame'
