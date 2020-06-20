@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import { AppLayout } from '../layouts'
 import { Button, Popup, SignIn, SignUp } from '../components'
-
+import {GameStartModalWindow} from '../components/GameStartModalWindow'
 import './index.less'
 
 function Home() {
@@ -12,6 +12,8 @@ function Home() {
 
   return (
     <AppLayout>
+      {/* <GameStartModalWindow /> */}
+
       <h1>Main page</h1>
       <Button className='danger' onClick={() => console.log('triggered')}>
         Danger button
