@@ -4,35 +4,17 @@ import './audiocall.less';
 
 export function Audiocall (props) {
  
-    function shuffledArray(length){
-      const arr = Array.from({ length: length }, (_v, i=0) => i);
-      for (let i = arr.length - 1; i > 0; i -= 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
     const words = ['Pyatachok', 'where', 'is', 'my fucking', 'gun?'];
-    
-
-   function createCards() {
-      const array = [];
-      for (let i = 0; i < 5; i+=1) {
-         const card = (
-            <div>
-               <span className="number">{i}</span>
-               <div className="word">
-                  {words[i]}
-               </div>
-            </div>
-         );
-         array.push(card);                   
-      }
-      return array;
-   }
-   
-
+    const wordsArray =  Array.from({length: 5}).fill("").map((el, i) => {
+                   return (
+                     <div>
+                        <span className="number">{i + 1}</span>
+                        <div key={i} className="word">
+                           {words[i]}
+                        </div>
+                     </div>
+                   );
+                });
    return (
       <div className="wrapper">
          <div className="darken">
@@ -45,7 +27,7 @@ export function Audiocall (props) {
                <span>POINTS:</span> 100500
             </div>
             <div className="cards">
-                {createCards()}       
+                {wordsArray}      
             </div>
             <div className="button">
                <button className="btn">I don't know</button>
