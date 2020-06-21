@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { AppLayout } from '../layouts'
 import { Button, Popup, SignIn, SignUp } from '../components'
 import {GameStartModalWindow} from '../components/GameStartModalWindow'
-import {Audiocall} from "./games"
+// import {Audiocall} from "../components/games/audiocall"
 import './index.less'
 
 function Home() {
@@ -14,7 +14,7 @@ function Home() {
   return (
     <AppLayout>
       {/* <GameStartModalWindow /> */}
-      <Audiocall />
+      {/* <Audiocall /> */}
       
       <h1>Main page</h1>
       <Button className='danger' onClick={() => console.log('triggered')}>

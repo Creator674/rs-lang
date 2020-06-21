@@ -1,0 +1,94 @@
+
+.wrapper{
+   overflow: hidden;
+   height: 100vh;
+   width: 100%;
+   background: url(../../../public/images/audiocall/fon.svg);
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   scroll-behavior: smooth;
+   
+   .darken{
+      height: 100vh;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      width: 100%;
+      background-color: #fff5c1d4;
+
+      .icon{
+         margin: 4rem auto;
+         img{
+            cursor: pointer;
+         }
+      }
+
+      .points{
+         text-align: center;
+         margin: 0 auto;
+         font-size: 2rem;
+         color: #47453bd4;
+         font-weight: bold;
+
+         span{
+            font-size: 1.4rem;
+            color: #d6c79d;
+         }
+      }
+
+      .cards{
+         display: flex;
+         flex-direction: row;
+         max-width: 70rem;
+         width: 100%;
+         margin: 9rem auto 2rem;
+         text-align: center;
+
+         .word{
+            position: relative;
+            padding: 1rem 2rem;
+            border: 0.1rem solid #c5911c;
+            margin: 1rem 3rem;
+            color: rgb(26, 70, 28);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover{
+               box-shadow: 0.1rem 0.1rem 0.7rem #a930304d;
+            }
+         }
+
+         .number{
+            position: absolute;
+            margin-left: -6rem;
+            margin-top: 1.5rem;
+            font-size: 2rem !important;
+            color: rgba(206, 204, 204, 0.897);
+         }
+
+      }
+
+      .button{
+         margin: 3rem auto;
+
+         .btn{
+            cursor: pointer;
+            padding: 1rem 2rem;
+            font-size: 1.3rem;
+            color: #00000073;
+            background-color: #f0f8ffa3;
+            border: none;
+            outline: none;
+            border-radius: 0.3rem;
+            transition: all 0.5s ease;
+
+            &:hover{
+               box-shadow: 0.1rem 0.1rem 0.7rem #0000004d;
+            }
+         }
+      }
+}}
