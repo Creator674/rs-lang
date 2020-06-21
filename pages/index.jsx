@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { AppLayout } from '../layouts'
-import { Button, Popup, SignIn, SignUp, PuzzleGame} from '../components'
+import { Button, Popup, SignIn, SignUp} from '../components'
+import {SprintGame} from '../components/SprintGame'
 
 import './index.less'
 
@@ -11,7 +12,8 @@ function Home() {
 
   return (
     <AppLayout>
-      {/* <PuzzleGame /> */}
+      <SprintGame />
+
       <h1>Main page</h1>
       <Button className='danger' onClick={() => console.log('triggered')}>
         Danger button
