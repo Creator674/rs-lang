@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
+import Link from 'next/link' 
 
 import { AppLayout } from '../layouts'
-import { Button, Popup, SignIn, SignUp } from '../components'
-import {GameStartModalWindow} from '../components/GameStartModalWindow'
+ 
+import { Button, Popup, SignIn, SignUp} from '../components' 
+import {Speakit} from '../components/games'
+import {GameStartModalWindow} from '../components/GameStartModalWindow'  
 import './index.less'
 
 function Home() {
@@ -11,8 +13,9 @@ function Home() {
   const [showSignIn, toggleSignIn] = useState(false)
 
   return (
-    <AppLayout>
-      {/* <GameStartModalWindow /> */}
+    <AppLayout> 
+      <Speakit /> 
+      {/* <GameStartModalWindow /> */} 
 
       <h1>Main page</h1>
       <Button className='danger' onClick={() => console.log('triggered')}>

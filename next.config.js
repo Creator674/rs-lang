@@ -19,6 +19,7 @@ const nextConfig = {
         },
       },
     })
+    // config.resolve.module = ['node-modules']
     config.resolve.alias['public'] = path.join(__dirname, 'public')
     config.plugins = config.plugins || []
 
