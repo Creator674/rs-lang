@@ -1,12 +1,12 @@
 import React, { useState } from 'react'; 
 import './gamecard.less';
-import {shuffledArray} from '../../../../../lib/helpers/shufflefunc'
+// import {shuffledArray} from '../../../../../lib/helpers/shufflefunc'
 
  
 
 export function Gamecard (props) {
      
-   const shufeledArray = shuffledArray();
+  //  const shufeledArray = shuffledArray();
 
    return (
       <div className="wrapper-game">
