@@ -4,21 +4,16 @@ import './footer.less';
 
   export const Footer = ({props}) => {
 
-   
     const state ={
         isCheckClicked: false,
         isIdontKnowClicked: false,
         isContinueClicked: false,
         isnewGameClicked: false,
-        
         showCorrectAnswer: false,
       }
-   
-
 
      return (
         <div className="footer">
-
           <button title="I DON't KNOW!!!" 
                   className={"idontKnow" + (props ? "dismissed" : "")}
                   onClick={()=> {

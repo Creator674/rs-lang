@@ -14,8 +14,7 @@ function Home() {
   return ( 
     <AppLayout>
       {/* <Puzzle />*/} 
-      {/* <GameStartModalWindow /> */} 
-      <AppLayout> 
+      {/* <GameStartModalWindow /> */}  
       {/* <Speakit />*/}  
 
       <h1>Main page</h1>
