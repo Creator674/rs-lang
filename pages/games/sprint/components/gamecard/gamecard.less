@@ -1,0 +1,87 @@
+.wrapper-game{
+   display: flex;
+   flex-direction: column;
+   width: 100%; 
+   margin-bottom: 1rem;
+   background: none;
+
+   .card{
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0.05rem 0.05rem 0.8rem black;
+      max-width: 40rem;
+      width: 100%;
+      text-align: center;
+      background-color: #FFFBF4;
+      border-radius: 0.6rem;
+
+      img{
+         margin: 0 auto;
+         padding: 1rem 0;
+      }
+
+      &_title{
+         background-image: url(../../../../../public/images/sprint/s.png);
+         background-position: bottom;
+         background-size: cover;
+         background-repeat: no-repeat;
+
+         p{
+            font-size: 16px !important;
+            font-weight: bold;
+            color: #FFE0CA;
+            padding: 0 0 3rem;
+         }
+      }
+
+      &_info{
+         padding: 1rem 0;
+         .card_trans{
+           font-size: 22px !important;
+           color: #1F658A;
+           padding-bottom: 1rem;
+         }
+         .card_word{
+            font-size: 24px !important;
+         }
+      }
+
+      .border{
+         margin: 0 auto;
+         width: 30rem;
+         height: 0.1rem;
+         background-color: #1F658A;
+         margin-bottom: 2rem;
+      }
+
+      .game-bnts{ 
+            display: flex;
+            flex-direction: row;
+            justify-content: center; 
+            background: none;
+
+            button{
+               margin: 0 1rem 1rem 1rem;
+               text-align: center;  
+               border: none;
+               border-radius: 0.7rem;
+               padding: 1rem 2rem;
+               font-size: 22px !important;
+               transition: all 0.5s ease;
+
+               &.true{
+                  background-color: #74ca74;
+               }  
+               &.false{
+                  background-color: #ea4454db;
+               }
+               &:hover{
+                  box-shadow: 0.04rem 0.04rem 0.5rem black;
+               }
+            }
+      }
+
+   }
+  
+}
