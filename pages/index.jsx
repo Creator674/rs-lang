@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { AppLayout } from '../layouts' 
 import { Button, Popup, SignIn, SignUp } from '../components'
 import {GameStartModalWindow} from '../components/GameStartModalWindow'
-// import {Audiocall} from "../components/games/audiocall"  
+import {Audiocall} from "../components/games"  
 import  {Puzzle}  from '../components/games'   
 import {Speakit} from '../components/games'  
 import './index.less'
@@ -15,7 +15,7 @@ function Home() {
   return ( 
     <AppLayout> 
       {/* <GameStartModalWindow /> */}
-      {/* <Audiocall /> */} 
+      {/* <Audiocall />  */}
       {/* <Puzzle />*/}  
       {/* <Speakit />*/}  
  
