@@ -3,11 +3,7 @@ import './audiocall.less';
 
 
 export function Audiocall (props) {
-
-	const state = { 
-
-    };
-
+ 
     function shuffledArray(length){
       const arr = Array.from({ length: length }, (_v, i=0) => i);
       for (let i = arr.length - 1; i > 0; i -= 1) {
