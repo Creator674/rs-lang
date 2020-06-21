@@ -4,8 +4,7 @@ import { AppLayout } from '../layouts'
 import { Button, Popup, SignIn, SignUp} from '../components'
 import {SprintGame} from '../components/games' 
 import {GameStartModalWindow} from '../components/GameStartModalWindow'  
-import  {Puzzle}  from '../components/games'  
-import {Speakit} from '../components/games' 
+import  {Puzzle, Speakit }  from '../components/games'   
 import './index.less'
 
 function Home() {
