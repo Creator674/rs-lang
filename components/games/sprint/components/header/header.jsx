@@ -8,8 +8,8 @@ export function Header(props) {
       count: 80,
       audioSrc: "...",
     }
-   //   --------------------------------timer
 
+   //   --------------------------------timer
     const [counter, setCounter] = React.useState(130);
     React.useEffect(() => {
        counter > 0 && setTimeout(() => setCounter(counter - 1), 1000); 

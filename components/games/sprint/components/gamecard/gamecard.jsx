@@ -5,12 +5,8 @@ import {shuffledArray} from '../../../../../lib/helpers/shufflefunc'
  
 
 export function Gamecard (props) {
-    const state = { 
-      count: 1,
-      isCorrect: false,
-    };
- 
-    const shufeledArray = shuffledArray();
+     
+   const shufeledArray = shuffledArray();
 
    return (
       <div className="wrapper-game">
@@ -22,7 +18,7 @@ export function Gamecard (props) {
              <img src="./images/sprint/snail.png" alt="pic" width="70"></img>
              <div className="card_info">
                <p className="card_word">fuck off</p>
-               <p className="card_trans">отстаньте</p>
+               <p className="card_trans">хорошего дня</p>
              </div>
              <div className="border"></div>
              <div className="game-bnts">

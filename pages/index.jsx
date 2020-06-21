@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Link from 'next/link' 
 import { AppLayout } from '../layouts' 
 import { Button, Popup, SignIn, SignUp} from '../components'
-import {SprintGame} from '../components/games/sprint' 
+import {SprintGame} from '../components/games' 
 import {GameStartModalWindow} from '../components/GameStartModalWindow'  
 import  {Puzzle}  from '../components/games'  
 import {Speakit} from '../components/games' 
@@ -18,7 +18,7 @@ function Home() {
       {/* <Puzzle />*/} 
       {/* <GameStartModalWindow /> */} 
       {/* <Speakit />*/}  
-      {/* <SprintGame /> */}
+      <SprintGame />
       
       <h1>Main page</h1>
       <Button className='danger' onClick={() => console.log('triggered')}>
