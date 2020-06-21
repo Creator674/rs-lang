@@ -1,0 +1,113 @@
+.column {
+  flex: 0 0 50%;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  .picture {
+    width: 30rem;
+    height: 30rem;
+    overflow: hidden;
+    margin: 0 auto;
+    border-radius: 6rem;
+    border: 0.1rem solid #0003;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .translation {
+    margin: 1rem 0 0.2rem;
+    line-height: 2.7rem;
+    height: 3rem;
+    text-align: center;
+    display: block;
+    font-size: 2rem;
+    display: none;
+
+    .play {
+      display: block;
+    }
+  }
+
+  .input {
+    background: transparent;
+    border: none;
+    border-bottom: 0.15rem solid #87bc73;
+    width: 38rem;
+    height: 3rem;
+    margin: 0.8rem auto 0.2rem;
+    padding: 0.5rem 0.2rem 0.5rem 4rem;
+    position: relative;
+    background-image: url(../../../../public/images/speakit/microphone.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    font-size: 1.8rem;
+    color: black;
+    //   display: none;
+
+    .play {
+      display: block;
+    }
+  }
+
+  .btns-container {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 4rem;
+    text-align: center;
+    text-align: -webkit-center;
+
+    .btn {
+      width: 20rem;
+      padding: 0.8rem 3rem;
+      font-size: 2.2rem;
+      font-weight: 500;
+      font-family: 'Nobile', sans-serif;
+      background-color: #c3ecfe8f;
+      border: 1px solid #5379904a;
+      border-radius: 1.5rem;
+      color: #537990;
+      text-shadow: 0.1rem 0.1rem 1.2rem lightblue;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.5s ease;
+      margin-top: 2rem;
+      box-shadow: 0.05rem 0.05rem 0.8rem rgba(0, 0, 0, 0.23);
+
+      &:hover {
+        background-color: #f7ffff;
+        box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1), -0.1rem -0.1rem 0.5rem rgba(0, 0, 0, 0.1);
+      }
+    }
+    .speak.speakPls {
+      width: 34rem;
+      background-color: rgb(157, 223, 221);
+      color: aliceblue;
+    }
+    .speak {
+      position: relative;
+      width: 31rem;
+      text-align: left;
+      padding: 1.5rem 4rem;
+
+      &::before {
+        position: absolute;
+        content: '';
+        width: 5.9rem;
+        height: 5rem;
+        top: 0;
+        right: 1rem;
+        background-image: url(../../../../public/images/speakit/btn.png);
+        background-size: cover;
+        background-position: center;
+      }
+    }
+  }
+}
