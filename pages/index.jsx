@@ -15,10 +15,10 @@ function Home() {
   
   return ( 
     <AppLayout>
-      {/* <Puzzle />*/} 
-      {/* <GameStartModalWindow /> */} 
+      {/* <Puzzle />*/}  
+      {/* <GameStartModalWindow /> */}  
       {/* <Speakit />*/}  
-      <SprintGame />
+      {/* <SprintGame />*/}
       
       <h1>Main page</h1>
       <Button className='danger' onClick={() => console.log('triggered')}>
