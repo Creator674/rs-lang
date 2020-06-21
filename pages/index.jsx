@@ -1,21 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react' 
 import Link from 'next/link'
-
-import { AppLayout } from '../layouts'
+import { AppLayout } from '../layouts' 
 import { Button, Popup, SignIn, SignUp } from '../components'
 import {GameStartModalWindow} from '../components/GameStartModalWindow'
-// import {Audiocall} from "../components/games/audiocall"
+// import {Audiocall} from "../components/games/audiocall"  
+import  {Puzzle}  from '../components/games'   
+import {Speakit} from '../components/games'  
 import './index.less'
 
 function Home() {
   const [showSignUp, toggleSignUp] = useState(false)
   const [showSignIn, toggleSignIn] = useState(false)
 
-  return (
-    <AppLayout>
+  return ( 
+    <AppLayout> 
       {/* <GameStartModalWindow /> */}
-      {/* <Audiocall /> */}
-      
+      {/* <Audiocall /> */} 
+      {/* <Puzzle />*/}  
+      {/* <Speakit />*/}  
+ 
       <h1>Main page</h1>
       <Button className='danger' onClick={() => console.log('triggered')}>
         Danger button
