@@ -6,20 +6,12 @@ import './puzzle.less';
 
 
 export function PuzzleGame (props) {
-
-	const state = { 
-
-    };
-
-
+ 
    return (
       <div className="wrapper">
-         <Header {...props}/>
-
-         <Gameboard {...props}/>
-
-         <Footer {...props} />
-
+         <Header {...props}/> 
+         <Gameboard {...props}/> 
+         <Footer {...props} /> 
       </div>
    )
 } 
