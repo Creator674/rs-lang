@@ -1,1 +1,3 @@
-export * from './speakit'
+ 
+export * from './puzzle' 
+export * from './speakit' 

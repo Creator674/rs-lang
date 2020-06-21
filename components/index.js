@@ -1,5 +1,5 @@
 export * from './Button'
-export * from './Popup'
-export * from './Forms'
-export * from './games/speakit'
-
+export * from './Popup' 
+export * from './Forms' 
+export * from './games/Puzzle'  
+export * from './games/speakit' 
