@@ -6,15 +6,9 @@ import './sprint.less';
 
 export function SprintGame (props) {
 
-	const state = { 
-
-    };
-
-
    return (
       <div className="sprint">
          <Header {...props}/>
-
          <Gamecard {...props}/>
       </div>
    )

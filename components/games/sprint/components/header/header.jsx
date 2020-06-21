@@ -26,10 +26,7 @@ export function Header(props) {
               ></circle>
            </svg>
         </div>
-   );
-   
-
-
+   ); 
 
    return (
      <div className="sprint-header">

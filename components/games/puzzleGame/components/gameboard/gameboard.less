@@ -1,0 +1,161 @@
+.wrapper-game{
+   display: flex;
+   flex-direction: column;
+   width: 100%; 
+   margin-bottom: 1rem;
+   background-color: #FFFBF4;
+}
+.gameboard-cont{
+   display: block;
+   width: 86rem;
+   height: 40rem;
+   margin: 0 auto;
+   padding: 0;
+   box-sizing: border-box;
+   border: 1px solid #2C3E50;
+   position: relative;
+   box-shadow: 0.2rem 0.2rem 1rem #ffffff78, -0.2rem -0.2rem 1rem #ffffff78;
+   background-color: #FFE0CA;
+  
+   .guessed_phrases_board{
+      // background-image: url(../../../../public/images/puzzle/main.jpg); 
+      background-position: center;  
+      background-size: cover;
+      background-repeat: no-repeat; 
+   }
+
+   .gameboard{
+      position: absolute;
+       bottom: -32%;
+       width: 100%;
+       padding: 7rem 0;
+      margin: 0 auto;
+
+      .answ-wrapper{
+         position: absolute; 
+         left: 50%;
+         transform: translateX(-50%);
+         width: 100%;
+         text-align: center;
+
+         .input-res{ 
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            min-width: 20rem; 
+            background-color: #D3E8ED; 
+            text-align: center; 
+            min-height: 5rem;
+            border: none;
+            border-radius: 0.7rem;
+         
+            span{
+               background-color: #1f668a4f;
+               &.wrong{
+                  color: #e65a6b;
+                  background-color: #ee919d;
+               }
+            }
+         }
+      }
+
+      .word-container span{
+         padding: 1.5rem;
+         border: 0.1rem solid #6e3123;
+         background-color: #d3e8ed;
+         font-size: 1.8rem;
+         font-weight: 600;
+         width: 100%;
+         text-align: center;
+         font-family: monospace;
+         cursor: move;
+      }
+      .word-container:not(.input-res){ 
+         border: 0.2rem solid #6e3123;
+         margin-bottom: 1rem;
+         display: flex;
+         flex-direction: row;
+         justify-content: space-around;
+      
+         /* background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(/img/fonK.jpg); */
+         /* background-position: -66.1538px 0px; */
+         /* background-size: 860px 400px;
+         background-repeat: no-repeat;
+         position: static; */
+         /* width: 100%; */
+         /* left: 710.219px;
+          top: 814px; */
+      }
+
+
+   }
+
+   .guessed{
+      height: 4rem;
+      width: 100%;
+      display: flex;
+       flex-direction: row;
+       justify-content: space-around;
+       align-items: center;
+       
+       span{
+         padding: 0.9rem;
+         border: none;
+         background-color: rgba(211, 232, 237, 0.64);
+         margin: 0 auto;
+         font-size: 2rem !important;
+         font-weight: 600;
+         font-family: monospace; 
+         width: 100%;
+         text-align: center;
+       }
+   }
+}
+ 
+
+
+
+
+.dragging{
+   opacity: .5;
+}
+
+
+
+
+
+
+
+
+.phrase{
+   width: 100%;
+   margin: 0 auto 0.5rem;
+   text-align: center;
+ 
+  .translation-text{
+      background-color: #f0f8ff73;
+      color: #395239; 
+      line-height: 3.2rem;
+      font-size: 2rem !important;
+      width: max-content;
+      margin: 0 auto;
+      padding: 0 8rem;
+      border-radius: 0.5rem;
+      border-bottom: 0.4rem solid #D3E8ED;
+
+      .visibilityHid{
+         visibility: hidden;
+      }
+   }
+   .audio-transl{
+      background-color: #f0f8ff6e;
+      border-radius: 50%;
+      padding: 0.5rem;
+      cursor: pointer;
+      
+      .hidden{
+         display: none;
+      }
+   }
+}
+ 

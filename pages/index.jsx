@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { AppLayout } from '../layouts' 
 import { Button, Popup, SignIn, SignUp} from '../components'
-import {SprintGame} from './games/sprint' 
+import {SprintGame} from '../components/games/sprint' 
 import {GameStartModalWindow} from '../components/GameStartModalWindow' 
 import './index.less'
 
@@ -12,7 +12,7 @@ function Home() {
 
   return (
     <AppLayout> 
-      {/* <SprintGame /> */} 
+      <SprintGame /> 
       {/* <GameStartModalWindow /> */} 
 
       <h1>Main page</h1>

@@ -1,15 +1,7 @@
 import React, { useState } from 'react'; 
 import './gamecard.less';
+import {shuffledArray} from '../../../../../lib/helpers/shufflefunc'
 
-
- function shuffledArray(length){
-      const arr = Array.from({ length: length }, (_v, i=0) => i);
-      for (let i = arr.length - 1; i > 0; i -= 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-}
  
 
 export function Gamecard (props) {
@@ -18,6 +10,7 @@ export function Gamecard (props) {
       isCorrect: false,
     };
  
+    const shufeledArray = shuffledArray();
 
    return (
       <div className="wrapper-game">
