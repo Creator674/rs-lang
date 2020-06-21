@@ -12,11 +12,11 @@ function Home() {
   const [showSignUp, toggleSignUp] = useState(false)
   const [showSignIn, toggleSignIn] = useState(false)
 
-  return ( 
+  return (  
     <AppLayout> 
       {/* <GameStartModalWindow /> */}
       {/* <Audiocall />  */}
-      {/* <Puzzle />*/}  
+      {/* <Puzzle />*/}     
       {/* <Speakit />*/}  
  
       <h1>Main page</h1>

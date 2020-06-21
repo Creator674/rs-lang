@@ -7,19 +7,11 @@ import './puzzle.less';
 
 export function Puzzle (props) {
 
-	const state = { 
-
-    };
-
-
    return (
       <div className="wrapper">
          <Header {...props}/>
-
          <Gameboard {...props}/>
-
          <Footer {...props} />
-
       </div>
    )
 } 
