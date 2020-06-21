@@ -3,21 +3,19 @@ import Link from 'next/link'
 import { AppLayout } from '../layouts' 
 import { Button, Popup, SignIn, SignUp } from '../components'
 import {GameStartModalWindow} from '../components/GameStartModalWindow'
-import {Audiocall} from "../components/games"  
-import  {Puzzle}  from '../components/games'   
-import {Speakit} from '../components/games'  
+import {Audiocall, Puzzle, Speakit } from "../components/games"  
 import './index.less'
 
 function Home() {
   const [showSignUp, toggleSignUp] = useState(false)
   const [showSignIn, toggleSignIn] = useState(false)
 
-  return ( 
+  return (  
     <AppLayout> 
-      {/* <GameStartModalWindow /> */}
-      <Audiocall /> 
-      {/* <Puzzle />*/}  
-      {/* <Speakit />*/}  
+      {/* <GameStartModalWindow />  */}
+      {/* <Audiocall />  */}
+      {/* <Puzzle />       */}
+      {/* <Speakit />   */}
  
       <h1>Main page</h1>
       <Button className='danger' onClick={() => console.log('triggered')}>
