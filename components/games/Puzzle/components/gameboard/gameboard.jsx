@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; 
 import './gameboard.less';
-import {shuffledArray} from '../../../../../lib/helpers'
+// import {shuffledArray} from '../../../../../lib/helpers'
 
  
 export function Gameboard (props) {
@@ -8,7 +8,8 @@ export function Gameboard (props) {
       count: 1,
       isCorrect: false,
     };
-    const shuffeledArr = shuffledArray();
+
+    // const shuffeledArr = shuffledArray();
 
     function getPicture(level) {
       const imagePerPage = [45, 41, 40, 29, 29, 25];

@@ -1,1 +1,1 @@
-export * from './sprintgame'
+export * from './sprint'
