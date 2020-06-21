@@ -2,20 +2,15 @@ import React, { useState } from 'react';
 import './footer.less';
   
 
-  export const Footer = ({props}) => {
-
+  export const Footer = ({props}) => { 
    
     const state ={
         isCheckClicked: false,
         isIdontKnowClicked: false,
         isContinueClicked: false,
-        isnewGameClicked: false,
-        
+        isnewGameClicked: false, 
         showCorrectAnswer: false,
-      }
-   
-
-
+      } 
      return (
         <div className="footer">
 
