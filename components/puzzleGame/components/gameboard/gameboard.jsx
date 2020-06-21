@@ -10,55 +10,7 @@ import './gameboard.less';
       }
       return arr;
 }
-
-
-
-// function draggAfter(container, x){
-//    const dragEls = [...container.querySelectorAll(".draggyWord:not(.dragging)")];
-//    return dragEls.reduce((closest, child)=>{
-//        const boundingBox = child.getBoundingClientRect();
-//        const offset = x - boundingBox.left - boundingBox.width / 2;
-//        if(offset<0 && offset>closest.offset){
-//            return { offset, element: child};
-//        } 
-//        return closest;
-//    }, {offset: Number.NEGATIVE_INFINITY }).element;  
-//    // drag to right - negative number, drag to left - positive
-// }
-
-// function isBtnAllowed() {
-//    const isBoardEmpty = document.querySelector(".word-container:not(.input-res)");
-//    if(isBoardEmpty){
-//       if(!isBoardEmpty.innerHTML){
-//          checkAnswer.classList.remove("dismissed");
-//       }
-//    }
-// };
-
-// function doDragging(phrasecount, ind, string, audio){
-//    index = ind;
-//    if(ind === 0){
-//       count = string.length; 
-//    } else{
-//       count = phrasecount;
-//    }
-   
-//    document.querySelectorAll(".draggyWord").forEach(word => {
-//       word.addEventListener("dragstart", ()=>{
-//          word.classList.add("dragging");
-//       });
-//       word.addEventListener("dragend", ()=>{
-//          word.classList.remove("dragging");
-//       });
-//       word.addEventListener("click", ()=>{ 
-//          document.querySelector(".input-res").appendChild(word);
-//          isBtnAllowed();
-//       });
-// });  
-   
-
-
-
+ 
 export function Gameboard (props) {
     const state = { 
       count: 1,
@@ -113,10 +65,7 @@ export function Gameboard (props) {
           </div>;
       return answer;
    }
-
-
-
-
+ 
    return (
       <div className="wrapper-game">
         <div className="phrase">
