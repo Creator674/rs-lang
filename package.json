@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@material-ui/core": "^4.10.2",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-less": "^1.0.1",
     "aos": "^3.0.0-beta.6",
@@ -21,7 +24,11 @@
     "reset-css": "^5.0.1",
     "yup": "^0.29.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "autoprefixer": "^9.8.0",
+    "babel-plugin-styled-components": "^1.10.7",
+    "postcss-flexbugs-fixes": "^4.2.1"
+  },
   "scripts": {
     "dev": "next",
     "build": "next build",
@@ -37,5 +44,9 @@
   "bugs": {
     "url": "https://github.com/xmelsky/rs-lang/issues"
   },
-  "homepage": "https://github.com/xmelsky/rs-lang#readme"
+  "homepage": "https://github.com/xmelsky/rs-lang#readme",
+  "browserslist": [
+    "last 2 versions",
+    "> 1%"
+  ]
 }
