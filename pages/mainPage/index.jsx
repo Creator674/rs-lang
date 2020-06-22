@@ -13,7 +13,9 @@ const MainPage = (props) => {
                <img src="images/logo.png" alt="logo" />
                <a href="#">You deserve to live a life</a>
             </div>
-            <Button className="contacts-btn">Log In</Button>
+            <Button className="log-in">
+               <div></div>
+            </Button>
          </div>
         
         <nav className="navigation">
@@ -69,7 +71,9 @@ const MainPage = (props) => {
    
    <div className="contacts">
       <h1>So, what are U waiting for? Log In!</h1>
-      <Button className="contacts-btn">Log In</Button>  
+      <Button className="log-in">
+         <div></div> 
+      </Button>  
    </div>
     
    <div className="plan">

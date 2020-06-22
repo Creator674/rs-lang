@@ -1,5 +1,75 @@
 @import '../../styles/variables.less';
 
+// для сброса стилей по умолчанию с кнопки
+.button_reset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+  text-align: inherit;
+  outline: none;
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+  // cursor: pointer;
+}
+
+/* Remove excess padding and border in Firefox 4+ */
+&::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+
 .danger {
   background-color: @color-error;
+}
+
+
+.log-in {
+  .button_reset;
+  position: relative;
+  width: 132px;
+  height: 60px;
+  background-color: #2C3E50;
+}
+
+.log-in > div {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 2px solid #FFFFFF;
+  // border: 2px solid @color-add-light;
+  margin-left: 18px;
+}
+
+.log-in > div::before {
+  position: absolute;
+  left: 0;
+  top: -13px;
+  font-size: 75px;
+  color: @color-add-light;
+  content: '→';
+}
+
+.log-in > div::after {
+  content: 'Log In';
+  position: absolute;
+  right: 0;
+  top: 20px;
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  color: #FFFFFF;
+
 }

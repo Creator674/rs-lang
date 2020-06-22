@@ -26,8 +26,9 @@ function Home() {
       <Button className='default' onClick={() => toggleSignUp(!showSignUp)}>
         Sign Up
       </Button>
-      <Button className='default' onClick={() => toggleSignIn(!showSignIn)}>
-        Sign In
+      <Button className='log-in' onClick={() => toggleSignIn(!showSignIn)}>
+        <div></div>
+        {/* Sign In */}
       </Button>
       {showSignUp ? (
         <Popup toggleClose={() => toggleSignUp(false)}>
