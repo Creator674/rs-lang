@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
-import { Audiocall, Puzzle, Speakit } from "../components/games"  
+import Link from 'next/link' 
+import { Audiocall, Puzzle, Speakit, SprintGame } from "../components/games"   
 import { AppLayout } from '../layouts'
 import { Button, Popup, SignIn, SignUp } from '../components'
 import { GameStartModalWindow } from '../components/GameStartModalWindow'
@@ -17,7 +17,8 @@ function Home() {
       {/* <GameStartModalWindow />  */}
       {/* <Audiocall />    */}
       {/* <Puzzle />       */}
-      {/* <Speakit />   */}
+      {/* <Speakit />   */} 
+      {/* <SprintGame /> */} 
 
       <Progress value={75} /> 
       <h1>Main page</h1>
