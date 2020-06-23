@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
-import { Audiocall, Puzzle, Speakit, SprintGame } from '../components/games'
+import Link from 'next/link' 
+import { Audiocall, Puzzle, Speakit, SprintGame, Hangman } from "../components/games"   
 import { AppLayout } from '../layouts'
 import { Button, Popup, SignIn, SignUp } from '../components'
 import { GameStartModalWindow } from '../components/GameStartModalWindow'
@@ -18,8 +18,9 @@ function Home() {
       {/* <GameStartModalWindow />  */}
       {/* <Audiocall />    */}
       {/* <Puzzle />       */}
-      {/* <Speakit />   */}
-      {/* <SprintGame /> */}
+      {/* <Speakit />   */} 
+      {/* <SprintGame /> */} 
+      {/* <Hangman /> */}
       <ProgressBar current={36} total={50} width='60%' />
       <ProgressChart value={testValue} width='48px' />
       <input
