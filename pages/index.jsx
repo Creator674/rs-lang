@@ -6,12 +6,13 @@ import { Button, Popup, SignIn, SignUp } from '../components'
 import { GameStartModalWindow } from '../components/GameStartModalWindow'
 import './index.less'
 
-import ProgressBar from '../components/Progress/progress-bar'
+import { ProgressBar, ProgressChart } from '../components/Progress'
 
 function Home() {
   const [showSignUp, toggleSignUp] = useState(false)
   const [showSignIn, toggleSignIn] = useState(false)
 
+  const [testValue, setTestValue] = useState(0)
   return (
     <AppLayout>
       {/* <GameStartModalWindow />  */}
@@ -20,7 +21,14 @@ function Home() {
       {/* <Speakit />   */}
       {/* <SprintGame /> */}
       <ProgressBar current={36} total={50} width='60%' />
-
+      <ProgressChart value={testValue} width='48px' />
+      <input
+        type='text'
+        value={testValue}
+        onChange={({ target: { value } }) => {
+          setTestValue(+value || 0)
+        }}
+      />
       <h1>Main page</h1>
       <Button className='danger' onClick={() => console.log('triggered')}>
         Danger button

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) =>
   })
 )
 
-export default function progressBar({ current, total, width }) {
+export function ProgressBar({ current, total, width }) {
   const style = { margin: '0 auto', display: 'flex', alignItems: 'center', width: `${width}`, padding: '0.8rem' }
   const classes = useStyles()
   const percentage = ((current / total) * 100).toFixed(2)
