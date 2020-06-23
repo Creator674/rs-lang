@@ -21,7 +21,6 @@ export const SignUp = ({ className }) => {
         password: '',
       }}
       validationSchema={Yup.object().shape({
-        name: Yup.string().min(3, 'Minimum 3 characters required').required('Is required'),
         email: Yup.string().email('Email is invalid').required('Is required'),
         password: Yup.string()
           .min(8, 'Must be at least 8 characters')
@@ -37,14 +36,16 @@ export const SignUp = ({ className }) => {
         <Form className={`action-form ${className}`}>
           <div>{status}</div>
           <div className='form-group'>
+              <span className='close_form'>
+                  <i className='icon-cancel'></i>
+              </span>
             <label htmlFor='name'>
-              Name<span className='required'>*</span>
+              Name
             </label>
             <Field
               name='name'
               type='text'
-              className={'form-control' + (errors.email && touched.name ? ' is-invalid' : '')}
-              disabled={isLoading}
+              className='form-control'
             />
             <div className='error-container'>
               <ErrorMessage name='name' component='div' className='invalid-feedback' />
@@ -69,7 +70,7 @@ export const SignUp = ({ className }) => {
           </div>
           <div className='form-group'>
             <Button type='submit' className='btn btn-primary mr-2' disabled={isLoading}>
-              Sign up
+                Start Learning
             </Button>
           </div>
         </Form>
@@ -96,7 +97,7 @@ export const SignIn = ({ className }) => {
       }}
     >
       {({ errors, status, touched }) => (
-        <Form className={`action-form ${className}`}>
+        <Form className={`action-form-login ${className}`}>
           <div>{status}</div>
           <div className='form-group'>
             <label htmlFor='email'>

@@ -44,14 +44,12 @@ function Home() {
       {showSignUp ? (
         <Popup toggleClose={() => toggleSignUp(false)}>
           <div className='register-form'>
-            <h2>Sign up</h2>
             <SignUp />
           </div>
         </Popup>
       ) : showSignIn ? (
         <Popup toggleClose={() => toggleSignIn(false)}>
           <div className='register-form'>
-            <h2>Sign in</h2>
             <SignIn />
           </div>
         </Popup>
