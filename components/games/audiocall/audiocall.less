@@ -8,6 +8,7 @@
    background-repeat: no-repeat;
    background-size: cover;
    scroll-behavior: smooth;
+   font-family: 'Martel';
    
    .darken{
       height: 100vh;
@@ -42,34 +43,37 @@
       .cards{
          display: flex;
          flex-direction: row;
-         max-width: 70rem;
+                flex-wrap: wrap;
          width: 100%;
+         justify-content: center;
          margin: 9rem auto 2rem;
          text-align: center;
-
-         .word{
+         
+         .word-box{
             position: relative;
-            padding: 1rem 2rem;
-            border: 0.1rem solid #c5911c;
-            margin: 1rem 3rem;
-            color: rgb(26, 70, 28);
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
 
-            &:hover{
-               box-shadow: 0.1rem 0.1rem 0.7rem #a930304d;
+            .word{
+               padding: 1rem 2rem;
+               border: 0.1rem solid #c5911c;
+               margin: 1rem 3rem;
+               color: rgb(26, 70, 28);
+               font-weight: bold;
+               font-size: 1.8rem;
+               cursor: pointer;
+               transition: all 0.2s ease;
+               &:hover{
+                  box-shadow: 0.1rem 0.1rem 0.7rem #a930304d;
+               }
+            }
+
+            .number{
+               position: absolute;
+               left: 0;
+               top: 2rem;
+               font-size: 2rem;
+               color: rgba(206, 204, 204, 0.897);
             }
          }
-
-         .number{
-            position: absolute;
-            margin-left: -6rem;
-            margin-top: 1.5rem;
-            font-size: 2rem !important;
-            color: rgba(206, 204, 204, 0.897);
-         }
-
       }
 
       .button{
@@ -78,13 +82,15 @@
          .btn{
             cursor: pointer;
             padding: 1rem 2rem;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
+            font-family: 'Martel';
             color: #00000073;
             background-color: #f0f8ffa3;
             border: none;
             outline: none;
-            border-radius: 0.3rem;
+            border-radius: 0.5rem;
             transition: all 0.5s ease;
+            box-shadow: 0.1rem 0.1rem 0.4rem #8080808f;
 
             &:hover{
                box-shadow: 0.1rem 0.1rem 0.7rem #0000004d;
