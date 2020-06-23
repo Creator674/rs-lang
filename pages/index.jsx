@@ -4,6 +4,7 @@ import { Audiocall, Puzzle, Speakit, SprintGame, Hangman } from "../components/g
 import { AppLayout } from '../layouts'
 import { Button, Popup, SignIn, SignUp } from '../components'
 import { GameStartModalWindow } from '../components/GameStartModalWindow'
+import { MainPageWithCard } from '../components/MainPageWithCard'
 import './index.less'
 
 import { ProgressBar, ProgressChart } from '../components/Progress'
@@ -21,6 +22,8 @@ function Home() {
       {/* <Speakit />   */} 
       {/* <SprintGame /> */} 
       {/* <Hangman /> */}
+      {/* <MainPageWithCard /> */}
+
       <ProgressBar current={36} total={50} width='60%' />
       <ProgressChart value={testValue} width='48px' />
       <input
