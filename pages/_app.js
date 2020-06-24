@@ -3,6 +3,7 @@
 import React from 'react'
 import { ThemeProvider } from '@material-ui/core/styles'
 import theme from '../layouts'
+import GlobalState from '../context/GlobalState'
 
 function MyApp({ Component, pageProps }) {
   React.useEffect(() => {
@@ -10,9 +11,11 @@ function MyApp({ Component, pageProps }) {
     if (jssStyles && jssStyles.parentNode) jssStyles.parentNode.removeChild(jssStyles)
   }, [])
   return (
-    <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <GlobalState>
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </GlobalState>
   )
 }
 

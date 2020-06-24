@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import { getLocalStorageProp } from '../../lib'
-import { Popup } from '../Popup'
+import React, { useState, useEffect, useContext, createContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { fade } from '@material-ui/core/styles/colorManipulator'
@@ -16,6 +14,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 
 import { Header } from './Header'
+import { Context, DictionaryContext } from '../../context'
 
 const useStyles = makeStyles({
   root: {
@@ -106,26 +105,31 @@ const style = createMuiTheme({
 })
 
 export function Dictionary() {
+  const { words } = useContext(Context)
   const [value, setValue] = useState(1)
-  const [words, setWords] = useState([])
+  const [wordsList, setWords] = useState([])
+  const [filteredList, setFilteredList] = useState([])
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
 
   useEffect(() => {
-    const words = getLocalStorageProp('words.perDay') || []
     setWords(words)
   }, [])
 
   const classes = useStyles()
-
-  const Cards = words.map((word) => {
+  const Cards = (filteredList.length ? filteredList : wordsList).map((word) => {
     return <Word key={word.word} {...word} />
   })
 
   return (
-    <>
+    <DictionaryContext.Provider
+      value={{
+        setFilteredList,
+        setWords,
+      }}
+    >
       <Paper square>
         <Header />
         <MuiThemeProvider theme={style}>
@@ -145,6 +149,6 @@ export function Dictionary() {
       <TabPanel value={value} index={2}>
         Tab 3
       </TabPanel>
-    </>
+    </DictionaryContext.Provider>
   )
 }

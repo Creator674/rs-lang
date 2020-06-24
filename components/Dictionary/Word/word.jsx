@@ -19,9 +19,9 @@ export function Word(props) {
 
   useEffect(() => {
     getImg(props.image).then((result) => {
-      setTimeout(() => {
-        // setLoaded(result)
-      }, 5000)
+
+        setLoaded(result)
+
     })
   }, [])
 
