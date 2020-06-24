@@ -131,7 +131,7 @@ export function Dictionary() {
       }}
     >
       <Paper square>
-        <Header />
+        <Header setWords={setWords} />
         <MuiThemeProvider theme={style}>
           <Tabs value={value} onChange={handleChange} variant='fullWidth' aria-label='icon label tabs example' centered>
             <Tab label='Hard' />
