@@ -20,7 +20,7 @@ function Home() {
       {/* <Audiocall />    */}
       {/* <Puzzle />       */}
       {/* <Speakit />   */}
-      {/* <SprintGame /> */}
+      <SprintGame />
       {/* <Hangman /> */}
       {/* <MainPageWithCard /> */}
 
