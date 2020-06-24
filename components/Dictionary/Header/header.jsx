@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '2.3rem',
     paddingLeft: 36,
     paddingBottom: 16,
+    '& i:before': {
+      color: theme.palette.common.text,
+    },
   },
 
   container: {
@@ -37,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '2.4rem',
       transform: 'rotate(90deg)',
       margin: 0,
+      color: theme.palette.common.text,
     },
   },
   learned: {

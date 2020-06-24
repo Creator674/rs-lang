@@ -31,6 +31,12 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  leftBorder: {
+    borderLeft: `0.1rem solid ${theme.palette.common.success}`,
+  },
+  rightBorder: {
+    borderRight: `0.1rem solid ${theme.palette.common.success}`,
+  },
 })
 
 function TabPanel(props) {
@@ -45,7 +51,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
+        <Box p={0}>
           <div>{children}</div>
         </Box>
       )}
@@ -71,10 +77,13 @@ const style = createMuiTheme({
         fontSize: '2rem',
       },
     },
+
     MuiTab: {
       root: {
+        padding: '0 !important',
         minWidth: '0 !important',
-        border: '0.1rem solid',
+        borderTop: '0.1rem solid',
+        borderBottom: '0.1rem solid',
         borderColor: theme.palette.common.success,
         fontFamily: theme.props.mainFont,
         backgroundColor: fade(theme.palette.background.success, 0.3),
@@ -134,9 +143,9 @@ export function Dictionary() {
         <Header setWords={setWords} />
         <MuiThemeProvider theme={style}>
           <Tabs value={value} onChange={handleChange} variant='fullWidth' aria-label='icon label tabs example' centered>
-            <Tab label='Hard' />
+            <Tab className={classes.rightBorder} label='Hard' />
             <Tab label='Learning words' />
-            <Tab label='Easy' />
+            <Tab className={classes.leftBorder} label='Easy' />
           </Tabs>
         </MuiThemeProvider>
       </Paper>

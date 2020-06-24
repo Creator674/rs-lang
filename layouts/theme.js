@@ -1,6 +1,8 @@
 import { createMuiTheme } from '@material-ui/core/styles'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 
 const theme = createMuiTheme({
+  borders: {},
   typography: {
     boxSizing: 'border-box',
     htmlFontSize: 10,
@@ -37,6 +39,8 @@ theme.palette.background.main = '#ECF1F0'
 theme.palette.background.add = '#FFFBF4'
 theme.palette.background.success = '#38ADA9'
 theme.palette.background.error = '#FFE0CA'
+
+theme.borders.borderTop = `0.1rem solid ${fade(theme.palette.common.textAdd, 0.7)}`
 
 theme.typography.h3 = {
   fontSize: '1.2rem',
