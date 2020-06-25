@@ -17,8 +17,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.props.mainFont,
     fontSize: '1.8rem',
     lineHeight: '2.3rem',
-    paddingLeft: 36,
-    paddingBottom: 16,
+    padding: '0 3.2rem 1.6rem',
     '& i:before': {
       color: theme.palette.common.text,
     },
@@ -27,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
+    '& div.sort': {
+      flexShrink: 0,
+    },
   },
   sortBtn: {
     background: 'transparent',
@@ -36,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     height: '3.2rem',
     boxSizing: 'border-box',
     padding: 0,
+    flexShrink: 0,
     '& i:before': {
       fontSize: '2.4rem',
       transform: 'rotate(90deg)',
@@ -65,7 +68,6 @@ const useStyles = makeStyles((theme) => ({
   input: {
     '& > *': {
       marginLeft: '2rem',
-      width: '20ch',
     },
     '& label.Mui-focused': {
       color: 'none',
@@ -125,7 +127,7 @@ export function Header() {
         Learned words: <span>220 (84 today)</span>
       </div>
       <div className={classes.container}>
-        <div className='sort'>Sort by: &nbsp;</div>
+        <div className='sort'>Sort&nbsp;by: &nbsp;</div>
         <button className={classes.sortBtn} onClick={handleClose}>
           <i className='icon-sliders'></i>
         </button>

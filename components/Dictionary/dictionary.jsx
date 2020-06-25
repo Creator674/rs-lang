@@ -119,6 +119,8 @@ export function Dictionary() {
   const [wordsList, setWords] = useState([])
   const [filteredList, setFilteredList] = useState([])
 
+  const [isTranscription, toggleTranscription] = useState(true)
+
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
@@ -137,10 +139,13 @@ export function Dictionary() {
       value={{
         setFilteredList,
         setWords,
+        isTranscription,
+        toggleTranscription,
       }}
     >
       <Paper square>
         <Header setWords={setWords} />
+        <button onClick={() => toggleTranscription(!isTranscription)}>switch</button>
         <MuiThemeProvider theme={style}>
           <Tabs value={value} onChange={handleChange} variant='fullWidth' aria-label='icon label tabs example' centered>
             <Tab className={classes.rightBorder} label='Hard' />

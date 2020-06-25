@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { getImg } from '../../../lib'
 
-// import Skeleton from '@material-ui/lab/Skeleton'
-import Skeleton from '../CardSkeleton/card-skeleton'
-import { Footer } from '../CardFooter'
+import { Word } from '../Word'
 import { CardText } from '../CardText'
+import { Footer } from '../CardFooter'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,12 +35,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const WordBox = ({ word, image, src, ...restProps }) => {
+const WordBox = ({ word, image, src, isLoaded, ...restProps }) => {
   const classes = useStyles()
   return (
     <div className={`card-box ${classes.root}`}>
-      <div className='word'>{word}</div>
-      <img src={src} alt={`Associative image for ${word}`} width='100px' height='100px' />
+      <Word {...{ src, word, ...restProps, isLoaded }} />
       <CardText outerStyles={classes.styleDictionary} index='textExample' word={restProps} />
       <CardText outerStyles={classes.styleDictionary} index='textMeaning' word={restProps} />
       <Footer />
@@ -51,12 +49,21 @@ const WordBox = ({ word, image, src, ...restProps }) => {
 
 export function Card(props) {
   const [isLoaded, setLoaded] = useState(false)
+  const [src, setSrc] = useState(null)
 
+  let isMounted = false
   useEffect(() => {
+    isMounted = true
     getImg(props.image).then((result) => {
-      setLoaded(result)
+      if (isMounted) {
+        setLoaded(true)
+        setSrc(result)
+      }
     })
+    return () => {
+      isMounted = false
+    }
   }, [])
 
-  return isLoaded ? <WordBox src={isLoaded} {...props} /> : <Skeleton word={props.word} />
+  return <WordBox isLoaded={isLoaded} src={src} {...props} />
 }
