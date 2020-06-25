@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { Audiocall, Puzzle, Speakit, SprintGame, Hangman } from '../components/games'
 import { AppLayout } from '../layouts'
 import { Button, Popup, SignIn, SignUp } from '../components'
 import { GameStartModalWindow } from '../components/GameStartModalWindow'
@@ -8,6 +7,7 @@ import { MainPageWithCard } from '../components/MainPageWithCard'
 import './index.less'
 
 import { ProgressBar, ProgressChart } from '../components/Progress'
+import { Audiocall, Puzzle, Speakit, SprintGame, Hangman } from '../components/games'
 
 function Home() {
   const [showSignUp, toggleSignUp] = useState(false)

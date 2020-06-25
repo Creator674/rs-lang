@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, createContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { fade } from '@material-ui/core/styles/colorManipulator'
-import { Word } from './Word'
+import { Card } from './Card'
 import theme from '../../layouts/theme'
 
 import './dictionary.less'
@@ -129,7 +129,7 @@ export function Dictionary() {
 
   const classes = useStyles()
   const Cards = (filteredList.length ? filteredList : wordsList).map((word) => {
-    return <Word key={word.word} {...word} />
+    return <Card key={word.word} {...word} />
   })
 
   return (
