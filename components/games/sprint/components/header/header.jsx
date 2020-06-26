@@ -25,15 +25,8 @@ export function Header(props) {
 
    return (
      <div className="sprint-header">
-        <div className="sprint_column">
-           <h1 className="sprint_title">POINTS</h1>
-           <p> 0 </p>  
-        </div>
-
-        <div className="sprint_column">
-            <h1 className="sprint_title">TIMER</h1>
+            <h1 className="sprint_title">Audio Call</h1>
             {time} 
-        </div> 
      </div>
    );
 } 
