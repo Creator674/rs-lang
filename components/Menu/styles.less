@@ -242,3 +242,28 @@
     width: 248px;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .main-menu {
+    &.sidebar {
+      margin-top: 8px;
+      height: calc(100vh - 8px);
+      transform: translateX(-48px);
+    }
+    & .item__mobile {
+      position: absolute;
+      left: 48px;
+      top: 0;
+      transition: all 0.4s linear;
+    }
+    & .nav {
+      margin-top: 48px;
+    }
+    &.sidebar.sidebar__mobile {
+      transform: translateX(0);
+      & > .nav-wrapper div:first-child {
+        left: 0;
+      }
+    }
+  }
+}

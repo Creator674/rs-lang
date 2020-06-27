@@ -8,7 +8,7 @@ import './styles.less'
 export const Menu = () => {
   const [isMenuShown, toggleMenu] = useState(false)
   return (
-    <div className={`main-menu sidebar ${isMenuShown ? 'show' : ''}`}>
+    <div className={`main-menu sidebar ${isMenuShown ? 'sidebar__mobile' : ''} ${isMenuShown ? 'show' : ''}`}>
       <div className='nav-wrapper'>
         <MainButtons data={data.mainButtons} isShown={isMenuShown} action={() => toggleMenu(!isMenuShown)} />
         <NavButtons data={data.navButtons} isShown={isMenuShown} />
