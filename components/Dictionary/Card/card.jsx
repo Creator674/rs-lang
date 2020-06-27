@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { getImg } from '../../../lib'
+import { getImg } from 'lib'
 
 import { Word } from '../Word'
 import { CardText } from '../CardText'
@@ -56,8 +56,10 @@ export function Card(props) {
     isMounted = true
     getImg(props.image).then((result) => {
       if (isMounted) {
-        setLoaded(true)
-        setSrc(result)
+        setTimeout(() => {
+          setLoaded(true)
+          setSrc(result)
+        }, 2000)
       }
     })
     return () => {

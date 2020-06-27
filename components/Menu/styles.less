@@ -1,0 +1,244 @@
+.main-menu {
+  & .link {
+    color: #2c3e50;
+    text-decoration: none;
+  }
+
+  & .item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  & .sub-menu {
+    transition: all 0.4s linear;
+  }
+
+  & .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background-color: #7ab4cc;
+    transition: all 0.4s linear;
+    z-index: 1;
+  }
+
+  & .image {
+    width: 28px;
+    height: 28px;
+    background-color: #1f658a;
+    transition: all 0.4s linear;
+  }
+
+  & .tooltip {
+    position: absolute;
+    left: -120px;
+    padding: 6px 16px;
+    text-align: center;
+    color: #2c3e50;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    background: #7ab4cc;
+    border-radius: 14px;
+    transition: all 0.4s linear;
+  }
+
+  & .tooltip::before {
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 99%;
+    top: calc(50% - 4px);
+    border-top: 4px solid transparent;
+    border-right: 12px solid #7ab4cc;
+    border-bottom: 4px solid transparent;
+  }
+
+  & .item:hover .tooltip {
+    left: 65px;
+  }
+
+  & .item:hover .icon,
+  & .item:hover .sub-menu {
+    background-color: #ecf1f0;
+  }
+
+  & .item:hover .image {
+    color: #7ab4cc;
+  }
+
+  & .sub-menu {
+    position: absolute;
+    left: -152px;
+    width: 176px;
+    padding: 12px 6px 12px 18px;
+    color: #2c3e50;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 24px;
+    background-color: #7ab4cc;
+    transition: all 0.4s linear;
+  }
+
+  & .sub-menu.show {
+    left: 48px;
+  }
+
+  & .light-bg {
+    background: #d3e8ed;
+  }
+
+  & .sub-menu.logo {
+    background-color: #38ada9;
+  }
+
+  & .item:active .image {
+    background-color: #38ada9;
+  }
+
+  /* BURGER */
+  & .logo {
+    font-weight: bold;
+  }
+
+  & .lang {
+    color: #055b67;
+  }
+
+  & .burger {
+    background-color: #38ada9;
+  }
+
+  & .rotate {
+    transform: rotate(180deg);
+  }
+
+  & .image__burger {
+    background-color: transparent;
+    width: 0;
+    height: 0;
+    border-top: 14px solid transparent;
+    border-left: 28px solid #055b67;
+    border-bottom: 14px solid transparent;
+  }
+
+  & .item:hover .image__burger {
+    background-color: transparent;
+  }
+
+  & .rotate {
+    transform: rotate(180deg);
+  }
+
+  /* DICTIONARY */
+  & .icon__dict {
+    background-color: #d3e8ed;
+  }
+
+  & .image__dict {
+    background-color: #055b67;
+  }
+
+  & .tooltip__dict {
+    background-color: #38ada9;
+  }
+
+  & .tooltip__dict::before {
+    border-right: 12px solid #38ada9;
+  }
+
+  & .item:hover .icon_dict {
+    background-color: #ecf1f0;
+  }
+
+  & .item:hover .image__dict {
+    background-color: #38ada9;
+  }
+
+  /* NAVIGATION */
+  & .nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  & .nav-item:first-child .icon,
+  & .nav-item:last-child .icon {
+    border-top: 2px solid #1f658a;
+  }
+
+  & .sub-menu__bordered {
+    border-top: 2px solid #1f658a;
+  }
+
+  /* STATISTIC */
+  & .statistic {
+    font-family: 'Arial';
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+    text-align: right;
+  }
+
+  & .statistic:hover .icon {
+    cursor: default;
+  }
+  & .active {
+    background-color: #ecf1f0;
+  }
+  & .icon_statistic {
+    color: #1f658a;
+    background-color: #d3e8ed;
+  }
+
+  & .icon_statistic__new {
+    color: #c00000;
+  }
+
+  & .sub-menu__small {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: left;
+  }
+
+  & .item:active .icon {
+    background-color: #ecf1f0;
+  }
+
+  /* AUDIO */
+  & .icon__audio {
+    background-color: #d3e8ed;
+    border-top: 2px solid #1f658a;
+  }
+
+  & .image__audio {
+    background-color: transparent;
+    color: #1f658a;
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  &.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 576px;
+    height: 100vh;
+    background: #d3e8ed;
+    width: 48px;
+    transition: all 0.4s linear;
+  }
+
+  &.sidebar.show {
+    width: 248px;
+  }
+}

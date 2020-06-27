@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Popover from '../Popover/popover'
 import Menu from '../SubMenu/sub-menu'
-import { Context, DictionaryContext } from '../../../context'
+import { Context, DictionaryContext } from 'context'
 
 const useStyles = makeStyles((theme) => ({
   root: {

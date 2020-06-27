@@ -89,7 +89,7 @@ export default function subMenu() {
     sort: { field, direction },
   } = useContext(Context)
   const { setWords } = useContext(DictionaryContext)
-  const items = ['Alphabetical', 'Chronologically', 'Times used']
+  const items = ['Alphabetically', 'Chronologically', 'Times used']
   const list = items.map((item, i) => {
     return (
       <div

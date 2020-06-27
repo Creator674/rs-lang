@@ -47,14 +47,26 @@ const initialSort = {
 const GlobalState = (props) => {
   const [words, setWords] = useState(initialWords)
   const [sort, setSort] = useState(initialSort)
+  const [activeMenu, setActiveMenu] = useState(0)
+  const [toRepeatWords, setToRepeatWords] = useState(22)
+  const [newWords, setNewWords] = useState(30)
+  const [isAudioOn, setAudio] = useState(true)
 
   return (
     <Context.Provider
       value={{
-        words: words,
-        sort: sort,
-        setSort: setSort,
-        setWords: setWords,
+        words,
+        sort,
+        activeMenu,
+        setSort,
+        setWords,
+        setActiveMenu,
+        toRepeatWords,
+        setToRepeatWords,
+        newWords,
+        setNewWords,
+        isAudioOn,
+        setAudio,
       }}
     >
       {props.children}
