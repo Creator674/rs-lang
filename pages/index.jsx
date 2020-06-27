@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Link from 'next/link'
 import { AppLayout } from '../layouts'
-import { Button, Popup, SignIn, SignUp } from '../components'
-import { GameStartModalWindow } from '../components/GameStartModalWindow'
-import { MainPageWithCard } from '../components/MainPageWithCard'
+import { Button, Popup, SignIn, SignUp } from 'components'
+import { GameStartModalWindow } from 'components/GameStartModalWindow'
+import { MainPageWithCard } from 'components/MainPageWithCard'
 import './index.less'
 
-import { ProgressBar, ProgressChart } from '../components/Progress'
+import { ProgressBar, ProgressChart } from 'components/Progress'
+import { Menu } from 'components/Menu'
 import { Audiocall, Puzzle, Speakit, SprintGame, Hangman } from '../components/games'
 
 function Home() {
@@ -20,12 +21,15 @@ function Home() {
       {/* <Audiocall />    */}
       {/* <Puzzle />       */}
       {/* <Speakit />   */}
-      <SprintGame />
+      {/* <SprintGame /> */}
       {/* <Hangman /> */}
       {/* <MainPageWithCard /> */}
 
+      <Menu />
+
       <ProgressBar current={36} total={50} width='60%' />
       <ProgressChart value={testValue} width='48px' />
+
       <input
         type='text'
         value={testValue}

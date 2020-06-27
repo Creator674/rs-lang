@@ -1,0 +1,95 @@
+export const data = {
+  mainButtons: [
+    {
+      text: 'RSLang',
+      type: 'burger',
+      link: '/',
+      icon: 'icon-arrow-right',
+      styling: '__burger',
+    },
+  ],
+  navButtons: [
+    {
+      id: 0,
+      type: 'game',
+      text: 'Learn Words',
+      link: '/main-page',
+      icon: 'learn',
+      isBordered: true,
+    },
+    {
+      id: 1,
+      type: 'game',
+      text: 'Speak It',
+      link: '/games/speak-it',
+      icon: 'speakit',
+    },
+    {
+      id: 2,
+      type: 'game',
+      text: 'Puzzle English',
+      link: '/games/puzzle-english',
+      icon: 'puzzle',
+    },
+    {
+      id: 3,
+      type: 'game',
+      text: 'Savannah',
+      link: '/games/savannah',
+      icon: 'savannah',
+    },
+    {
+      id: 4,
+      type: 'game',
+      text: 'Sprint',
+      link: '/games/sprint',
+      icon: 'sprint',
+    },
+    {
+      id: 5,
+      type: 'game',
+      text: 'Audiocall',
+      link: '/games/audiocall',
+      icon: 'audiocall',
+    },
+    {
+      id: 6,
+      type: 'game',
+      text: 'Hangman',
+      link: '/games/hangman',
+      icon: 'hangman',
+    },
+    {
+      id: 7,
+      type: 'dictionary',
+      text: 'Dictionary',
+      icon: 'dictionary',
+      link: '/dict',
+      styling: '__dict',
+      isBordered: true,
+      subClass: 'light-bg',
+    },
+  ],
+  statisticButtons: [
+    {
+      type: 'counter',
+      text: 'Words for repetition',
+      subClass: 'light-bg',
+    },
+    {
+      type: 'counter-new',
+      text: 'New words',
+      subClass: 'light-bg',
+      styling: '__new',
+    },
+  ],
+  footerButtons: [
+    {
+      type: 'switch',
+      text: 'Audio on/off',
+      icon: 'audio',
+      isBordered: true,
+      subClass: 'light-bg',
+    },
+  ],
+}
