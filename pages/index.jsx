@@ -17,7 +17,7 @@ function Home() {
   return (
     <AppLayout>
       {/* <GameStartModalWindow />  */}
-      {/* <Audiocall />    */}
+      <Audiocall />   
       {/* <Puzzle />       */}
       {/* <Speakit />   */}
       {/* <SprintGame /> */}

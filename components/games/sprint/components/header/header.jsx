@@ -25,7 +25,7 @@ export function Header(props) {
 
    return (
      <div className="sprint-header">
-            <h1 className="sprint_title">Audio Call</h1>
+            <h1 className="sprint_title">Sprint</h1>
             {time} 
      </div>
    );
