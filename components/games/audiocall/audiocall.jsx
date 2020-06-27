@@ -5,8 +5,8 @@ import './audiocall.less';
 
 export const Audiocall = (props) => {
   
-   let  shufeledArray1 = shuffledArray(20);
-   let  shufeledArray2 = shuffledArray(20);
+   let  shuffledArray1 = shuffledArray(20);
+   let  shuffledArray2 = shuffledArray(20);
 let isGameEnd = false;
 
    const [data, setDate] = useState([]);
@@ -29,8 +29,8 @@ let isGameEnd = false;
           setDate(data);
           setWords(data.map((el) => el[0]));
           setTranslation(data.map((el) => el[1])); 
-          setCurrentWord(data[shufeledArray1[count]][0]);
-          setCurrentTranslation(data[shufeledArray1[count]][1]);
+          setCurrentWord(data[shuffledArray1[count]][0]);
+          setCurrentTranslation(data[shuffledArray1[count]][1]);
           
           const images = data.map( (el) => getImg(el[3]).then(img => img));
           Promise.allSettled(images).then((results) => {
@@ -47,18 +47,17 @@ let isGameEnd = false;
 
 
    const drawWords = () => { 
-console.log(images[shufeledArray1[count]]);
       const arrayOfFiveWords = [];
       arrayOfFiveWords.push(currentTranslation);
       let i = 0;
-      // while (arrayOfFiveWords.length < 5) {
-      //    const ind = shufeledArray2[i]; 
-      //    const currentInd = shufeledArray1[count];
-      //    if(i !== currentInd){
-      //       arrayOfFiveWords.push(translation[ind]);
-      //    }
-      //    i += 1;
-      // }
+      while (arrayOfFiveWords.length < 5) {
+         const ind = shuffledArray2[i]; 
+         const currentInd = shuffledArray1[count];
+         if(i !== currentInd){
+            arrayOfFiveWords.push(translation[ind]);
+         }
+         i += 1;
+      }
       arrayOfFiveWords.sort(() => Math.random() - 0.5);
          return arrayOfFiveWords.map( (el, i) => (
             <div className="word-box">
@@ -74,6 +73,7 @@ console.log(images)
 console.log(audio) 
 
    const handleClick = (word) => {  
+      console.log(currentTranslation, word)
       if(currentTranslation === word){
          console.log('yes, it"s" true!!');
          setPoints(points + 10);
@@ -82,16 +82,17 @@ console.log(audio)
          console.log('no, it"s false!!');
       }
       setCount(count + 1); 
-      shufeledArray2 = shuffledArray(20);  // refreshing shuffled array
+      shuffledArray2 = shuffledArray(20);  // refreshing shuffled array
       if(count + 1 > 19){
          console.log('THE END OF GAME');
+         setCount(0);
          isGameEnd = true;
       }
-
-      setCurrentWord(words[shufeledArray1[count]]);
-      setCurrentTranslation(translation[shufeledArray1[count]]);
-      setCurrentImage(images[shufeledArray1[count]]);
-      setCurrentAudio(audio[shufeledArray1[count]]);
+      setTimeout(()=>{
+         setIsGuessed(false);
+      }, 1700);
+      setCurrentWord(words[shuffledArray1[count]]);
+      setCurrentTranslation(translation[shuffledArray1[count]]);
       console.log(currentWord, currentTranslation)
    };
    
@@ -119,10 +120,10 @@ console.log(audio)
                </div>
                <div className="points">
                   <span>POINTS:</span> {points}
-                  <div className="image">
-                     <img src={isGuessed ? '' : '/images/audiocall/snail.png'} alt="word"></img>
+                  <div className={`image ${isGuessed ? '' : 'hide'}`}>
+                     <img src={isGuessed ? images[shuffledArray1[count]] : '/images/audiocall/snail.png'} alt="word"></img>
                   </div>
-                  <p className={`word-correct ${isGuessed ? images[shufeledArray1[count]] : 'hide'} `} >{currentWord}</p>
+                  <p className={`word-correct ${isGuessed ? '' : 'hide'} `} >{currentWord}</p>
                </div>
                <div className="cards">
                   { drawWords() }      
@@ -135,7 +136,7 @@ console.log(audio)
                </div>
          </div>
 
-            {/* <audio src={audio[shufeledArray1[count]] || '/audio/wow.mp3'} id="word"></audio> */}
+            <audio src={audio[shuffledArray1[count]] || '/audio/wow.mp3'} id="word"></audio>
          </div>
       )
 } 
