@@ -114,12 +114,13 @@ const style = createMuiTheme({
 })
 
 export function Dictionary() {
-  const { words } = useContext(Context)
+  const {
+    words,
+    cardSettings: { isTranslation, isTranscription },
+  } = useContext(Context)
   const [value, setValue] = useState(1)
   const [wordsList, setWords] = useState([])
   const [filteredList, setFilteredList] = useState([])
-
-  const [isTranscription, toggleTranscription] = useState(true)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
@@ -140,12 +141,10 @@ export function Dictionary() {
         setFilteredList,
         setWords,
         isTranscription,
-        toggleTranscription,
       }}
     >
       <Paper square>
         <Header setWords={setWords} />
-        <button onClick={() => toggleTranscription(!isTranscription)}>switch</button>
         <MuiThemeProvider theme={style}>
           <Tabs value={value} onChange={handleChange} variant='fullWidth' aria-label='icon label tabs example' centered>
             <Tab className={classes.rightBorder} label='Hard' />

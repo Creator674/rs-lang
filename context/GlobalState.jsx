@@ -44,6 +44,12 @@ const initialSort = {
   direction: 'asc',
 }
 
+const initialCardSettings = {
+  isTranslation: true,
+  isWordShown: true,
+  isTranscription: true,
+}
+
 const GlobalState = (props) => {
   const [words, setWords] = useState(initialWords)
   const [sort, setSort] = useState(initialSort)
@@ -51,6 +57,7 @@ const GlobalState = (props) => {
   const [toRepeatWords, setToRepeatWords] = useState(22)
   const [newWords, setNewWords] = useState(30)
   const [isAudioOn, setAudio] = useState(true)
+  const [cardSettings, setCardSettings] = useState(initialCardSettings)
 
   return (
     <Context.Provider
@@ -67,6 +74,8 @@ const GlobalState = (props) => {
         setNewWords,
         isAudioOn,
         setAudio,
+        cardSettings,
+        setCardSettings,
       }}
     >
       {props.children}

@@ -16,10 +16,10 @@ export const hard = createMuiTheme({
   overrides: {
     MuiButton: {
       root: {
-        background: theme.palette.common.main,
+        backgroundColor: theme.palette.common.main,
         color: theme.palette.common.btnLight,
 
-        '&:hover': {
+        '&:hover, &:focus': {
           backgroundColor: theme.palette.common.success,
           color: theme.palette.background.success,
         },
@@ -35,10 +35,10 @@ export const repeat = createMuiTheme({
   overrides: {
     MuiButton: {
       root: {
-        background: theme.palette.common.btnMiddle,
+        backgroundColor: theme.palette.common.btnMiddle,
         color: theme.palette.common.main,
 
-        '&:hover': {
+        '&:hover, &:focus': {
           backgroundColor: theme.palette.background.success,
           color: theme.palette.common.success,
         },
@@ -54,10 +54,10 @@ export const easy = createMuiTheme({
   overrides: {
     MuiButton: {
       root: {
-        background: theme.palette.common.btnLight,
+        backgroundColor: theme.palette.common.btnLight,
         color: theme.palette.common.btnWhite,
 
-        '&:hover': {
+        '&:hover, &:focus': {
           backgroundColor: theme.palette.background.fadeSuccess,
           color: theme.palette.common.btnWhite,
         },
