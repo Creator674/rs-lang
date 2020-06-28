@@ -1,12 +1,24 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyle = makeStyles((theme) => ({
-  root: {
-    fontFamily: theme.props.mainFont,
-    borderTop: theme.borders.borderTop,
-  },
-}))
+const useStyle = makeStyles((theme) => {
+  console.log(theme)
+  return {
+    root: {
+      fontFamily: theme.props.mainFont,
+      borderTop: theme.borders.borderTop,
+      '&.border-top-0': {
+        borderTop: 'none',
+      },
+      '&.second-row p:first-child': {
+        lineHeight: '2.4rem',
+      },
+      '&.second-row p': {
+        lineHeight: '2.2rem',
+      },
+    },
+  }
+})
 
 function StringParsed({ string, children }) {
   const [, part1, , part2, part3] = string.match(/(.*)<(.*)>(.*)<\/\2>(.*)/)
@@ -19,12 +31,11 @@ function StringParsed({ string, children }) {
   )
 }
 
-export const CardText = ({ word, index, outerStyles, children }) => {
+export const CardText = ({ word, index, outerStyles, children, className }) => {
   const translateKey = `${index}Translate`
   const classes = useStyle()
-  console.log(word[index].match(/<.*>/))
   return (
-    <div className={`${classes.root} ${outerStyles}`}>
+    <div className={`${classes.root} ${outerStyles} ${className}`}>
       {!children ? (
         <p className='sentence' dangerouslySetInnerHTML={{ __html: word[index] }} />
       ) : (

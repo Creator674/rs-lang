@@ -28,17 +28,39 @@ const word = {
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: '0 3.2rem',
-    borderBottom: `0.1rem solid ${theme.palette.common.success}`,
+  btnRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    [theme.breakpoints.up('xs')]: {
+      padding: '1.6rem 0',
+    },
+    [theme.breakpoints.up('sm')]: {
+      padding: '1.6rem',
+    },
+    [theme.breakpoints.up('md')]: {
+      padding: '1.6rem 0',
+    },
+    padding: '1.6rem 0',
+
+    '& .btn-wrapper > *': {
+      marginRight: '0.8rem',
+    },
+  },
+  gameboard: {
+    [theme.breakpoints.up('xs')]: {
+      padding: '0 2.4rem',
+    },
+    [theme.breakpoints.up('md')]: {
+      padding: '0',
+    },
   },
   styleDictionary: {
-    padding: '1.6rem 0',
+    padding: '2rem 0',
     '& p.sentence': {
       fontFamily: theme.props.secondFont,
-      fontSize: '1.2rem',
-      lineHeight: '1.6rem',
-      marginBottom: '0.4rem',
+      fontSize: '1.8rem',
+      lineHeight: '3.0rem',
+      marginBottom: '1rem',
       '& b': {
         fontWeight: 'bold',
         color: theme.palette.common.success,
@@ -49,8 +71,8 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     '& p.translation': {
-      fontSize: '1.2rem',
-      lineHeight: '1.4rem',
+      fontSize: '1.8rem',
+      lineHeight: '2.2rem',
       color: theme.palette.common.textAdd,
     },
   },
@@ -62,23 +84,22 @@ export function PlayCard() {
   return (
     <div className='play-card'>
       <div className='card-box'>
-        <div className='btns-row'>
+        <div className={classes.btnRow}>
           <div className='btn-wrapper'>
-            <MuiButton>Hard</MuiButton>
-            <button className='hard'>hard</button>
-            <button className='repeat'>repeat</button>
-            <button className='easy'>easy</button>
+            <MuiButton themeName='hard'>Hard</MuiButton>
+            <MuiButton themeName='repeat'>Repeat</MuiButton>
+            <MuiButton themeName='easy'>Easy</MuiButton>
           </div>
-          <button className='answer'>answer</button>
+          <MuiButton themeName='answer'>Answer</MuiButton>
         </div>
         <div className='play-image'>
           <PlayImage src={word.image} />
         </div>
-        <div className='gameboard'>
-          <CardText outerStyles={classes.styleDictionary} index='textExample' word={word}>
+        <div className={classes.gameboard}>
+          <CardText className='border-top-0' outerStyles={classes.styleDictionary} index='textExample' word={word}>
             <input value='blabla' />
           </CardText>
-          <CardText outerStyles={classes.styleDictionary} index='textMeaning' word={word} />
+          <CardText className='second-row' outerStyles={classes.styleDictionary} index='textMeaning' word={word} />
         </div>
         <PlayFooter>
           <ProgressChart width={'36px'} value={40} />

@@ -2,6 +2,15 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 
 const theme = createMuiTheme({
+  breakpoints: {
+    values: {
+      xs: 320,
+      sm: 375,
+      md: 768,
+      lg: 1280,
+      xl: 1440,
+    },
+  },
   borders: {},
   typography: {
     boxSizing: 'border-box',
@@ -39,6 +48,7 @@ theme.palette.background.main = '#ECF1F0'
 theme.palette.background.add = '#FFFBF4'
 theme.palette.background.success = '#38ADA9'
 theme.palette.background.error = '#FFE0CA'
+theme.palette.background.fadeSuccess = fade(theme.palette.background.success, 0.4)
 
 theme.borders.borderTop = `0.1rem solid ${fade(theme.palette.common.textAdd, 0.7)}`
 
