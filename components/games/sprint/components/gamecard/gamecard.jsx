@@ -3,8 +3,7 @@ import './gamecard.less';
 import { getWordsAndTranslation } from '../../../../../lib/crud/auth';
 import { shuffledArray, shuffledRandomArray } from '../../../../../lib/helpers/shufflefunc';
 
-
-
+ 
 export const Gamecard = (props) => { 
       let  shufeledArray1 = shuffledArray(20);
       let  shufeledArray2 = shuffledRandomArray(20);
@@ -105,9 +104,9 @@ export const Gamecard = (props) => {
                           onClick={() => handleClick(true)} >true</button>
                   <button className="false"
                           onClick={() => handleClick(false)} >false</button>
-               </div>
+               </div> 
             </div>
-
+ 
             <audio src='/audio/kok.mp3' className="audio_word" id="yes"></audio>
             <audio src='/audio/piu.mp3' className="audio_word" id="no"></audio>
             <audio src='/audio/wow.mp3' className="audio_word" id="wow"></audio>
