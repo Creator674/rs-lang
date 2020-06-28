@@ -1,6 +1,7 @@
 export * from './Button'
 export * from './Popup'
 export * from './Forms'
+export * from './PlayCard'
 export * from './Dictionary'
 export * from './games/Puzzle'
 export * from './games/speakit'

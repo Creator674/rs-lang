@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import Link from 'next/link'
 import { AppLayout } from '../layouts'
-import { Button, Popup, SignIn, SignUp } from 'components'
+import { Button, Popup, SignIn, SignUp, PlayCard } from 'components'
 import { GameStartModalWindow } from 'components/GameStartModalWindow'
 import { MainPageWithCard } from 'components/MainPageWithCard'
 import './index.less'
@@ -24,7 +24,7 @@ function Home() {
       {/* <SprintGame /> */}
       {/* <Hangman /> */}
       {/* <MainPageWithCard /> */}
-
+      <PlayCard />
       <Menu />
 
       <ProgressBar current={36} total={50} width='60%' />
