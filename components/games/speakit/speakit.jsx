@@ -5,23 +5,14 @@ import { CardShow } from './cardshow'
 import './index.less'
 
 export function Speakit(props) {
-  const state = {
-    isPlayed: true,
-    level: '1',
-    audioSrc: '...',
-  }
-
-  // played = () =>{
-  //    audio.play();
-  // };
 
   return (
-    <div className='wrapper'>
+    <div className='wrapper-speakit'>
       <Header {...props} />
       <div className='flex_column'>
         <CardShow {...props} />
         <TenCards {...props} />
-        <audio src={state.audioSrc} className='audio_word'></audio>
+        <audio src={''} className='audio_word'></audio>
       </div>
     </div>
   )

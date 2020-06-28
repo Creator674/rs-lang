@@ -20,7 +20,7 @@ function Home() {
       {/* <GameStartModalWindow />  */}
       {/* <Audiocall />    */}
       {/* <Puzzle />       */}
-      {/* <Speakit />   */}
+      <Speakit />  
       {/* <SprintGame /> */}
       {/* <Hangman /> */}
       {/* <MainPageWithCard /> */}
