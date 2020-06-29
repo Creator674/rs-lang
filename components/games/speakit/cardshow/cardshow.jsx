@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import {getTranslation} from '../../../../lib/crud/auth';
 import './cardShow.less'
 
 export const CardShow = () => {
@@ -71,7 +70,7 @@ export const CardShow = () => {
   return (
     <div className='column'>
         <div className='picture'>
-          <img src={imageSrc ? imageSrc : "./images/speakit/init.jpg"} alt="pic" />
+          <img src={imageSrc ? imageSrc : "./images/speakit/start.png"} alt="pic" />
         </div>
 
         <p className={gameStart ? 'translation' : 'translation play'}>
@@ -80,7 +79,7 @@ export const CardShow = () => {
 
         <input
           type='text'
-          className={gameStart ? 'input' : 'input play'}
+          className={listening ? 'input play' : 'input '}
           readOnly={true}
           defaultValue={pronouncedWord}
         />

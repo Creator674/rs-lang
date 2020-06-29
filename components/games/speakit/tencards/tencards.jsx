@@ -4,6 +4,7 @@ import './tenCards.less'
 
 export function TenCards(props) {
   let cardsArr = []
+  console.log(props)
   for (let i = 0; i < 10; i += 1) {
     cardsArr.push(<Card {...props[i]} />)
   }

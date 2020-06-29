@@ -15,7 +15,7 @@ export function Header(props) {
       </div>
 
       <div className='header_column'>
-        <div className='timer'>Time is left: {counter}</div>
+        <div className='timer'>Time is left: <span>{counter}</span></div>
         <div className='score'>
           <img src='./images/speakit/star1.png' />
           {props.isguessed ? 'img src="./images/speakit/star1.png' : ''}

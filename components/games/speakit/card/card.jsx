@@ -6,26 +6,23 @@ export default class Card extends React.Component {
  
    constructor(props){
       super(props),
- 
       this.state = {
          status: false,
-         currentWord: "...",
- 
-         isPlayedAudio: false,
-         word: "...",
-         imageSrc: "...",
-         translation: "...",
-         transcription: "...",
+         word: props.word,
+         translation: props.wordTranslate,
+         transcription: props.transcription,
+         audioSrc: props.sound,
          isguessed: false,
        }
- 
-      //  this.output = this.output.bind(this)
     };
 
-    audioPlay () {
-      this.setState({
-         isPlayedAudio: true,
-      });
+    componentDidMount = () => {
+      console.log(this.state.audioSrc)
+    }
+
+    audioPlay = () => {
+      this.audio = new Audio(this.state.audioSrc);
+      this.audio.play();
    };
 
 
