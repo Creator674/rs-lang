@@ -31,6 +31,7 @@
             font-size: 2rem;
             padding: 2rem;
             font-weight: bold;
+            color: #f5deb39e;
             span{
                color: #ef5353;
             }
@@ -42,6 +43,11 @@
             text-shadow: 0.05rem 0.05rem 0.2rem black;
             font-family: monospace;
             font-weight: bold;
+
+            span.question{
+               font-size: 3rem;
+               color:#e0ffd9 ;
+            }
          }
          .answer{
             padding: 1rem;
@@ -86,6 +92,17 @@
    .letters{
       margin: 4rem auto;
       text-align: center;
+      .win{
+         font-size: 3rem;
+         padding: 2rem;
+         color: #d24444;
+         text-shadow: 0.05rem 0.05rem 0.2rem black;
+         font-family: monospace;
+         font-weight: bold;
+      }
+      .win{
+         color: #44d24b;
+      }
       .btns{
          display: flex;
          flex-direction: row;
@@ -109,16 +126,13 @@
                box-shadow: 0.2rem 0.2rem 0.4rem #ffa8a2b0, -0.2rem -0.2rem 0.4rem #ffa8a2b0;
             }
          }
-         .lose, .win{
+         .lose{
             font-size: 3rem;
             padding: 2rem;
             color: #d24444;
             text-shadow: 0.05rem 0.05rem 0.2rem black;
             font-family: monospace;
             font-weight: bold;
-         }
-         .win{
-            color: #44d24b;
          }
       }
 
