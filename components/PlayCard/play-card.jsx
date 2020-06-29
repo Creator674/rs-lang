@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('xs')]: {
       padding: '1.6rem 0',
     },
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.only('sm')]: {
       padding: '1.6rem',
     },
     [theme.breakpoints.up('md')]: {
@@ -50,10 +50,11 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('xs')]: {
       padding: '0 2.4rem',
     },
-    [theme.breakpoints.up('md')]: {
-      padding: '0',
-    },
+    // [theme.breakpoints.up('md')]: {
+    //   padding: '0',
+    // },
   },
+
   styleDictionary: {
     padding: '2rem 0',
     '& p.sentence': {
@@ -85,7 +86,7 @@ export function PlayCard() {
     <div className='play-card'>
       <div className='card-box'>
         <div className={classes.btnRow}>
-          <div className='btn-wrapper'>
+          <div className='btn-wrapper card-wrapper'>
             <MuiButton themeName='hard'>Hard</MuiButton>
             <MuiButton themeName='repeat'>Repeat</MuiButton>
             <MuiButton themeName='easy'>Easy</MuiButton>
@@ -95,15 +96,15 @@ export function PlayCard() {
         <div className='play-image'>
           <PlayImage src={word.image} />
         </div>
-        <div className={classes.gameboard}>
+        <div className={`${classes.gameboard} card-wrapper`}>
           <CardText className='border-top-0' outerStyles={classes.styleDictionary} index='textExample' word={word}>
             <input value='blabla' />
           </CardText>
           <CardText className='second-row' outerStyles={classes.styleDictionary} index='textMeaning' word={word} />
+          <PlayFooter word={word}>
+            <ProgressChart width={'36px'} value={40} />
+          </PlayFooter>
         </div>
-        <PlayFooter>
-          <ProgressChart width={'36px'} value={40} />
-        </PlayFooter>
       </div>
     </div>
   )

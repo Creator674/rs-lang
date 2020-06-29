@@ -2,12 +2,28 @@ import React, { useContext } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 
-import { Context } from '../../../context'
+import { Context } from 'context'
 
 const useStyle = makeStyles((theme) => ({
   root: {
     position: 'relative',
+    display: 'flex',
     padding: '1.6rem 0',
+    borderTop: theme.borders.borderTop,
+    '& .audio': {
+      paddingTop: '0.4rem ',
+      paddingRight: '0.8rem'
+    },
+    '& .card-chart': {
+      position: "absolute",
+      top: 0,
+      right: 0,
+    },
+    '& i:before': {
+      fontSize: '1.8rem',
+      fontWeight: 600,
+      lineHeight: '2.3rem',
+    }
   },
   word: {
     fontFamily: theme.props.secondFont,
@@ -36,39 +52,23 @@ const useStyle = makeStyles((theme) => ({
   },
 }))
 
-export const PlayFooter = ({ word, transcription, wordTranslate, children }) => {
+export const PlayFooter = ({ word: { word, transcription, wordTranslate }, children, className }) => {
   const classes = useStyle()
   const {
     cardSettings: { isTranscription, isWordShown, isTranslation },
   } = useContext(Context)
 
   return (
-    <div className={classes.root}>
-      <div>
-        {isWordShown ? (
-          <p className={classes.word} style={{ display: 'flex' }}>
-            {word} &nbsp;&nbsp;
-            <span>
-              <i className='icon-volume'></i>
-            </span>
-          </p>
-        ) : null}
-        {isTranscription ? <p className={classes.transcription}>{transcription}</p> : null}
-        {isTranslation ? (
-          <p className={classes.translation}>
-            {wordTranslate}{' '}
-            {!isWordShown ? (
-              <>
-                &nbsp;&nbsp;
-                <span>
-                  <i className='icon-volume'></i>
-                </span>
-              </>
-            ) : null}
-          </p>
-        ) : null}
+    <div className={`${classes.root} ${className}`}>
+      <div className='audio'>
+        <i className='icon-volume'></i>
       </div>
-      {children}
+      <div>
+        {isWordShown ? <p className={classes.word} style={{ display: 'flex' }} >{word}</p> : null}
+        {isTranscription ? <p className={classes.transcription}>{transcription}</p> : null}
+        {isTranslation ? <p className={classes.translation}>{wordTranslate}</p> : null}
+      </div>
+      <div className="card-chart">{children}</div>
     </div>
   )
 }
