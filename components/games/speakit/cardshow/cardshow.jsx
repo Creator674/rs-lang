@@ -1,48 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import './cardShow.less'
 
-export const CardShow = () => {
+export const CardShow = ({iGuessedTheWord, startTheGame, data}) => {
 
-  const [listening, setListening] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [gameStart, setGameStart] = useState(false);
-
-  const [word, setWord] = useState('');
+  const [allData, setData] = useState([]);
+  const [words, setWords] = useState([]);
   const [imageSrc, setImageSrc] = useState('');
   const [translation, setTranslation] = useState('');
   const [pronouncedWord, setPronouncedWord] = useState('');
 
+  useEffect(() => {
+    console.log(data)
+    setData(data);
+    setWords(data.map(el => el.word))
+  }, [startTheGame])
 
-   if (typeof window !== 'undefined') {
+  const checkTheAnswer = (pronWord) => {
+    const spokedWord = pronWord.toLowerCase();
+    const ind = words.indexOf(spokedWord);
+    if(ind !== -1){
+      console.log('YEEEEEEEEEEAH')
+      setTranslation(allData[ind].wordTranslate);
+      setImageSrc(allData[ind].image)
+      iGuessedTheWord(spokedWord);
+    }
+  };
+
+  const startGAME = () => {
+
+    startTheGame();
      const SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
      const recognition = new SpeechRecognition();
      recognition.interimResults = false;
      recognition.maxAlternatives = 10;
      recognition.lang = "en-EN";
      recognition.continuous = false;
-   }
-
-  const toggleListen = () => {
-    setListening(!listening);
-  };
-
-  const checkTheAnswer = (word) => {
-    const spokedWord = word.toLowerCase();
-    console.log(spokedWord)
-  };
-
-  const startGAME = () => {
-    // e.preventDefault();
-    if (listening) {
-      recognition.start();
+     recognition.start();
+     
       setGameStart(true);
       recognition.onresult = (e) => {
         const transcriptions = Array.from(e.results)
           .map((res) => res[0])
           .map((result) => result.transcript)
           .join('');
-        setPronouncedWord(transcriptions);
-        console.log(transcriptions);
+        setPronouncedWord((words) => words = transcriptions); 
+   console.log(transcriptions);
         if (e.results[0].isFinal) {
           checkTheAnswer(transcriptions);
         }
@@ -51,7 +55,6 @@ export const CardShow = () => {
       recognition.onspeechend = () => {
         recognition.stop()
       };
-   }
   };
 
   const restartHandleClick = (event) => {
@@ -73,21 +76,21 @@ export const CardShow = () => {
           <img src={imageSrc ? imageSrc : "./images/speakit/start.png"} alt="pic" />
         </div>
 
-        <p className={gameStart ? 'translation' : 'translation play'}>
-          {/* {getTranslation(word)} */}
+        <p className='translation'>
+          {translation}
         </p>
 
         <input
           type='text'
-          className={listening ? 'input play' : 'input '}
+          className={gameStart ? 'input go' : 'input'}
           readOnly={true}
-          defaultValue={pronouncedWord}
+          value={pronouncedWord || ''}
         />
 
         <div className='btns-container'>
           <button className={gameStart ? 'btn speak' : 'btn speak speakPls'} 
-                  onClick={() => toggleListen()}>
-            Speak please
+                  onClick={() => startGAME()}>
+                  {gameStart ? "SPEAK!" : 'Start the game'  }
           </button>
 
           <button className='btn restart' 

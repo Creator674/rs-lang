@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './header.less'
 
-export function Header(props) {
+export function Header({start}) {
 
-  const [counter, setCounter] = React.useState(500)
-  React.useEffect(() => {
+  const [counter, setCounter] = useState(500);
+  
+  useEffect(() => { 
+    console.log(start)
     counter > 0 && setTimeout(() => setCounter(counter - 1), 1000)
-  }, [counter])
-
+  }, [counter]);
+   
   return (
     <div className='header'>
       <div className='header_column'>
@@ -15,10 +17,10 @@ export function Header(props) {
       </div>
 
       <div className='header_column'>
-        <div className='timer'>Time is left: <span>{counter}</span></div>
+        <div className='timer'>Time is left: <span>{start && counter}</span></div>
         <div className='score'>
           <img src='./images/speakit/star1.png' />
-          {props.isguessed ? 'img src="./images/speakit/star1.png' : ''}
+          {start.isguessed ? 'img src="./images/speakit/star1.png' : ''}
         </div>
       </div>
     </div>

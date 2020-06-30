@@ -13,7 +13,17 @@ export function Speakit(props) {
   const [translation, setTranslation] = useState([]);
   const [audio, setAudio] = useState([]);
   const [image, setImage] = useState([]);
+  const [startGame, setStartGame] = useState(false);
+  const [guessed, setGuessed] = useState('');
 
+  const startTheGame =() =>{
+    setStartGame(true);
+  };
+
+  const iGuessedTheWord = (myWord) => {
+    console.log('my ', myWord)
+    setGuessed(myWord);
+  }
 
   useEffect(() => {
     combineWords(1,1).then((data) => {
@@ -28,10 +38,10 @@ export function Speakit(props) {
 
   return (
     <div className='wrapper-speakit'>
-      <Header {...props} />
+      <Header start={startGame} />
       <div className='flex_column'>
-        <CardShow {...props} />
-        <TenCards {...data} />
+        <CardShow iGuessedTheWord={iGuessedTheWord} startTheGame={startTheGame} data ={data}/>
+        <TenCards guessed={guessed} data ={data} />
         <audio src={''} className='audio_word'></audio>
       </div>
     </div>

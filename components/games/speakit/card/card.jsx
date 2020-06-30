@@ -1,44 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './card.less';
 
 
-export default class Card extends React.Component {
+export const Card = ({guessed, props}) => {
  
-   constructor(props){
-      super(props),
-      this.state = {
-         status: false,
-         word: props.word,
-         translation: props.wordTranslate,
-         transcription: props.transcription,
-         audioSrc: props.sound,
-         isguessed: false,
-       }
+    const [word, setWord] = useState();
+    const [audioSrc, setAudioSrc] = useState();
+    const [translation, setTranslation] = useState();
+    const [transcription, setTranscription] = useState(); 
+    // console.log(props)
+
+    useEffect(() => {
+      // console.log(props)
+      setWord(props.word);
+      setTranscription(props.transcription);
+      setAudioSrc(props.sound);
+      setTranslation(props.translation);
+    }, [])
+
+    const audioPlay = () => {
+      const audio = new Audio();
+      audio.src = audioSrc;
+      audio.play();
     };
 
-    componentDidMount = () => {
-      console.log(this.state.audioSrc)
-    }
 
-    audioPlay = () => {
-      this.audio = new Audio(this.state.audioSrc);
-      this.audio.play();
-   };
-
-
-   render(){
      return (
-     		<div className={this.state.isGuessed ? "card true" : "card" }
-                >
-     		    <div className="icon" onClick={this.audioPlay}>
+     		<div className={guessed === word ? "card true" : "card"}>
+     		    <div className="icon" onClick={() => audioPlay()}>
                  <img src="./images/speakit/play.png" />
                </div>
 
      		    <div className="text">
-                 <p>  {this.state.word} </p>
-                 <p>  {this.state.transcription} </p>
+                 <p>  {word} </p>
+                 <p>  {transcription} </p>
                </div>
      		</div>
      );
-  }
 } 
