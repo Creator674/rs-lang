@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('xs')]: {
       padding: '1.6rem 0',
     },
-    [theme.breakpoints.only('sm')]: {
+    [theme.breakpoints.up('sm')]: {
       padding: '1.6rem',
     },
     [theme.breakpoints.up('md')]: {
@@ -50,9 +50,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('xs')]: {
       padding: '0 2.4rem',
     },
-    // [theme.breakpoints.up('md')]: {
-    //   padding: '0',
-    // },
+    [theme.breakpoints.up('md')]: {
+      padding: '0',
+    },
   },
 
   styleDictionary: {
