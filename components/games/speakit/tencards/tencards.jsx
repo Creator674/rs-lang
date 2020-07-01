@@ -7,11 +7,11 @@ export function TenCards({guessed, data}) {
   const cardsArr = [];
   console.log(guessed)
 
-if(data.length){
-  for (let i = 0; i < 10; i += 1) {
-    cardsArr.push(<Card guessed={guessed} props={data[i]}/>)
+  if(data.length){
+    for (let i = 0; i < 10; i += 1) {
+      cardsArr.push(<Card guessed={guessed} props={data[i]}/>)
+    }
   }
-}
 
   useEffect(() => {
     console.log(data)

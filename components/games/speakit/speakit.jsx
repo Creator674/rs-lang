@@ -9,11 +9,8 @@ import { combineWords } from '../../../lib/crud/auth';
 export function Speakit(props) {
 
   const [data, setData] = useState([]);
-  const [word, setWord] = useState([]);
-  const [translation, setTranslation] = useState([]);
-  const [audio, setAudio] = useState([]);
-  const [image, setImage] = useState([]);
   const [startGame, setStartGame] = useState(false);
+  const [star, setStar] = useState(0);
   const [guessed, setGuessed] = useState('');
 
   const startTheGame =() =>{
@@ -23,22 +20,19 @@ export function Speakit(props) {
   const iGuessedTheWord = (myWord) => {
     console.log('my ', myWord)
     setGuessed(myWord);
+    setStar(star => star + 1);
   }
 
   useEffect(() => {
     combineWords(1,1).then((data) => {
       console.log(data);
       setData(data);
-      setWord(data.map(el => el.word));
-      setTranslation(data.map(el => el.wordTranslate));
-      setAudio(data.map(el => el.sound));
-      setImage(data.map(el => el.image));
     });
   },[]);
 
   return (
     <div className='wrapper-speakit'>
-      <Header start={startGame} />
+      <Header star={star} start={startGame} />
       <div className='flex_column'>
         <CardShow iGuessedTheWord={iGuessedTheWord} startTheGame={startTheGame} data ={data}/>
         <TenCards guessed={guessed} data ={data} />

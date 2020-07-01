@@ -18,15 +18,25 @@ export const Card = ({guessed, props}) => {
       setTranslation(props.translation);
     }, [])
 
+    useEffect(() => {
+      if(guessed === word){
+        setTimeout(() => {
+          audioPlay();
+        }, 1000);    
+      }
+    }, [guessed])
+
     const audioPlay = () => {
       const audio = new Audio();
       audio.src = audioSrc;
       audio.play();
     };
 
+  
 
      return (
      		<div className={guessed === word ? "card true" : "card"}>
+            <div>{}</div>
      		    <div className="icon" onClick={() => audioPlay()}>
                  <img src="./images/speakit/play.png" />
                </div>
