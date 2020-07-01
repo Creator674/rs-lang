@@ -1,50 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import './card.less';
+import React, { useState, useEffect } from 'react'
+import './card.less'
 
+export const Card = props => {
+  const { isActive, word, transcription, translation } = props
 
-export const Card = ({guessed, props}) => {
- 
-    const [word, setWord] = useState();
-    const [audioSrc, setAudioSrc] = useState();
-    const [translation, setTranslation] = useState();
-    const [transcription, setTranscription] = useState(); 
-    // console.log(props)
+  useEffect(() => {
+    if (guessed === word) {
+      setTimeout(() => {
+        audioPlay()
+      }, 1000)
+    }
+  }, [guessed])
 
-    useEffect(() => {
-      // console.log(props)
-      setWord(props.word);
-      setTranscription(props.transcription);
-      setAudioSrc(props.sound);
-      setTranslation(props.translation);
-    }, [])
+  const audioPlay = () => {
+    const audio = new Audio()
+    audio.src = audioSrc
+    audio.play()
+  }
 
-    useEffect(() => {
-      if(guessed === word){
-        setTimeout(() => {
-          audioPlay();
-        }, 1000);    
-      }
-    }, [guessed])
+  return (
+    <div className={guessed === word ? 'card true' : 'card'}>
+      <div>{}</div>
+      <div className='icon' onClick={() => audioPlay()}>
+        <img src='./images/speakit/play.png' />
+      </div>
 
-    const audioPlay = () => {
-      const audio = new Audio();
-      audio.src = audioSrc;
-      audio.play();
-    };
-
-  
-
-     return (
-     		<div className={guessed === word ? "card true" : "card"}>
-            <div>{}</div>
-     		    <div className="icon" onClick={() => audioPlay()}>
-                 <img src="./images/speakit/play.png" />
-               </div>
-
-     		    <div className="text">
-                 <p>  {word} </p>
-                 <p>  {transcription} </p>
-               </div>
-     		</div>
-     );
-} 
+      <div className='text'>
+        <p> {word} </p>
+        <p> {transcription} </p>
+      </div>
+    </div>
+  )
+}
