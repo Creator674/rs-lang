@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import Link from 'next/link'
 import { AppLayout } from '../layouts'
-import { Button, Popup, SignIn, SignUp } from 'components'
+import { Button, Popup, SignIn, SignUp, UserAvatar } from 'components'
 import { GameStartModalWindow } from 'components/GameStartModalWindow'
 import { MainPageWithCard } from 'components/MainPageWithCard'
 import './index.less'
@@ -25,7 +25,10 @@ function Home() {
       {/* <Hangman /> */}
       {/* <MainPageWithCard /> */}
 
-      <Menu />
+      <div className='wrapper-main-page'>
+        <Menu />
+        <UserAvatar />
+      </div>
 
       <ProgressBar current={36} total={50} width='60%' />
       <ProgressChart value={testValue} width='48px' />
@@ -46,7 +49,6 @@ function Home() {
       </Button>
       <Button className='log-in' onClick={() => toggleSignIn(!showSignIn)}>
         <div></div>
-        {/* Sign In */}
       </Button>
       {showSignUp ? (
         <Popup toggleClose={() => toggleSignUp(false)}>
@@ -64,6 +66,7 @@ function Home() {
       <Link href='/account'>
         <a>Account</a>
       </Link>
+     
     </AppLayout>
   )
 }
