@@ -1,22 +1,12 @@
-import React, { useState } from 'react'
-import Card from '../card/card'
+import React from 'react'
 import './tenCards.less'
 
-export function TenCards(props) {
-  const state = {
-    imageSrc: '...',
-    translation: '...',
-    pronouncedWord: '...',
-  }
-
-  let cardsArr = []
-  for (let i = 0; i < 10; i += 1) {
-    cardsArr.push(<Card {...props[i]} />)
-  }
-
+export function CardsContainer({children}) {
   return (
     <div className='column'>
-      <div className='right'>{cardsArr}</div>
+      <div className='right'>
+        {children}
+      </div>
     </div>
   )
 }

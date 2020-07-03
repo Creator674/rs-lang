@@ -11,7 +11,7 @@
     overflow: hidden;
     margin: 0 auto;
     border-radius: 6rem;
-    border: 0.1rem solid #0003;
+    border: 0.3rem solid #ffffff;
 
     img {
       width: 100%;
@@ -26,54 +26,78 @@
     height: 3rem;
     text-align: center;
     display: block;
-    font-size: 2rem;
-    display: none;
-
-    .play {
-      display: block;
-    }
+    font-family: 'Martel';
+    font-size: 2.3rem;
+    display: block;
   }
 
-  .input {
+  input[type='text'] {
     background: transparent;
     border: none;
-    border-bottom: 0.15rem solid #87bc73;
-    width: 38rem;
+    border-bottom: 0.15rem solid #7AB4CC;
+    width: 28rem;
     height: 3rem;
     margin: 0.8rem auto 0.2rem;
     padding: 0.5rem 0.2rem 0.5rem 4rem;
+    font-size: 2rem;
+    color: #1F658A;
+    text-align: center;
     position: relative;
     background-image: url(../../../../public/images/speakit/microphone.png);
     background-size: contain;
     background-repeat: no-repeat;
-    font-size: 1.8rem;
-    color: black;
-    //   display: none;
-
-    .play {
-      display: block;
+    background-position: left;
+    &.go{
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0.76);
+      animation: pulse 2s infinite;
     }
+   
   }
 
+  @-webkit-keyframes pulse {
+    0% {
+      -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.76);
+    }
+    70% {
+        -webkit-box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.76);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.76);
+    }
+  }
+  @keyframes pulse {
+    0% {
+      -moz-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.76);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.76);
+    }
+    70% {
+        -moz-box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.76);
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.76);
+    }
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.76);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.76);
+    }
+  }
   .btns-container {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 4rem;
+    padding-top: 4rem;
     text-align: center;
     text-align: -webkit-center;
 
     .btn {
       width: 20rem;
       padding: 0.8rem 3rem;
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 500;
-      font-family: 'Nobile', sans-serif;
-      background-color: #c3ecfe8f;
+      font-family: 'Martel';
+      background-color: #D3E8ED;
       border: 1px solid #5379904a;
       border-radius: 1.5rem;
-      color: #537990;
+      color: #1F658A;
       text-shadow: 0.1rem 0.1rem 1.2rem lightblue;
       cursor: pointer;
       outline: none;
@@ -85,29 +109,18 @@
         background-color: #f7ffff;
         box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1), -0.1rem -0.1rem 0.5rem rgba(0, 0, 0, 0.1);
       }
+    } 
+    .speak {
+      background-color: #f7ffff; 
+      position: relative;
+      width: 31rem;
+      text-align: center;
+      padding: 1.5rem 4rem;
     }
     .speak.speakPls {
       width: 34rem;
-      background-color: rgb(157, 223, 221);
+      background-color: #0099db7d;
       color: aliceblue;
-    }
-    .speak {
-      position: relative;
-      width: 31rem;
-      text-align: left;
-      padding: 1.5rem 4rem;
-
-      &::before {
-        position: absolute;
-        content: '';
-        width: 5.9rem;
-        height: 5rem;
-        top: 0;
-        right: 1rem;
-        background-image: url(../../../../public/images/speakit/btn.png);
-        background-size: cover;
-        background-position: center;
-      }
     }
   }
 }
