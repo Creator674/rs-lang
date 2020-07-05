@@ -2,7 +2,7 @@ import React from 'react';
 import { getWordsAndTranslationAndExamples } from '../../../lib/crud/auth';
 
 
-export const allWords = () => {
+export const Phrases = () => {
    
    return getWordsAndTranslationAndExamples(1,1)
        .then( (data) => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './gamecard.less';
-import { getWordsAndTranslation } from '../../../../../lib/crud/auth';
-import { shuffledArray, shuffledRandomArray } from '../../../../../lib/helpers/shufflefunc';
+import { getWordsAndTranslation } from '../../../lib/crud/auth';
+import { shuffledArray, shuffledRandomArray } from '../../../lib/helpers/shufflefunc';
 
  
 export const Gamecard = (props) => { 
@@ -93,10 +93,10 @@ export const Gamecard = (props) => {
          <div className="wrapper-game">
             <div className="card">
                <div className="card_title">
-                  <img src="/images/sprint/ok.png" alt="pic" width="30"></img>
+                  <img src="../images/sprint/ok.png" alt="pic" width="30"></img>
                   <p id="points">+ {points} points</p>
                </div>
-               <img src="/images/sprint/snail.png" alt="pic" width="70"></img>
+               <img src="../images/sprint/snail.png" alt="pic" width="70"></img>
                  { drawWords() }
                <div className="border"></div>
                <div className="game-bnts">
@@ -107,9 +107,9 @@ export const Gamecard = (props) => {
                </div> 
             </div>
  
-            <audio src='/audio/kok.mp3' className="audio_word" id="yes"></audio>
-            <audio src='/audio/piu.mp3' className="audio_word" id="no"></audio>
-            <audio src='/audio/wow.mp3' className="audio_word" id="wow"></audio>
+            <audio src='../audio/kok.mp3' className="audio_word" id="yes"></audio>
+            <audio src='../audio/piu.mp3' className="audio_word" id="no"></audio>
+            <audio src='../audio/wow.mp3' className="audio_word" id="wow"></audio>
          </div>
       ); 
 }  

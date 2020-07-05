@@ -8,7 +8,7 @@ import './index.less'
 
 import { ProgressBar, ProgressChart } from 'components/Progress'
 import { Menu } from 'components/Menu'
-import { Audiocall, Puzzle, SprintGame, Hangman } from '../components/games'
+import { Audiocall, Puzzle } from '../components/games'
 
 function Home() {
   const [showSignUp, toggleSignUp] = useState(false)
@@ -19,10 +19,7 @@ function Home() {
     <AppLayout>
       {/* <GameStartModalWindow />  */}
       {/* <Audiocall />    */}
-      {/* <Puzzle />       */}
-      {/* <Speakit />   */}
-      {/* <SprintGame /> */}
-      {/* <Hangman /> */}
+      {/* <Puzzle />       */}  
       {/* <MainPageWithCard /> */}
 
       <div className='wrapper-main-page'>

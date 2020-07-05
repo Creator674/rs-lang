@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';  
-import { makeStyles } from '@material-ui/core/styles'
 import './index.less';
-import { allWords } from './words'
+import { Phrases } from '../../../components/games/phrases'
+import { ButtonsLetters } from '../../../components/games/buttonsLetters'
 import { shuffledArray} from '../../../lib/helpers/shufflefunc';
 
 import step0 from '../../../public/images/hangman/0.jpg';
@@ -12,20 +12,10 @@ import step4 from '../../../public/images/hangman/4.jpg';
 import step5 from '../../../public/images/hangman/5.jpg';
 import step6 from '../../../public/images/hangman/6.jpg';
 
-const useStyles = makeStyles({
-   root: {
-     backgroundImage: 'url(/images/hangman/fon.jpg)',
-   },
-   title: {
-     fontSize: 14,
-   }
- })
-
-export const Hangman = (props) => { 
+const Hangman = (props) => { 
       const maxWrong = 6;
       const shuffled = shuffledArray(20);
       const images = [step0, step1, step2, step3, step4, step5, step6];
-      const classes = useStyles();
 
       const [win, setWin]= useState(false);
       const [next, setNext]= useState(false);
@@ -45,7 +35,7 @@ export const Hangman = (props) => {
             setCount(count + 1);
             setNext(false);
          }
-         const values = allWords().then((data) => {
+         const values = Phrases().then((data) => {
             console.log(data);
             setAnswer(data[0][shuffled[count]]);
             setTranslate(data[1][shuffled[count]]);
@@ -67,16 +57,6 @@ export const Hangman = (props) => {
             .map( (letter, i) => (
                guessed.has(letter) ? <span key={i}>{letter}</span> : <span> </span>
             ));
-      };
-
-      const generateBtns = () => {
-         return 'abcdefghijklmnopqrstuvwxyz'.split("").map(letter => (
-            <button key={letter} 
-                    value={letter}
-                    onClick={() => handleClick(letter)}
-                    disabled={guessed.has(letter)}
-                    > {letter}</button>
-         ));
       };
 
       const resetButton = () => {
@@ -103,7 +83,7 @@ export const Hangman = (props) => {
       }, [clicks]);
 
       return (
-            <div className={`${classes.root} hangman`}>
+            <div className='hangman'>
                <h1>Guess the Word or Die!</h1>
 
                <div className="row">
@@ -127,12 +107,14 @@ export const Hangman = (props) => {
                         <p className="win">You win! Congrats!</p> : ''}
                   <div className="btns" id='btns'>
                      { gameOver ?
-                        <p className="lose">You fucked up! Try again</p> : generateBtns()
+                        <p className="lose">You fucked up! Try again</p> : ''
                      }
+                     <ButtonsLetters handleClick={handleClick} guessed={guessed}/>
                   </div>
                   <button className="reset" onClick={resetButton}>Reset</button>
                </div>
-
             </div>
       );
 } 
+
+export default Hangman;

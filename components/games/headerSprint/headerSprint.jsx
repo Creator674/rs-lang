@@ -1,12 +1,13 @@
-import React, { useState } from 'react'; 
-import './header.less';
+import React, { useState, useEffect } from 'react'; 
+import './headerSprint.less';
  
 
-export function Header(props) {
+export function HeaderSprint(props) {
 
    //   --------------------------------timer
-    const [counter, setCounter] = React.useState(130);
-    React.useEffect(() => {
+    const [counter, setCounter] = useState(130);
+    
+    useEffect(() => {
        counter > 0 && setTimeout(() => setCounter(counter - 1), 1000); 
     }, [counter]);
 
@@ -25,7 +26,7 @@ export function Header(props) {
 
    return (
      <div className="sprint-header">
-            <h1 className="sprint_title">Audio Call</h1>
+            <h1 className="sprint_title">Sprint</h1>
             {time} 
      </div>
    );
