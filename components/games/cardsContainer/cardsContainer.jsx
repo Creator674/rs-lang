@@ -1,5 +1,5 @@
 import React from 'react'
-import './tenCards.less'
+import './cardsContainer.less'
 
 export function CardsContainer({children}) {
   return (
