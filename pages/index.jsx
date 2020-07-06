@@ -2,8 +2,6 @@ import React, { useState, useContext } from 'react'
 import Link from 'next/link'
 import { AppLayout } from '../layouts'
 import { Button, Popup, SignIn, SignUp, UserAvatar } from 'components'
-import { GameStartModalWindow } from 'components/GameStartModalWindow'
-import { MainPageWithCard } from 'components/MainPageWithCard'
 import './index.less'
 
 import { ProgressBar, ProgressChart } from 'components/Progress'
@@ -17,9 +15,8 @@ function Home() {
   const [testValue, setTestValue] = useState(0)
   return (
     <AppLayout>
-      {/* <GameStartModalWindow />  */}
       {/* <Audiocall />    */} 
-      {/* <MainPageWithCard /> */}
+      {/* <Savannah /> */}
 
       <div className='wrapper-main-page'>
         <Menu />

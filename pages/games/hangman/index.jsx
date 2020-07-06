@@ -3,6 +3,7 @@ import './index.less';
 import { Phrases } from '../../../components/games/phrases'
 import { ButtonsLetters } from '../../../components/games/buttonsLetters'
 import { shuffledArray} from '../../../lib/helpers/shufflefunc';
+import { GameStartModalWindow} from '../../../components/GameStartModalWindow';
 
 import step0 from '../../../public/images/hangman/0.jpg';
 import step1 from '../../../public/images/hangman/1.jpg';
@@ -29,6 +30,7 @@ const Hangman = (props) => {
       const [example, setExample]= useState('');
 
       const gameOver = mistake >= maxWrong;
+      const startModal = false;
 
       useEffect(() => {
          if(next){
@@ -84,6 +86,7 @@ const Hangman = (props) => {
 
       return (
             <div className='hangman'>
+               <GameStartModalWindow gameId={3} nameOfGame={'hangman'}/>
                <h1>Guess the Word or Die!</h1>
 
                <div className="row">

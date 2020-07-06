@@ -5,6 +5,7 @@ import { CardShow } from '../../../components/games/cardshow'
 import { Card } from '../../../components/games/card'
 import './index.less'
 import { combineWords } from '../../../lib/crud/auth'
+import { GameStartModalWindow} from '../../../components/GameStartModalWindow';
 
 const Speakit = (props) => {
   const [data, setData] = useState([])
@@ -64,6 +65,8 @@ const Speakit = (props) => {
 
   return (
     <div className='wrapper-speakit'>
+      <GameStartModalWindow gameId={0} nameOfGame={'speakit'}/>
+
       <Header star={star} start={startGame} setGameEnd={setGameEnd} restart={restart} />
       <div className='flex_column'>
         <CardShow

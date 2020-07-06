@@ -5,6 +5,7 @@ import { FooterPuzzle } from '../../../components/games/footerPuzzle'
 import './index.less'
 import { dataForPuzzle } from '../../../lib/crud/auth';
 import { getPicture } from '../../../lib/helpers/getPicture'
+import { GameStartModalWindow} from '../../../components/GameStartModalWindow';
 
 
 const  Puzzle = (props) => {
@@ -82,6 +83,8 @@ const  Puzzle = (props) => {
   
   return (
     <div className='puzzle-wrapper'>
+      <GameStartModalWindow gameId={4} nameOfGame={'puzzleenglish'}/>
+
       <HeaderPuzzle pronosBtnClicked={pronosBtnClicked} translBtnClicked={translBtnClicked}
               pictureBtnClicked={pictureBtnClicked} autopronBtnClicked={autopronBtnClicked}/>
      
