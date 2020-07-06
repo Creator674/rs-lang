@@ -7,8 +7,8 @@ import { MainPageWithCard } from 'components/MainPageWithCard'
 import './index.less'
 
 import { ProgressBar, ProgressChart } from 'components/Progress'
-import { Menu } from 'components/Menu'
-import { Audiocall, Puzzle } from '../components/games'
+import { Menu } from 'components/Menu' 
+import { Audiocall } from '../components/games' 
 
 function Home() {
   const [showSignUp, toggleSignUp] = useState(false)
@@ -18,8 +18,7 @@ function Home() {
   return (
     <AppLayout>
       {/* <GameStartModalWindow />  */}
-      {/* <Audiocall />    */}
-      {/* <Puzzle />       */}  
+      {/* <Audiocall />    */} 
       {/* <MainPageWithCard /> */}
 
       <div className='wrapper-main-page'>
