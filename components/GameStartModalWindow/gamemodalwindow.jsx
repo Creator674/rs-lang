@@ -2,33 +2,24 @@ import React, { useState } from 'react'
 import {Button} from '../Button'
 import './gamemodal.less'
 
-
-
-export const GameStartModalWindow = (props) => {
-
-   // const { gameId, nameOfGame, isStart } = props;
+export const GameStartModalWindow = props => {
+   const { gameId, nameOfGame } = props;
    
-   const games = ["speakit", "savanna", "audiocall", "ourgame", "puzzleenglish", "sprint"];
-   const colors = ["#d9c4ff", "#ff9292", "#000000", "#e44b63", "#689c8e", "#bbbf74"];
-   const colorsParagr = ["#777272", "#ffc4c4", "#9e7a47", "#c52740", "#636ece", "#6a7775"];
-
-   const nameOfGame = "sprint";   // - можно потестить поменять слова
-   const gameId = 5;
+   // const games = ["speakit", "savanna", "audiocall", "hangman", "puzzleenglish", "sprint"];
+   const colors = ["#ffe0b3", "#ff9292", "#000000", "#895860", "#536f6f", "#907468"];
+   const colorsParagr = ["#9d98ae", "#ffc4c4", "#9e7a47", "#b9b9b9", "#aaaaaa", "#ffd5c8cc"];
+   const sectionStyle = `url(/images/gamestart/${ nameOfGame }.svg)`; 
+   
    let text = "";
-
-   const sectionStyle = {
-      backgroundImage: `url(./images/gamestart/${ nameOfGame }.svg)`
-    };
-    const colorText = {
-      color: colors[gameId]
-    };
+   const [startModal, setStartModal] = useState(true);
+   
 
    switch (nameOfGame) {
       case "speakit":
          text = ( <div >
                      <h1 style={{color : (colors[gameId]) }}>SpeakIt</h1>
-                     <p style={{color : (colorsParagr[gameId]) }}>Click on the words to hear them sound. <br></br>
-                     Click on the button and speak the words into the microphone.</p>
+                     <p style={{color : (colorsParagr[gameId]) }}>Click on the button and speak the words into the microphone.<br></br>
+                     Train your pronunciation skills.</p>
                </div>);
          break;
       case "savanna":
@@ -42,14 +33,14 @@ export const GameStartModalWindow = (props) => {
          text = ( <div>
                      <h1 style={{color : (colors[gameId]) }}>Puzzle English</h1>
                      <p style={{color : (colorsParagr[gameId]) }}>Click on words, collect phrases. <br></br>
-                     Words can be drag and drop. Select tooltips in the menu</p>
+                     Words can be drag and drop. Select tooltips in the top menu.</p>
                </div>);
          break;
       case "sprint":
          text = ( <div>
-                     <h1 style={{color : (colors[gameId]) }}>Puzzle EnglishSprint</h1>
-                     <p style={{color : (colorsParagr[gameId]) }}>Click on words, collect phrases. <br></br>
-                     Words can be drag and drop. Select tooltips in the menu</p>
+                     <h1 style={{color : (colors[gameId]) }}>Sprint</h1>
+                     <p style={{color : (colorsParagr[gameId]) }}>Choose the right answer as fast as you can. <br></br>
+                     Guess the right translation for the english word</p>
                </div>);
          break;
       case "audiocall":
@@ -59,11 +50,11 @@ export const GameStartModalWindow = (props) => {
                      Your task is to choose the correct translation of the spoken word.</p>
                </div>);
          break;
-      case "ourgame":
+      case "hangman":
          text = ( <div>
-                     <h1 style={{color : (colors[gameId]) }}>Super puper game?</h1>
-                     <p style={{color : (colorsParagr[gameId]) }}>Click on words, and wait.... <br></br>
-                     Until smth will happened</p>
+                     <h1 style={{color : (colors[gameId]) }}>Hangman</h1>
+                     <p style={{color : (colorsParagr[gameId]) }}>This cheerful game tests your skill of understanding of the definition of the word. 
+                           <br></br>It also improves your mercy.</p>
                </div>);
          break;  
       default:
@@ -73,11 +64,14 @@ export const GameStartModalWindow = (props) => {
     
 
    return (
-       <div className={nameOfGame + " start"} style={ sectionStyle }>
+       <div className="start-modal-game" 
+            style={ {backgroundImage : sectionStyle,
+                     display: !startModal? 'none' : 'block'} }>
           <div className="darken">
              <div className="title">
                  {text}
-                 <Button className="start-btn">Start</Button>
+                 <Button className="start-btn"
+                         onClick={() => setStartModal(false)}>Start</Button>
              </div>
           </div>
        </div>
