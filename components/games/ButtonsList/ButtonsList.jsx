@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react'
+import './ButtonsList.less'
 
 export const ButtonsList = ({ list = [], playWord, isResult, handleClick }) => {
   let buttons = null

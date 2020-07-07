@@ -4,11 +4,23 @@ import './headerSprint.less';
 
 export function HeaderSprint(props) {
 
+   const {startTimer, stopTimer} = props;
    //   --------------------------------timer
-    const [counter, setCounter] = useState(130);
+    const [counter, setCounter] = useState(0);
     
     useEffect(() => {
+    if(startTimer){
+      setCounter(130);
+    } else {
+      setCounter(0);
+    }
+   }, [startTimer]);
+
+    useEffect(() => {
        counter > 0 && setTimeout(() => setCounter(counter - 1), 1000); 
+       if(counter === 0){
+         stopTimer();
+      }
     }, [counter]);
 
    const time = ( 
