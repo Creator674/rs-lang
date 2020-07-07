@@ -1,10 +1,15 @@
+// @import '../node_modules/reset-css/less/reset.less';
 @import './variables';
 @import './fonts/fontello.css';
 
+* {
+  box-sizing: border-box;
+}
+
 html {
+  font-family: 'Source Sans Pro', sans-serif;
   font-size: 10px;
   color: @color-text;
-  box-sizing: 'border-box';
 }
 
 button {
@@ -24,11 +29,11 @@ h2 {
 @keyframes animate-audio {
   0% {
     opacity: 1;
-    transform: scale(1)
+    transform: scale(1);
   }
 
   to {
     opacity: 0;
-    transform: scale(1.7)
+    transform: scale(1.7);
   }
 }
