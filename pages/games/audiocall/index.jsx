@@ -4,7 +4,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { Transition } from 'react-transition-group'
 import { combineWords } from 'lib/crud/auth'
 import { ButtonsList, ButtonAudio } from '../../../components/games/'
-import { GameStartModalWindow} from '../../../components/GameStartModalWindow';
+import { GameStartModalWindow } from '../../../components/GameStartModalWindow'
 import './index.less'
 
 import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
@@ -49,6 +49,8 @@ const Audiocall = () => {
   const audio = useRef()
   const wordsDeck = useRef()
   // const wordsList = useRef()
+
+  let isMounted = false
 
   const getRandomWord = () => {
     if (activeStep >= 9) return null
@@ -106,12 +108,17 @@ const Audiocall = () => {
   // }, [playWord])
 
   useEffect(() => {
+    isMounted = true
     combineWords(1, 1)
       .then((data) => {
+        if (!isMounted) return
         wordsDeck.current = data
         setupPlayState()
       })
       .catch((error) => error)
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   const getAudioRef = () => audio.current
@@ -126,8 +133,8 @@ const Audiocall = () => {
 
   return (
     <div className='game-box audiocall'>
-      <GameStartModalWindow gameId={2} nameOfGame={'audiocall'}/>
-      
+      <GameStartModalWindow gameId={2} nameOfGame={'audiocall'} />
+
       <ThemeProvider theme={theme}>
         <MobileStepper variant='progress' steps={11} position='static' activeStep={activeStep} />
       </ThemeProvider>
@@ -194,4 +201,4 @@ const Audiocall = () => {
   )
 }
 
-export default Audiocall;
+export default Audiocall
