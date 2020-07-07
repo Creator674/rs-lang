@@ -6,8 +6,8 @@ export const GameStartModalWindow = props => {
    const { gameId, nameOfGame, startTheTimer } = props;
    
    // const games = ["speakit", "savanna", "audiocall", "hangman", "puzzleenglish", "sprint"];
-   const colors = ["#ffe0b3", "#ff9292", "#000000", "#895860", "#536f6f", "#907468"];
-   const colorsParagr = ["#9d98ae", "#ffc4c4", "#9e7a47", "#b9b9b9", "#aaaaaa", "#ffd5c8cc"];
+   const colors = ["#ffe0b3", "#ff9292", "#e3e299b5", "#895860", "#536f6f", "#907468"];
+   const colorsParagr = ["#9d98ae", "#ffc4c4", "#876078", "#b9b9b9", "#aaaaaa", "#ffd5c8cc"];
    const sectionStyle = `url(/images/gamestart/${ nameOfGame }.svg)`; 
    
    let text = "";
@@ -47,7 +47,7 @@ export const GameStartModalWindow = props => {
          text = ( <div>
                      <h1 style={{color : (colors[gameId]) }}>AudioCall</h1>
                      <p style={{color : (colorsParagr[gameId]) }}>You hear the word and see 5 options for translating it.  <br></br>
-                     Your task is to choose the correct translation of the spoken word.</p>
+                     Choose the correct one for the spoken word.</p>
                </div>);
          break;
       case "hangman":

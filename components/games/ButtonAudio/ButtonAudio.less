@@ -1,0 +1,22 @@
+.button-audio{
+   &:before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      opacity: 0;
+      left: 0;
+      background: rgba(255,255,255,.3);
+    }
+    &.active{
+
+      &:before {
+         animation: animate-audio 2s ease infinite;
+       }
+    }
+
+    &.tap.audio.block {
+      display: block;
+    } 
+}

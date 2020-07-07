@@ -1,0 +1,58 @@
+.btn-wrapper {
+   position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin: 0 1rem;
+
+   &:after {
+     content: '';
+     position: absolute;
+     left: 0;
+     top: 50%;
+     width: 0;
+     height: 2px;
+     background-color: #0171c2;
+   }
+
+   &.wrong:after {
+     width: 100%;
+     transition: all 0.5s ease;
+   }
+
+   &:hover {
+     background-color: hsla(0, 0%, 100%, 0.12);
+     cursor: pointer;
+   }
+
+   &.disabled:hover,
+   &.disabled:hover button {
+     background-color: transparent;
+     cursor: default;
+   }
+
+   & .number {
+     color: #fff;
+     font-size: 2rem;
+     opacity: 0.5;
+     padding-left: 1rem;
+   }
+
+   .check-mark {
+     opacity: 0;
+     width: 3rem;
+     height: 3rem;
+     position: absolute;
+     left: -0.6rem;
+     top: 1rem;
+     background: url(../../../public/images/audiocall/checkmark.svg);
+   }
+
+   &.success .number {
+     opacity: 0;
+   }
+
+   &.success .check-mark {
+     opacity: 1;
+   }
+}

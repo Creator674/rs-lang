@@ -5,7 +5,6 @@ import { AppLayout } from 'layouts'
 
 import { ProgressBar, ProgressChart } from 'components/Progress'
 import { Menu } from 'components/Menu'
-import { Audiocall } from 'components/games'
 import { Button, Popup, SignIn, SignUp, UserAvatar } from 'components'
 
 function Home() {
@@ -15,7 +14,6 @@ function Home() {
   const [testValue, setTestValue] = useState(0)
   return (
     <AppLayout>
-      {/* <Audiocall />    */}
       {/* <Savannah /> */}
 
       <div className='wrapper-main-page'>

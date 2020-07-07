@@ -1,31 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-
-const useStyle = makeStyles((theme) => ({
-  root: {
-    '&:before': {
-      content: '""',
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      borderRadius: '50%',
-      opacity: 0,
-      left: 0,
-      background: 'rgba(255,255,255,.3)',
-    },
-  },
-  active: {
-    '&:before': {
-      animation: 'animate-audio 2s ease infinite',
-    },
-  },
-}))
+import React, { useState, useEffect } from 'react' 
+import './ButtonAudio.less'
+ 
 
 export const ButtonAudio = ({ small, getAudioRef, className }) => {
   let isMounted
   const [isActive, setActive] = useState(false)
-
-  const styles = useStyle()
+ 
   useEffect(() => {
     isMounted = true
     document.addEventListener('keydown', playSound)
@@ -59,8 +39,8 @@ export const ButtonAudio = ({ small, getAudioRef, className }) => {
   }
   return (
     <span
-      className={`tap audio ${className || 'block'} ${styles.root} ${isActive ? styles.active : ''}`}
+      className={`button-audio tap audio ${className || 'block'} ${isActive ? 'active' : ''}`}
       onClick={setListeners}
     />
   )
-}
+} 
