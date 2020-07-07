@@ -14,10 +14,12 @@ const Speakit = (props) => {
   const [guessed, setGuessed] = useState('')
   const [successCards, setSuccessCards] = useState([])
   const [restart, setRestart] = useState(false)
+  const [showResults, setShowResults] = useState(false);
 
   const setGameEnd = (bool) => {
     if (bool) {
-      console.log('END of the game')
+      console.log('END of the game');
+      setShowResults(true);
     }
   }
 
@@ -67,7 +69,8 @@ const Speakit = (props) => {
     <div className='wrapper-speakit'>
       <GameStartModalWindow gameId={0} nameOfGame={'speakit'}/>
 
-      <Header star={star} start={startGame} setGameEnd={setGameEnd} restart={restart} />
+      <Header star={star} start={startGame} setGameEnd={setGameEnd} 
+              restart={restart}  />
       <div className='flex_column'>
         <CardShow
           addCard={addCard}

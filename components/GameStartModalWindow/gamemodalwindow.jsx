@@ -3,7 +3,7 @@ import {Button} from '../Button'
 import './gamemodal.less'
 
 export const GameStartModalWindow = props => {
-   const { gameId, nameOfGame } = props;
+   const { gameId, nameOfGame, startTheTimer } = props;
    
    // const games = ["speakit", "savanna", "audiocall", "hangman", "puzzleenglish", "sprint"];
    const colors = ["#ffe0b3", "#ff9292", "#000000", "#895860", "#536f6f", "#907468"];
@@ -71,7 +71,10 @@ export const GameStartModalWindow = props => {
              <div className="title">
                  {text}
                  <Button className="start-btn"
-                         onClick={() => setStartModal(false)}>Start</Button>
+                         onClick={() => {
+                            setStartModal(false)
+                            startTheTimer ? startTheTimer() : null;
+                         }}>Start</Button>
              </div>
           </div>
        </div>
