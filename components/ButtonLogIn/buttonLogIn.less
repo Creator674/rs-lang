@@ -1,0 +1,92 @@
+@import '../../styles/variables.less';
+
+
+.login {
+  padding-left: 1.6rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  font-family: 'Source Sans Pro';
+  font-weight: normal;
+  font-size: 1.8rem;
+  line-height: 1.8rem;
+  text-transform: capitalize;
+  color: #ffffff;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.login__line,
+.login:after,
+.login:before {
+  content: '';
+  position: absolute;
+  left: 3.8rem;
+  width: 1.2rem;
+  height: 0.2rem;
+  background-color: #f3b31d;
+  transition: all 0.3s ease-out;
+}
+
+.login:before {
+  top: 2rem;
+  transform: rotate(45deg);
+}
+
+.login:after {
+  bottom: 2rem;
+  transform: rotate(-45deg);
+}
+
+.login__line {
+  width: 4.8rem;
+  top: calc(50% - 0.1rem);
+  left: 0;
+}
+
+.login__round {
+  display: block;
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 50%;
+  border: 0.2rem solid #ffffff;
+  margin-right: 0.8rem;
+}
+
+@media (min-width: 768px) {
+  .login__line {
+    width: 6rem;
+  }
+
+  .login:before,
+  .login::after {
+    width: 1.8rem;
+    left: 4.4rem;
+  }
+
+  .login:before {
+    top: 2.4rem;
+  }
+
+  .login:after {
+    bottom: 2.4rem;
+  }
+
+  .login:hover .login__line,
+  .login:focus .login__line {
+    transform: translate(0.8rem);
+  }
+
+  .login:hover.login:after,
+  .login:hover.login:before,
+  .login:focus.login:after,
+  .login:focus.login:before {
+    left: 5.2rem;
+  }
+
+  .login__round {
+    width: 6rem;
+    height: 6rem;
+  }
+}

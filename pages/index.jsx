@@ -2,6 +2,7 @@ import React from 'react'
 import './style.less'
 
 import { LandingCard, dataLandingCards } from 'components/LandingCard'
+import { ButtonLogIn } from 'components'
 
 const MainPage = () => {
   return (
@@ -45,11 +46,7 @@ const MainPage = () => {
               </ul>
             </nav>
             <div className='header__login'>
-              <button className='login'>
-                <span className='login__line'></span>
-                <span className='login__round'></span>
-                Log&nbsp;in
-              </button>
+              <ButtonLogIn />
             </div>
           </div>
         </div>
@@ -63,7 +60,7 @@ const MainPage = () => {
               <source media='(min-width: 768px)' srcSet='images/landing/learning-girl_big.png' />
               <img src='images/landing/learning-girl.png' className='promo__image' alt='Learning girl' />
             </picture>
-            <div className='text-wrapper'>
+            <div className='promo__text-wrapper'>
               <p className='promo__text'>
                 RSLang is an applicaton, that will help you to&nbsp;improve and expand the limits of your English
                 vocabulary.
@@ -72,6 +69,7 @@ const MainPage = () => {
                 Our application has 6&nbsp;different difficulty levels in each of 6&nbsp;games , that will suit
                 everyone.
               </p>
+              <button className='btn-start promo__button'>Start Learning</button>
             </div>
           </div>
         </div>
@@ -86,9 +84,9 @@ const MainPage = () => {
           </div>
 
           <div className='container promo__slogans'>
-            <p className='promo__slogan'>всё такое перепревосходное</p>
-            <p className='promo__slogan'>удобное, интересное и прекрасное</p>
-            <p className='promo__slogan'>интуитивно понятное</p>
+            <p className='promo__slogan'>everything is perfect</p>
+            <p className='promo__slogan'>convinient, nice and interesting</p>
+            <p className='promo__slogan'>intuitive</p>
           </div>
         </div>
       </section>
@@ -100,67 +98,6 @@ const MainPage = () => {
             {dataLandingCards.map((card) => (
               <LandingCard key={card.title} {...card} />
             ))}
-
-            {/* <li className='games__card'>
-              <div className='card'>
-                <p className='card__category'>Vocabulary</p>
-                <h3 className='card__title'>Puzzle English</h3>
-                <p className='card__text'>
-                  Lingvist is designed to get you into a learning flow with no distractions. With Lingvist, there’s
-                  nothing extra to get in the way, not what someone else.
-                </p>
-              </div>
-            </li>
-            <li className='games__card'>
-              <div className='card'>
-                <p className='card__category'>Vocabulary</p>
-                <h3 className='card__title'>Puzzle English</h3>
-                <p className='card__text'>
-                  Lingvist is designed to get you into a learning flow with no distractions. With Lingvist, there’s
-                  nothing extra to get in the way, not what someone else.
-                </p>
-              </div>
-            </li>
-            <li className='games__card'>
-              <div className='card'>
-                <p className='card__category'>Vocabulary</p>
-                <h3 className='card__title'>Puzzle English</h3>
-                <p className='card__text'>
-                  Lingvist is designed to get you into a learning flow with no distractions. With Lingvist, there’s
-                  nothing extra to get in the way, not what someone else.
-                </p>
-              </div>
-            </li>
-            <li className='games__card'>
-              <div className='card'>
-                <p className='card__category'>Vocabulary</p>
-                <h3 className='card__title'>Puzzle English</h3>
-                <p className='card__text'>
-                  Lingvist is designed to get you into a learning flow with no distractions. With Lingvist, there’s
-                  nothing extra to get in the way, not what someone else.
-                </p>
-              </div>
-            </li>
-            <li className='games__card'>
-              <div className='card'>
-                <p className='card__category'>Vocabulary</p>
-                <h3 className='card__title'>Puzzle English</h3>
-                <p className='card__text'>
-                  Lingvist is designed to get you into a learning flow with no distractions. With Lingvist, there’s
-                  nothing extra to get in the way, not what someone else.
-                </p>
-              </div>
-            </li>
-            <li className='games__card'>
-              <div className='card'>
-                <p className='card__category'>Vocabulary</p>
-                <h3 className='card__title'>Puzzle English</h3>
-                <p className='card__text'>
-                  Lingvist is designed to get you into a learning flow with no distractions. With Lingvist, there’s
-                  nothing extra to get in the way, not what someone else.
-                </p>
-              </div>
-            </li> */}
           </ul>
         </div>
       </section>

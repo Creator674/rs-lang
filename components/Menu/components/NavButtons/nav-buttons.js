@@ -9,7 +9,9 @@ function NavButton({ data: { id, type, text, link, icon, isBordered, styling, su
       <Link href={link || '/'}>
         <div className='item'>
           <div className={`icon ${styling ? `icon${styling}` : ''} ${activeMenu === id ? 'active' : ''}`}>
-            <div className={`image ${styling ? `image${styling}` : ''}`}></div>
+            <div className={`image ${styling ? `image${styling}` : ''}`}>
+              <img src={icon} />
+            </div>
           </div>
           <div
             className={`tooltip ${styling ? `tooltip${styling}` : ''}`}

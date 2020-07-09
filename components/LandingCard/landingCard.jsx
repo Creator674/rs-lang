@@ -6,15 +6,15 @@ export const LandingCard = ({ title, imgSrc, gradient, keyWords, link, descripti
   return (
     <li className='games__card'>
       <Link href={link}>
-        <a href=''>
-          <div className='landing-card-wrapper'>
-            <div className='game-image'>
+        <a href='' className='landing-card__link'>
+          <div className='landing-card__wrapper'>
+            <div className='landing-card__image'>
               <img src={imgSrc} alt='game-image' />
             </div>
-            <div className='bottom' style={{ background: gradient }}>
+            <div className='landing-card__bottom' style={{ background: gradient }}>
               <p>{keyWords}</p>
             </div>
-            <div className='top'>
+            <div className='landing-card__top'>
               <h3>{title}</h3>
               <p>{description}</p>
             </div>

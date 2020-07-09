@@ -1,6 +1,8 @@
+@import '../../styles/variables.less';
+
 .main-menu {
   & .link {
-    color: #2c3e50;
+    color: @color-text;
     text-decoration: none;
   }
 
@@ -19,33 +21,33 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
-    background-color: #7ab4cc;
+    width: 4.8rem;
+    height: 4.8rem;
+    background-color: @color-main;
     transition: all 0.4s linear;
     z-index: 1;
   }
 
   & .image {
-    width: 28px;
-    height: 28px;
-    background-color: #1f658a;
+    text-align: center;
+    width: 3.2rem;
+    height: 3.2rem;
     transition: all 0.4s linear;
   }
 
   & .tooltip {
     position: absolute;
-    left: -120px;
-    padding: 6px 16px;
+    left: -12rem;
+    padding: 0.6rem 1.6rem;
     text-align: center;
-    color: #2c3e50;
+    color: @color-text;
     font-family: 'Source Sans Pro';
     font-style: normal;
     font-weight: normal;
-    font-size: 14px;
-    line-height: 16px;
-    background: #7ab4cc;
-    border-radius: 14px;
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+    background: @color-btn-middle;
+    border-radius: 1.4rem;
     transition: all 0.4s linear;
   }
 
@@ -55,54 +57,51 @@
     height: 0;
     position: absolute;
     right: 99%;
-    top: calc(50% - 4px);
-    border-top: 4px solid transparent;
-    border-right: 12px solid #7ab4cc;
-    border-bottom: 4px solid transparent;
+    top: calc(50% - 0.4rem);
+    border-top: 0.4rem solid transparent;
+    border-right: 1.2rem solid @color-btn-middle;
+    border-bottom: 0.4rem solid transparent;
   }
 
   & .item:hover .tooltip {
-    left: 65px;
+    left: 6.5rem;
   }
 
   & .item:hover .icon,
   & .item:hover .sub-menu {
-    background-color: #ecf1f0;
+    background-color: @color-bg-main;
   }
 
   & .item:hover .image {
-    color: #7ab4cc;
+    transform: scale(1.2);
+    color: @color-btn-middle;
   }
 
   & .sub-menu {
     position: absolute;
-    left: -152px;
-    width: 176px;
-    padding: 12px 6px 12px 18px;
-    color: #2c3e50;
+    left: -15.2rem;
+    width: 17.6rem;
+    padding: 1.2rem 0.6rem 1.2rem 1.8rem;
+    color: @color-text;
     font-family: 'Source Sans Pro';
     font-style: normal;
     font-weight: normal;
-    font-size: 20px;
-    line-height: 24px;
-    background-color: #7ab4cc;
+    font-size: 2rem;
+    line-height: 2.4rem;
+    background-color: @color-btn-middle;
     transition: all 0.4s linear;
   }
 
   & .sub-menu.show {
-    left: 48px;
+    left: 4.8rem;
   }
 
   & .light-bg {
-    background: #d3e8ed;
+    background: @color-btn-light;
   }
 
   & .sub-menu.logo {
-    background-color: #38ada9;
-  }
-
-  & .item:active .image {
-    background-color: #38ada9;
+    background-color: @color-bg-success;
   }
 
   /* BURGER */
@@ -111,11 +110,11 @@
   }
 
   & .lang {
-    color: #055b67;
+    color: @color-success;
   }
 
   & .burger {
-    background-color: #38ada9;
+    background-color: @color-bg-success;
   }
 
   & .rotate {
@@ -126,9 +125,9 @@
     background-color: transparent;
     width: 0;
     height: 0;
-    border-top: 14px solid transparent;
-    border-left: 28px solid #055b67;
-    border-bottom: 14px solid transparent;
+    border-top: 1.2rem solid transparent;
+    border-left: 2rem solid @color-success;
+    border-bottom: 1rem solid transparent;
   }
 
   & .item:hover .image__burger {
@@ -141,27 +140,33 @@
 
   /* DICTIONARY */
   & .icon__dict {
-    background-color: #d3e8ed;
+    background-color: @color-btn-light;
   }
 
   & .image__dict {
-    background-color: #055b67;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   & .tooltip__dict {
-    background-color: #38ada9;
+    background-color: @color-bg-success;
   }
 
   & .tooltip__dict::before {
-    border-right: 12px solid #38ada9;
+    border-right: 1.2rem solid @color-bg-success;
   }
 
   & .item:hover .icon_dict {
-    background-color: #ecf1f0;
+    background-color: @color-bg-main;
   }
 
-  & .item:hover .image__dict {
-    background-color: #38ada9;
+  & .nav-item:nth-child(8) .item:hover .sub-menu {
+    background-color: @color-bg-success;
+  }
+
+  & .item:hover .icon__dict {
+    background-color: @color-bg-success;
   }
 
   /* NAVIGATION */
@@ -172,19 +177,19 @@
 
   & .nav-item:first-child .icon,
   & .nav-item:last-child .icon {
-    border-top: 2px solid #1f658a;
+    border-top: 0.2rem solid @color-main;
   }
 
   & .sub-menu__bordered {
-    border-top: 2px solid #1f658a;
+    border-top: 0.2rem solid @color-main;
   }
 
   /* STATISTIC */
   & .statistic {
-    font-family: 'Arial';
+    font-family: 'Source Sans Pro';
     font-weight: bold;
-    font-size: 18px;
-    line-height: 23px;
+    font-size: 1.8rem;
+    line-height: 2.3rem;
     text-align: right;
   }
 
@@ -192,72 +197,72 @@
     cursor: default;
   }
   & .active {
-    background-color: #ecf1f0;
+    background-color: @color-bg-main;
   }
   & .icon_statistic {
-    color: #1f658a;
-    background-color: #d3e8ed;
+    color: @color-main;
+    background-color: @color-btn-light;
   }
 
   & .icon_statistic__new {
-    color: #c00000;
+    color: @color-add-dark;
   }
 
   & .sub-menu__small {
     font-weight: bold;
-    font-size: 14px;
-    line-height: 24px;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
     text-align: left;
   }
 
   & .item:active .icon {
-    background-color: #ecf1f0;
+    background-color: @color-bg-main;
   }
 
   /* AUDIO */
   & .icon__audio {
-    background-color: #d3e8ed;
-    border-top: 2px solid #1f658a;
+    background-color: @color-btn-light;
+    border-top: 0.2rem solid @color-main;
   }
 
   & .image__audio {
     background-color: transparent;
-    color: #1f658a;
-    font-size: 20px;
-    line-height: 30px;
+    color: @color-main;
+    font-size: 2rem;
+    line-height: 3rem;
   }
 
   &.sidebar {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 576px;
+    min-height: 57.6rem;
     height: 100vh;
-    background: #d3e8ed;
-    width: 48px;
+    background: @color-btn-light;
+    width: 4.8rem;
     transition: all 0.4s linear;
   }
 
   &.sidebar.show {
-    width: 248px;
+    width: 24.8rem;
   }
 }
 
 @media screen and (max-width: 767px) {
   .main-menu {
     &.sidebar {
-      margin-top: 8px;
-      height: calc(100vh - 8px);
-      transform: translateX(-48px);
+      margin-top: 0.8rem;
+      height: calc(100vh - 0.8rem);
+      transform: translateX(-4.8rem);
     }
     & .item__mobile {
       position: absolute;
-      left: 48px;
+      left: 4.8rem;
       top: 0;
       transition: all 0.4s linear;
     }
     & .nav {
-      margin-top: 48px;
+      margin-top: 4.8rem;
     }
     &.sidebar.sidebar__mobile {
       transform: translateX(0);

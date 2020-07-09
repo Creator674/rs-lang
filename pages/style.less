@@ -1,3 +1,5 @@
+@import '../styles/variables.less';
+
 .landing-box {
   ul {
     padding-left: 0;
@@ -81,7 +83,7 @@
   .hamburger:before {
     content: '';
     position: absolute;
-    background-color: #38ada9;
+    background-color: @color-bg-success;
     width: 100%;
     height: 0.2rem;
   }
@@ -117,73 +119,18 @@
     font-size: 2rem;
     line-height: 2rem;
     text-transform: capitalize;
-    color: #2c3e50;
+    color: @color-text;
     transition: all 0.3s ease-out;
   }
 
   .navigation__link:hover,
   .navigation__link:focus {
-    color: #ffffff;
+    color: @color-btn-white;
   }
 
   .navigation__item:active {
-    border-top: 0.2rem solid #ffffff;
+    border-top: 0.2rem solid @color-btn-white;
     background: linear-gradient(180deg, #54bfe0 0%, rgba(255, 255, 255, 0) 79.91%);
-  }
-
-  /* login */
-  .login {
-    padding-left: 1.6rem;
-    display: flex;
-    align-items: center;
-    position: relative;
-    font-family: 'Source Sans Pro';
-    font-weight: normal;
-    font-size: 1.8rem;
-    line-height: 1.8rem;
-    text-transform: capitalize;
-    color: #ffffff;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-  }
-
-  .login__line,
-  .login:after,
-  .login:before {
-    content: '';
-    position: absolute;
-    background-color: #f3b31d;
-    height: 0.2rem;
-  }
-
-  .login:before {
-    width: 1.2rem;
-    top: 1.8rem;
-    left: 3.6rem;
-    transform: rotate(45deg);
-  }
-
-  .login:after {
-    width: 1.2rem;
-    bottom: 1.8rem;
-    left: 3.6rem;
-    transform: rotate(-45deg);
-  }
-
-  .login__line {
-    width: 4.8rem;
-    top: calc(50% - 0.1rem);
-    left: 0;
-  }
-
-  .login__round {
-    display: block;
-    width: 4.8rem;
-    height: 4.8rem;
-    border-radius: 50%;
-    border: 0.2rem solid #ffffff;
-    margin-right: 0.8rem;
   }
 
   @media (min-width: 768px) {
@@ -207,27 +154,6 @@
     .navigation {
       flex-direction: row;
     }
-
-    .login__line {
-      width: 6rem;
-    }
-
-    .login:before {
-      width: 1.8rem;
-      top: 2.3rem;
-      left: 4.4rem;
-    }
-
-    .login:after {
-      width: 1.8rem;
-      bottom: 2.3rem;
-      left: 4.4rem;
-    }
-
-    .login__round {
-      width: 6rem;
-      height: 6rem;
-    }
   }
 
   @media (min-width: 1440px) {
@@ -243,7 +169,7 @@
 
   .promo__wrapper {
     overflow: hidden;
-    padding-top: 1.6rem;
+    padding: 1.6rem 1.6rem 3.2rem;
   }
 
   .promo__content {
@@ -255,7 +181,7 @@
     font-weight: bold;
     font-size: 3.6rem;
     line-height: 4.5rem;
-    color: #1f658a;
+    color: @color-main;
   }
 
   .promo__image {
@@ -264,9 +190,8 @@
     margin-top: -4.8rem;
   }
 
-  .text-wrapper {
+  .promo__text-wrapper {
     margin-top: -4.8rem;
-    padding-bottom: 5.6rem;
   }
 
   .promo__text {
@@ -277,12 +202,16 @@
     text-indent: 3rem;
   }
 
+  .promo__button {
+    margin-top: 4.8rem;
+  }
+
   .container.promo__slogans {
     margin: 0;
   }
 
   .promo__slogans {
-    max-width: 48rem;
+    max-width: 36rem;
     padding-bottom: 5.6rem;
   }
 
@@ -295,7 +224,7 @@
     font-weight: normal;
     font-size: 1.6rem;
     line-height: 2rem;
-    background: #7ab4cc;
+    background: @color-btn-middle;
     border-radius: 3.6rem;
   }
 
@@ -306,7 +235,7 @@
     right: 99%;
     width: 0;
     height: 0;
-    border-right: 2rem solid #7ab4cc;
+    border-right: 2rem solid @color-btn-middle;
     border-left: 0;
     border-bottom: 0.7rem solid transparent;
     border-top: 0.7rem solid transparent;
@@ -314,6 +243,29 @@
 
   .promo__video-wrapper {
     padding: 0;
+  }
+
+  /* btn-start */
+  .btn-start {
+    width: 100%;
+    padding: 0.8rem 4.8rem 0.9rem;
+    text-align: center;
+    font-family: 'Source Sans Pro';
+    font-weight: normal;
+    font-size: 1.8rem;
+    line-height: 2.3rem;
+    color: @color-btn-white;
+    background: @color-btn-middle;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+    z-index: 1;
+  }
+
+  .btn-start:hover,
+  .btn-start:focus {
+    background: @color-main;
   }
 
   /* video */
@@ -325,7 +277,7 @@
     align-items: center;
     width: 100%;
     height: 67vw;
-    background: #1f658a;
+    background: @color-main;
     background-image: url('../public/images/landing/intersect.png');
     background-repeat: no-repeat;
     background-position: center bottom;
@@ -378,12 +330,12 @@
     font-size: 4.8rem;
     line-height: 7rem;
     text-transform: capitalize;
-    color: #ffffff;
+    color: @color-btn-white;
   }
 
   @media (min-width: 768px) {
     .promo__wrapper {
-      padding-top: 3.2rem;
+      padding: 1.6rem 4.8rem 4.8rem;
     }
 
     .promo__content {
@@ -407,10 +359,9 @@
       left: 24%;
     }
 
-    .text-wrapper {
+    .promo__text-wrapper {
       margin-top: 0;
       width: 40%;
-      padding-bottom: 19%;
       z-index: 1;
     }
 
@@ -418,6 +369,10 @@
       font-size: 2rem;
       line-height: 3.4rem;
       text-indent: 5rem;
+    }
+
+    .promo__button {
+      margin-top: 25%;
     }
 
     .promo__video-wrapper {
@@ -429,7 +384,7 @@
     }
 
     .promo__slogans {
-      max-width: 56rem;
+      max-width: 44rem;
       padding: 1.6rem 0 7.2rem;
     }
 
@@ -443,7 +398,7 @@
 
     .promo__slogan::before {
       top: calc(50% - 0.8rem);
-      border-right: 2.8rem solid #7ab4cc;
+      border-right: 2.8rem solid @color-btn-middle;
       border-left: 0;
       border-bottom: 0.8rem solid transparent;
       border-top: 0.8rem solid transparent;
@@ -462,7 +417,6 @@
     }
 
     .promo__slogans {
-      max-width: 56rem;
       padding: 0 0 0 2.4rem;
     }
 
@@ -473,8 +427,13 @@
   }
 
   @media (min-width: 1440px) {
-    .text-wrapper {
+    .promo__wrapper {
+      padding: 1.6rem 12rem 4.8rem;
+    }
+
+    .promo__text-wrapper {
       padding-left: 10rem;
+      width: 50%;
     }
 
     .promo__title {
@@ -485,12 +444,11 @@
       left: 43%;
     }
 
-    .text-wrapper {
-      width: 50%;
-    }
-
     .promo__video-wrapper {
       padding: 0 12rem 7.2rem;
+      background-image: url('../public/images/landing/grass.png');
+      background-position: top -2.2rem right 3.7rem;
+      background-repeat: no-repeat;
     }
 
     .video {
@@ -512,22 +470,25 @@
 
   .games {
     border-top: 0.1rem solid rgba(115, 136, 145, 0.7);
-    background: #ecf1f0;
+    background: @color-bg-main;
   }
 
   .games__wrapper {
     padding: 1.6rem 1.6rem 5.6rem;
   }
 
-  /* TODO: временно! */
-  .games__card:not(:last-child) {
+  .games__card {
     padding-bottom: 3.2rem;
+  }
+
+  .games__card:last-child {
+    padding-bottom: 0;
   }
 
   .card {
     width: 100%;
     min-height: 31.8rem;
-    background: #fffbf4;
+    background: @color-bg-add;
     box-shadow: 0.2rem 0.5rem 2.5rem rgba(0, 0, 0, 0.2);
     border-radius: 1.6rem;
   }
@@ -590,14 +551,14 @@
 
   .algorithm__light {
     padding: 5.6rem 1.6rem 8.6rem;
-    color: #ffffff;
-    background: #055b67;
+    color: @color-btn-white;
+    background: @color-success;
   }
 
   .algorithm__dark {
     padding: 12rem 1.6rem 5.6rem;
-    color: #055b67;
-    background: #fffbf4;
+    color: @color-success;
+    background: @color-bg-add;
   }
 
   .algorithm__light::before,
@@ -612,12 +573,12 @@
 
   .algorithm__light::before {
     top: 3.2rem;
-    color: #ffffff;
+    color: @color-btn-white;
   }
 
   .algorithm__dark::before {
     top: 9.4rem;
-    color: #055b67;
+    color: @color-success;
   }
 
   .algorithm__light::after {
@@ -627,12 +588,12 @@
     left: calc(50% - 7.6rem);
     width: 14.4rem;
     height: 14.4rem;
-    background: #ffffff;
+    background: @color-btn-white;
     background-image: url('../public/images/landing/bulb.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 75%;
-    border: 0.2rem solid #055b67;
+    border: 0.2rem solid @color-success;
     border-radius: 50%;
     z-index: 1;
   }
@@ -716,7 +677,7 @@
 
   /* ABOUT US */
   .about-us {
-    background: #d3e8ed;
+    background: @color-btn-light;
     padding: 1.6rem 0 5.6rem;
   }
 
@@ -730,7 +691,7 @@
     font-weight: normal;
     font-size: 1.6rem;
     line-height: 1.6rem;
-    color: #738891;
+    color: @color-text-add;
     text-align: center;
   }
 
@@ -744,7 +705,7 @@
     width: 12rem;
     height: 12rem;
     background: url('../public/images/landing/vladislavkhlebec.png');
-    border: 0.2rem solid #738891;
+    border: 0.2rem solid @color-text-add;
     border-radius: 50%;
   }
 
@@ -763,9 +724,9 @@
     justify-content: space-between;
     align-items: flex-start;
     position: relative;
-    padding: 1.2rem 4.8rem 6.4rem 1.6rem;
+    padding: 1.2rem 4.8rem 1.2rem 1.6rem;
     height: 9.6rem;
-    background: #fffbf4;
+    background: @color-bg-add;
     box-shadow: 0.2rem 0.4rem 1.2rem rgba(0, 0, 0, 0.2);
     border-radius: 0 0 0 3.6rem;
   }
@@ -775,7 +736,7 @@
   }
 
   .member__name {
-    font-weight: normal;
+    font-weight: bold;
     font-size: 1.6rem;
     line-height: 2rem;
   }
@@ -790,7 +751,7 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: #2c3e50;
+    color: @color-text;
     margin-right: 0.8rem;
   }
 
@@ -804,8 +765,8 @@
   .member__github-icon {
     width: 3.6rem;
     height: 3.6rem;
-    background: #738891;
-    border: 0.2rem solid #738891;
+    background: @color-text-add;
+    border: 0.2rem solid @color-text-add;
     border-radius: 50%;
   }
 
@@ -817,7 +778,7 @@
     width: 9.6rem;
     height: 9.6rem;
     background: url('../public/images/landing/xmelsky.png');
-    border: 0.2rem solid #738891;
+    border: 0.2rem solid @color-text-add;
     border-radius: 50%;
     box-shadow: 0.2rem 0.4rem 1.2rem rgba(0, 0, 0, 0.2);
   }
@@ -856,7 +817,7 @@
   /* FOOTER */
   .footer {
     padding: 4.8rem 0 4.8rem;
-    background: #2c3e50;
+    background: @color-text;
   }
 
   .footer__wrapper {
@@ -879,7 +840,7 @@
     font-weight: normal;
     font-size: 2.4rem;
     line-height: 3.5rem;
-    color: #ffffff;
+    color: @color-btn-white;
   }
 
   .footer__rsschool-line {
@@ -891,7 +852,7 @@
     font-size: 2.4rem;
     line-height: 3rem;
     text-align: right;
-    color: #ffffff;
+    color: @color-btn-white;
   }
 
   .footer__rsschool-logo {
@@ -900,7 +861,7 @@
     margin-right: 0.4rem;
     width: 3.9rem;
     height: 3.9rem;
-    background: #ffffff;
+    background: @color-btn-white;
     border-radius: 50%;
   }
 
@@ -927,6 +888,6 @@
   }
 
   .footer__add-color {
-    color: #38ada9;
+    color: @color-bg-success;
   }
 }
