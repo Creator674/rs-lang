@@ -69,7 +69,7 @@ const MainPage = () => {
                 Our application has 6&nbsp;different difficulty levels in each of 6&nbsp;games , that will suit
                 everyone.
               </p>
-              <button className="btn-start promo__button">Start Learning</button>
+              <button className='btn-start promo__button'>Start Learning</button>
             </div>
           </div>
         </div>
@@ -84,9 +84,9 @@ const MainPage = () => {
           </div>
 
           <div className='container promo__slogans'>
-            <p className='promo__slogan'>всё такое перепревосходное</p>
-            <p className='promo__slogan'>удобное, интересное и прекрасное</p>
-            <p className='promo__slogan'>интуитивно понятное</p>
+            <p className='promo__slogan'>everything is perfect</p>
+            <p className='promo__slogan'>convinient, nice and interesting</p>
+            <p className='promo__slogan'>intuitive</p>
           </div>
         </div>
       </section>
