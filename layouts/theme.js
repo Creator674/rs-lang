@@ -45,6 +45,7 @@ theme.palette.background.add = '#FFFBF4'
 theme.palette.background.success = '#38ADA9'
 theme.palette.background.error = '#FFE0CA'
 
+
 theme.borders.borderTop = `0.1rem solid ${fade(theme.palette.common.textAdd, 0.7)}`
 
 theme.typography.h3 = {
