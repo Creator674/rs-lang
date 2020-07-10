@@ -69,7 +69,14 @@ const MainPage = () => {
         <section className='promo'>
           <div className='container promo__wrapper'>
             <div className='promo__content'>
-              <h1 className='promo__title'>Take your vocabulary to the next level</h1>
+              <h1 className='promo__title'>
+                <span className='promo__title-thin'>up</span>DATE!&nbsp;
+                <span className='promo__title-thin'>up</span>GRADE!{' '}
+                <span className='promo__title-indent'>
+                  UP
+                  <span className='promo__title-thin'>lift&nbsp;yourself!</span>
+                </span>
+              </h1>
               <picture>
                 <source media='(min-width: 768px)' srcSet='images/landing/learning-girl_big.png' />
                 <img src='images/landing/learning-girl.png' className='promo__image' alt='Learning girl' />
