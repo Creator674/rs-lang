@@ -3,6 +3,7 @@ import './style.less'
 
 import { LandingCard, dataLandingCards } from 'components/LandingCard'
 import { ButtonLogIn } from 'components'
+import { LandingMember, dataLandingMembers } from 'components/LandingMember'
 
 const MainPage = () => {
   return (
@@ -152,97 +153,9 @@ const MainPage = () => {
             <p className='member__position'>mentor</p>
           </div>
           <ul className='about-us__list'>
-            <li className='about-us__item'>
-              <div className='member'>
-                <div className='member__wrapper'>
-                  <h5 className='member__name'>Dima Xmiel</h5>
-                  <p className='member__position'>team-lead</p>
-                </div>
-                <a href='' className='member__github'>
-                  <span className='member__nikname'>xmelsky</span>
-                  <span className='member__github-icon'></span>
-                </a>
-                <img src='images/landing/xmelsky.png' alt='Dima Xmiel' className='member__picture' />
-              </div>
-            </li>
-            <li className='about-us__item'>
-              <div className='member'>
-                <div className='member__wrapper'>
-                  <h5 className='member__name'>Dima Xmiel</h5>
-                  <p className='member__position'>team-lead</p>
-                </div>
-                <a href='' className='member__github'>
-                  <span className='member__nikname'>xmelsky</span>
-                  <span className='member__github-icon'></span>
-                </a>
-                <img src='images/landing/xmelsky.png' alt='Dima Xmiel' className='member__picture' />
-              </div>
-            </li>
-            <li className='about-us__item'>
-              <div className='member'>
-                <div className='member__wrapper'>
-                  <h5 className='member__name'>Dima Xmiel</h5>
-                  <p className='member__position'>team-lead</p>
-                </div>
-                <a href='' className='member__github'>
-                  <span className='member__nikname'>xmelsky</span>
-                  <span className='member__github-icon'></span>
-                </a>
-                <img src='images/landing/xmelsky.png' alt='Dima Xmiel' className='member__picture' />
-              </div>
-            </li>
-            <li className='about-us__item'>
-              <div className='member'>
-                <div className='member__wrapper'>
-                  <h5 className='member__name'>Dima Xmiel</h5>
-                  <p className='member__position'>team-lead</p>
-                </div>
-                <a href='' className='member__github'>
-                  <span className='member__nikname'>xmelsky</span>
-                  <span className='member__github-icon'></span>
-                </a>
-                <img src='images/landing/xmelsky.png' alt='Dima Xmiel' className='member__picture' />
-              </div>
-            </li>
-            <li className='about-us__item'>
-              <div className='member'>
-                <div className='member__wrapper'>
-                  <h5 className='member__name'>Dima Xmiel</h5>
-                  <p className='member__position'>team-lead</p>
-                </div>
-                <a href='' className='member__github'>
-                  <span className='member__nikname'>xmelsky</span>
-                  <span className='member__github-icon'></span>
-                </a>
-                <img src='images/landing/xmelsky.png' alt='Dima Xmiel' className='member__picture' />
-              </div>
-            </li>
-            <li className='about-us__item'>
-              <div className='member'>
-                <div className='member__wrapper'>
-                  <h5 className='member__name'>Dima Xmiel</h5>
-                  <p className='member__position'>team-lead</p>
-                </div>
-                <a href='' className='member__github'>
-                  <span className='member__nikname'>xmelsky</span>
-                  <span className='member__github-icon'></span>
-                </a>
-                <img src='images/landing/xmelsky.png' alt='Dima Xmiel' className='member__picture' />
-              </div>
-            </li>
-            <li className='about-us__item'>
-              <div className='member'>
-                <div className='member__wrapper'>
-                  <h5 className='member__name'>Dima Xmiel</h5>
-                  <p className='member__position'>team-lead</p>
-                </div>
-                <a href='' className='member__github'>
-                  <span className='member__nikname'>xmelsky</span>
-                  <span className='member__github-icon'></span>
-                </a>
-                <img src='images/landing/xmelsky.png' alt='Dima Xmiel' className='member__picture' />
-              </div>
-            </li>
+            {dataLandingMembers.map((member) => (
+              <LandingMember key={member.name} {...member} />
+            ))}
           </ul>
         </div>
       </section>
