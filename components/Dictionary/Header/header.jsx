@@ -151,6 +151,14 @@ export function Header() {
             onClose={handleClose}
             anchorEl={anchorEl}
             open={isPopover}
+            anchorOrigin={{
+              vertical: 'center',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
           >
             <Menu />
           </Popover>

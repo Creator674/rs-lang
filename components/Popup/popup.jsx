@@ -13,7 +13,11 @@ export const Popup = (props) => {
   }, [])
 
   const closeModal = (e) => {
-    if (e.target.classList.contains('overlay')) {
+    if (
+      // e.target.classList.contains('overlay') ||
+      e.target.classList.contains('close-btn') ||
+      e.target.classList.contains('icon-cancel')
+    ) {
       toggleClose()
     } else if (e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27) {
       toggleClose()
@@ -23,6 +27,9 @@ export const Popup = (props) => {
   return (
     <div className='overlay' onMouseDown={closeModal}>
       <div className={`modal ${className}`} data-aos='fade-up' data-aos-delay='300'>
+        <button className='close-btn' onClick={closeModal}>
+          <i className='icon-cancel'></i>
+        </button>
         {children}
       </div>
     </div>

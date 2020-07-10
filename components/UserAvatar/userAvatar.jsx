@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Menu from './DropdownMenu/dropdownMenu'
 import { makeStyles } from '@material-ui/core/styles'
 import Popover from '../Dictionary/Popover/popover'
@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.props.mainFont,
     fontSize: '1.8rem',
     lineHeight: '2.3rem',
-    padding: '0 3.2rem 1.6rem',
+    padding: '1.6rem',
+    // padding: '0 3.2rem 1.6rem',
     '& i:before': {
       color: theme.palette.common.text,
     },
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   avatarBtn: {
     background: 'transparent',
@@ -45,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '2.3rem',
     padding: '0.9rem',
     borderRadius: '0.8rem',
+    marginTop: '0.8rem',
   },
   paper: {
     background: theme.palette.background.add,
@@ -52,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const UserAvatar = () =>  {
+export const UserAvatar = ({ userName }) => {
   const [isPopover, setIsPopover] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const classes = useStyles()
@@ -65,11 +68,11 @@ export const UserAvatar = () =>  {
   return (
     <div className={classes.dropdownMenu}>
       <div className={classes.container}>
-        <div className='userAvatar'>Hi,&nbsp;User&nbsp;</div>
+        <div className='userAvatar'>Hi,&nbsp;{userName}&nbsp;</div>
         <button className={classes.avatarBtn} onClick={handleClose}>
           <i className='icon-github-circled'></i>
         </button>
-        
+
         {isPopover ? (
           <Popover
             classes={{
@@ -79,7 +82,15 @@ export const UserAvatar = () =>  {
             onClose={handleClose}
             anchorEl={anchorEl}
             open={isPopover}
-            >
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+          >
             <Menu />
           </Popover>
         ) : null}
@@ -87,5 +98,3 @@ export const UserAvatar = () =>  {
     </div>
   )
 }
-
-

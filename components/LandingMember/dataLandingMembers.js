@@ -9,7 +9,7 @@ export const dataLandingMembers = [
     name: 'Anastasiya Rzhevutskaya',
     position: 'react-developer',
     nikname: 'davinchick',
-    imgSrc: 'images/landing/davinchick.jpg',
+    imgSrc: 'images/landing/davinchick.png',
   },
   {
     name: 'Olga Kharkevich',
@@ -27,18 +27,18 @@ export const dataLandingMembers = [
     name: 'Olga Latkina ',
     position: 'UX/UI designer',
     nikname: 'olgalatkina',
-    imgSrc: 'images/landing/olgalatkina.jpg',
+    imgSrc: 'images/landing/olgalatkina.png',
   },
   {
     name: 'Yaroslav Ryzhkov',
     position: 'react-developer',
     nikname: 'creator674',
-    imgSrc: 'images/landing/xmelsky.png',
+    imgSrc: 'images/landing/creator674.png',
   },
   {
     name: 'Yura Tezher',
     position: 'react-developer',
     nikname: 'yuratez',
-    imgSrc: 'images/landing/xmelsky.png',
+    imgSrc: 'images/landing/yuratez.png',
   },
 ]
