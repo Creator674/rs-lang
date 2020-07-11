@@ -18,7 +18,7 @@ export function HeaderSprint(props) {
 
     useEffect(() => {
        counter > 0 && setTimeout(() => setCounter(counter - 1), 1000); 
-       if(counter === 0){
+       if(counter === 0 && startTimer){
          stopTimer();
       }
     }, [counter]);

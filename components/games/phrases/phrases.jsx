@@ -14,7 +14,7 @@ export const Phrases = () => {
          dataArray.push(arrayOfTranslations);
          dataArray.push(arrayOfExamples);
          
-         console.log( dataArray )
+        //  console.log( dataArray )
          return dataArray;
         })
         .catch((error) => error);

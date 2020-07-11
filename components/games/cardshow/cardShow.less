@@ -5,20 +5,25 @@
   flex-direction: column;
   align-items: stretch;
 
-  .cardShow-picture {
-    width: 30rem;
-    height: 30rem;
-    overflow: hidden;
-    margin: 0 auto;
-    border-radius: 6rem;
-    border: 0.3rem solid #ffffff;
+  .cardShow-picture-cont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .cardShow-picture {
+      width: 30rem;
+      height: 30rem;
+      overflow: hidden;
+      margin: 0 auto;
+      border-radius: 6rem;
+      border: 0.3rem solid #ffffff;
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
-  }
+}
 
   .cardShow-translation {
     margin: 1rem 0 0.2rem;
