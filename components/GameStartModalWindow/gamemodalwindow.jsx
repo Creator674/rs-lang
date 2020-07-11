@@ -5,7 +5,7 @@ import './gamemodal.less'
 export const GameStartModalWindow = props => {
    const { gameId, nameOfGame, startTheTimer } = props;
    
-   // const games = ["speakit", "savanna", "audiocall", "hangman", "puzzleenglish", "sprint"];
+   // const games = ["speakit", "savannah", "audiocall", "hangman", "puzzleenglish", "sprint"];
    const colors = ["#ffe0b3", "#ff9292", "#e3e299b5", "#895860", "#536f6f", "#907468"];
    const colorsParagr = ["#9d98ae", "#ffc4c4", "#876078", "#b9b9b9", "#aaaaaa", "#ffd5c8cc"];
    const sectionStyle = `url(/images/gamestart/${ nameOfGame }.svg)`; 
