@@ -37,17 +37,17 @@ const MainPage = () => {
                     </a>
                   </li>
                   <li className='navigation__item'>
-                    <a className='navigation__link' href='#home'>
+                    <a className='navigation__link' href='#games'>
                       Games
                     </a>
                   </li>
                   <li className='navigation__item'>
-                    <a className='navigation__link' href='#home'>
+                    <a className='navigation__link' href='#algorithm'>
                       Algorithm
                     </a>
                   </li>
                   <li className='navigation__item'>
-                    <a className='navigation__link' href='#home'>
+                    <a className='navigation__link' href='#about-us'>
                       About Us
                     </a>
                   </li>
@@ -66,7 +66,7 @@ const MainPage = () => {
           </div>
         </header>
 
-        <section className='promo'>
+        <section className='promo' id='home'>
           <div className='container promo__wrapper'>
             <div className='promo__content'>
               <h1 className='promo__title'>
@@ -112,7 +112,7 @@ const MainPage = () => {
           </div>
         </section>
 
-        <section className='games'>
+        <section className='games' id='games'>
           <div className='container games__wrapper'>
             <h2 className='section-title'>Games</h2>
             <ul className='games__list'>
@@ -123,7 +123,7 @@ const MainPage = () => {
           </div>
         </section>
 
-        <section className='algorithm'>
+        <section className='algorithm' id='algorithm'>
           <div className='container algorithm__wrapper'>
             <h2 className='section-title'>Algorithm</h2>
             <div className='algorithm__content'>
@@ -159,7 +159,7 @@ const MainPage = () => {
           </div>
         </section>
 
-        <section className='about-us'>
+        <section className='about-us' id='about-us'>
           <div className='container'>
             <h2 className='section-title about-us__title'>About Us</h2>
             <p className='about-us__subtitle'>Snow White and the 7 dwarfs</p>
