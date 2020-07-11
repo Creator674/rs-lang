@@ -73,3 +73,39 @@
   color: #FFFFFF;
 
 }
+
+.settingsButton_wrapper {
+  display: flex;
+  width: 311px;
+  justify-content: space-between;
+  margin-top: 16px;
+  & *{
+    width: 147px;
+    height: 40px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: 'Source Sans Pro';
+    line-height: 23px;
+    border: 2px solid #7AB4CC;
+  }
+  & .settingsButton--RESET {
+    background: white;
+    color: #7AB4CC;
+  }
+  & .settingsButton--RESET:hover {
+    border: 2px solid #C00000;
+    background: #C00000;
+    color: white;
+  }
+  & .settingsButton--OK {
+    background: #7AB4CC;
+    color: white;
+  }
+  & .settingsButton--OK:hover {
+    border: 2px solid #38ADA9;
+    background: #38ADA9;
+    color: white;
+  }
+}
