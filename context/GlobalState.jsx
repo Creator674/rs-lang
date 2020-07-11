@@ -44,6 +44,31 @@ const initialSort = {
   direction: 'asc',
 }
 
+const currentSettings = {
+  learnNew: true,
+  repeatNew: true,
+  difficultOnly: false,
+  autoSoundplay: false,
+
+  showWord: true,
+  showTranslation: false,
+  showTranscription: true,
+  addPronunciation: false,
+  addIllustration: true,
+
+  showDefenition: false,
+  defenitionTranslation: true,
+  defenitionPronunciation: false,
+
+  expampleOfUsage: true,
+  exampleOfUsageTranslation: false,
+  exampleOfUsagePronunciation: true,
+
+  REPEATbutton: false,
+  HARDbutton: true,
+  SHOWANSWERbutton: false,
+  EASYbutton: true,
+}
 const initialCardSettings = {
   isTranslation: true,
   isWordShown: true,
@@ -67,6 +92,7 @@ const GlobalState = (props) => {
   const [toRepeatWords, setToRepeatWords] = useState(22)
   const [newWords, setNewWords] = useState(30)
   const [isAudioOn, setAudio] = useState(true)
+//   const [cardSettings, setCardSettings] = useState(currentSettings)
   const [cardSettings, setCardSettings] = useState(initialCardSettings)
   const [learnProgress, setLearnProgress] = useState(initialLearnProgress)
   const [appSettings, setAppSettings] = useState(initialAppSettings)
@@ -88,6 +114,7 @@ const GlobalState = (props) => {
         setAudio,
         cardSettings,
         setCardSettings,
+          
         learnProgress,
         setLearnProgress,
         appSettings,
