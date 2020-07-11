@@ -34,7 +34,6 @@ const Speakit = (props) => {
   }
 
   const addCard = (card) => {
-    console.log(card)
     setSuccessCards((successCards) => {
       if (successCards.indexOf(card) === -1) {
         setStar((star) => star + 1)
@@ -57,13 +56,13 @@ const Speakit = (props) => {
       } else {
         return [...guessed, word]
       }
-    })
+    });
+    setallnotGuessed(allwords => allwords.filter(el => el.word !== card));
   }
 
   const startTheGame = () => {
     setStartGame(true)
   }
-  console.log(allGuessed)
 
   const iGuessedTheWord = (myWord) => {
     setGuessed(myWord)
@@ -78,16 +77,19 @@ const Speakit = (props) => {
       setShowResults(false);
     }
   }
-  const setShow =() =>{
-    setShowResults(true);
-    setTimeout(() => {
-      setShowResults(false);
-    }, 3000);
-  };
 
   useEffect(() => {
     combineWords(1, 1).then((data) => { 
-      setData(data.filter((el, ind) => ind < 10))
+      setData(data.filter((el, ind) => ind < 10));
+      setallnotGuessed(data.filter((el, ind) => ind < 10)
+        .map(el => {
+          const word = {}
+          word.word = el.word
+          word.transcription = el.transcription;
+          word.translate = el.wordTranslate;
+          word.audio = el.sound
+          return word
+        }))
     })
   }, [])
 
@@ -100,8 +102,7 @@ const Speakit = (props) => {
               restart={restart}  />
       <div className='flex_column'>
         <CardShow
-          addCard={addCard}
-          setShow={setShow}
+          addCard={addCard} 
           iGuessedTheWord={iGuessedTheWord}
           startTheGame={startTheGame}
           data={data}

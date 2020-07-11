@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './cardShow.less'
 
 export const CardShow = (props) => {
-  const { setShow, addCard, iGuessedTheWord, startTheGame, restartTheGame, restart, data } = props
+  const { addCard, iGuessedTheWord, startTheGame, restartTheGame, restart, data } = props
 
   const [gameStart, setGameStart] = useState(false)
   const [allData, setData] = useState([])
@@ -32,7 +32,7 @@ export const CardShow = (props) => {
     const SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
     const recognition = new SpeechRecognition()
     recognition.interimResults = false
-    recognition.maxAlternatives = 20
+    recognition.maxAlternatives = 40
     recognition.lang = 'en-EN'
     recognition.continuous = false
     recognition.start()
@@ -62,10 +62,6 @@ export const CardShow = (props) => {
     // restartTheGame(false);
   }
 
-  const showResultWindow = () => {
-    setShow();
-  }
-
   return (
     <div className='column'>
       <div className='cardShow-picture-cont'>
@@ -90,9 +86,6 @@ export const CardShow = (props) => {
         </button>
         <button className='btn restart' onClick={() => restartHandleClick()}>
           Restart
-        </button>
-        <button className='btn results' onClick={() => showResultWindow()}>
-          Results
         </button>
       </div>
     </div>

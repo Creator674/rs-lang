@@ -35,7 +35,7 @@ export const ButtonsList = ({ list = [], playWord, isResult, handleClick }) => {
     const button = useRef()
     refs.current.push(button)
     if (isResult) {
-      console.log({ isResult })
+      // console.log({ isResult })
       return (
         <div
           key={item.word}
@@ -51,7 +51,7 @@ export const ButtonsList = ({ list = [], playWord, isResult, handleClick }) => {
         </div>
       )
     } else {
-      console.log({ isResult })
+      // console.log({ isResult })
       return (
         <div key={item.word} className='btn-wrapper'>
           <div className='number'>{i + 1}</div>
