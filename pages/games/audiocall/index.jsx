@@ -159,7 +159,7 @@ const Audiocall = () => {
 
   return (
     <div className='game-box audiocall'>
-      {/* <GameStartModalWindow gameId={2} nameOfGame={'audiocall'}/> */}
+      <GameStartModalWindow gameId={2} nameOfGame={'audiocall'}/>
       {showResults && <StatisticGames allGuessed={allGuessed} allnotGuessed={allnotGuessed} />}
 
       <ThemeProvider theme={theme}>
