@@ -4,10 +4,10 @@ import { getWordsAndTranslation } from '../../../lib/crud/auth';
 import { shuffledArray, shuffledRandomArray } from '../../../lib/helpers/shufflefunc';
 
  
-export const Gamecard = (props) => { 
+export const Gamecard = ({addToArrayOfAnswers}) => { 
       let  shufeledArray1 = shuffledArray(20);
       let  shufeledArray2 = shuffledRandomArray(20);
-   let isGameEnd = false;
+      let isGameEnd = false;
  
       const [countGuessed, setcountGuessed] = useState(0); 
       const [data, setDate] = useState([]);
@@ -47,16 +47,14 @@ export const Gamecard = (props) => {
       }
  
       const handleClick = (bool) => {  
-
          const answer = words.indexOf(currentWord) === translation.indexOf(currentTranslation); 
          if(bool === answer){
-            console.log('yes, it"s" true!!');
             setPoints(points + 10);
             setcountGuessed(countGuessed + 1);
+            addToArrayOfAnswers(currentWord, currentTranslation);
             document.getElementById('yes').play();
          } else {
             setcountGuessed(0);
-            console.log('no, it"s false!!');
             document.getElementById('no').play();
          }
          setCount(count + 1); 
@@ -84,9 +82,6 @@ export const Gamecard = (props) => {
             console.log("it's the end of game!");
             //   ToDo: the end of game
           }
-
-          console.log(currentWord, currentTranslation)
-
       }
  
       return (

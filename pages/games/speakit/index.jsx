@@ -6,6 +6,8 @@ import { Card } from '../../../components/games/card'
 import './index.less'
 import { combineWords } from '../../../lib/crud/auth'
 import { GameStartModalWindow} from '../../../components/GameStartModalWindow';
+import { StatisticGames } from '../../../components/statisticGames'
+
 
 const Speakit = (props) => {
   const [data, setData] = useState([])
@@ -14,7 +16,11 @@ const Speakit = (props) => {
   const [guessed, setGuessed] = useState('')
   const [successCards, setSuccessCards] = useState([])
   const [restart, setRestart] = useState(false)
-  const [showResults, setShowResults] = useState(false);
+  
+  const [allGuessed, setAllGuessed] = useState([])
+  const [allnotGuessed, setallnotGuessed] = useState([])
+  const [showResults, setShowResults] = useState(false)
+
 
   const setGameEnd = (bool) => {
     if (bool) {
@@ -28,23 +34,36 @@ const Speakit = (props) => {
   }
 
   const addCard = (card) => {
+    console.log(card)
     setSuccessCards((successCards) => {
       if (successCards.indexOf(card) === -1) {
         setStar((star) => star + 1)
         return [...successCards, card]
       }
       return successCards
+    });
+    const word = {}
+    word.word = card
+    data.map((item) => {
+      if(item.word === card){
+        word.transcription = item.transcription;
+        word.translate = item.wordTranslate;
+        word.audio = item.sound
+      }
+    });
+    setAllGuessed((guessed) => {
+      if (guessed.some((el) => el.word == word)) {
+        return
+      } else {
+        return [...guessed, word]
+      }
     })
   }
-
-  // const deleteCard = card => {
-  //   setSuccessCards([successCards.filter(item => item !== card)]);
-  // } ----- TODO --  funtion for deleting
 
   const startTheGame = () => {
     setStartGame(true)
   }
-  console.log(successCards)
+  console.log(allGuessed)
 
   const iGuessedTheWord = (myWord) => {
     setGuessed(myWord)
@@ -56,11 +75,18 @@ const Speakit = (props) => {
       setGuessed('')
       setSuccessCards([])
       setRestart(true)
+      setShowResults(false);
     }
   }
+  const setShow =() =>{
+    setShowResults(true);
+    setTimeout(() => {
+      setShowResults(false);
+    }, 3000);
+  };
 
   useEffect(() => {
-    combineWords(1, 1).then((data) => {
+    combineWords(1, 1).then((data) => { 
       setData(data.filter((el, ind) => ind < 10))
     })
   }, [])
@@ -68,12 +94,14 @@ const Speakit = (props) => {
   return (
     <div className='wrapper-speakit'>
       <GameStartModalWindow gameId={0} nameOfGame={'speakit'}/>
+      {showResults && <StatisticGames allGuessed={allGuessed} allnotGuessed={allnotGuessed} />}
 
       <Header star={star} start={startGame} setGameEnd={setGameEnd} 
               restart={restart}  />
       <div className='flex_column'>
         <CardShow
           addCard={addCard}
+          setShow={setShow}
           iGuessedTheWord={iGuessedTheWord}
           startTheGame={startTheGame}
           data={data}

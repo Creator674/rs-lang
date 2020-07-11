@@ -23,11 +23,11 @@ const useStyles = makeStyles((theme) =>
 )
 
 export function ProgressBar({ current, total, width }) {
-  const style = { margin: '0 auto', display: 'flex', alignItems: 'center', width: `${width}`, padding: '0.8rem' }
+  const style = { margin: '0 auto', marginTop: 'auto', display: 'flex', alignItems: 'center', width: `${width}`, padding: '0.8rem' }
   const classes = useStyles()
   const percentage = ((current / total) * 100).toFixed(2)
   return (
-    <div style={style}>
+    <div className='progress-bar' style={style}>
       <span className={`${classes.label} ${classes.labelLeft}`}>{current}</span>
       <Progress value={percentage} />
       <span className={`${classes.label} ${classes.labelRight}`}>{total}</span>

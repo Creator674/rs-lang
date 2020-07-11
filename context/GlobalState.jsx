@@ -44,6 +44,22 @@ const initialSort = {
   direction: 'asc',
 }
 
+const initialCardSettings = {
+  isTranslation: true,
+  isWordShown: true,
+  isTranscription: false,
+  isMeaning: true,
+}
+const initialLearnProgress = {
+  total: 50,
+  current: 0,
+}
+
+const initialAppSettings = {
+  isAuthorized: false,
+  isModal: false,
+}
+
 const GlobalState = (props) => {
   const [words, setWords] = useState(initialWords)
   const [sort, setSort] = useState(initialSort)
@@ -51,6 +67,9 @@ const GlobalState = (props) => {
   const [toRepeatWords, setToRepeatWords] = useState(22)
   const [newWords, setNewWords] = useState(30)
   const [isAudioOn, setAudio] = useState(true)
+  const [cardSettings, setCardSettings] = useState(initialCardSettings)
+  const [learnProgress, setLearnProgress] = useState(initialLearnProgress)
+  const [appSettings, setAppSettings] = useState(initialAppSettings)
 
   return (
     <Context.Provider
@@ -67,6 +86,12 @@ const GlobalState = (props) => {
         setNewWords,
         isAudioOn,
         setAudio,
+        cardSettings,
+        setCardSettings,
+        learnProgress,
+        setLearnProgress,
+        appSettings,
+        setAppSettings,
       }}
     >
       {props.children}

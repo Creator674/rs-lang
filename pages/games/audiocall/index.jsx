@@ -5,6 +5,7 @@ import { Transition } from 'react-transition-group'
 import { combineWords } from 'lib/crud/auth'
 import { ButtonsList, ButtonAudio } from '../../../components/games/'
 import { GameStartModalWindow} from '../../../components/GameStartModalWindow';
+import { StatisticGames} from '../../../components/statisticGames';
 import './index.less'
 
 import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
@@ -45,6 +46,8 @@ const Audiocall = () => {
   // const [usedCount, setUsedCount] = useState(0)
   const [isResult, toggleResult] = useState(false)
   const [wordsList, setWordsList] = useState([])
+  const [allData, setAllData] = useState([])
+  const [gameEnd, setGameEnd] = useState(false)
 
   const audio = useRef()
   const wordsDeck = useRef()
@@ -108,6 +111,7 @@ const Audiocall = () => {
   useEffect(() => {
     combineWords(1, 1)
       .then((data) => {
+        setAllData(data)
         wordsDeck.current = data
         setupPlayState()
       })
@@ -127,7 +131,9 @@ const Audiocall = () => {
   return (
     <div className='game-box audiocall'>
       <GameStartModalWindow gameId={2} nameOfGame={'audiocall'}/>
-      
+      <StatisticGames allData={allData}/>
+
+
       <ThemeProvider theme={theme}>
         <MobileStepper variant='progress' steps={11} position='static' activeStep={activeStep} />
       </ThemeProvider>

@@ -1,3 +1,3 @@
 import theme from './theme'
-export * from './layouts.js'
+export * from './layouts'
 export default theme

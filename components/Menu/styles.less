@@ -1,6 +1,13 @@
 @import '../../styles/variables.less';
 
 .main-menu {
+  position: fixed;
+  left: 0;
+  z-index: 10;
+  & * {
+    box-sizing: content-box;
+  }
+
   & .link {
     color: @color-text;
     text-decoration: none;

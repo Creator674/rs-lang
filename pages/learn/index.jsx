@@ -1,24 +1,31 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import axios from 'lib/crud/api'
 import Link from 'next/link'
 import { AppLayout } from 'layouts'
-// import './index.less'
+
+import { refreshToken } from 'lib'
 
 import { ProgressBar, ProgressChart } from 'components/Progress'
-import { Menu } from 'components/Menu'
-import { Button, Popup, SignIn, SignUp, UserAvatar } from 'components'
+import { Menu, Learn, UserAvatar } from 'components'
+// import { Audiocall } from 'components/games'
+import { Button, Popup, SignIn, SignUp, PlayCard } from 'components'
+import './style.less'
 
 function Home() {
   const [showSignUp, toggleSignUp] = useState(false)
   const [showSignIn, toggleSignIn] = useState(false)
 
   const [testValue, setTestValue] = useState(0)
+
+  useEffect(() => {
+    // axios.get('https://afternoon-falls-25894.herokuapp.com/users')
+  })
   return (
     <AppLayout>
-      {/* <Savannah /> */}
-
       <div className='wrapper-main-page'>
         <Menu />
         <UserAvatar />
+        <Learn />
       </div>
 
       <ProgressBar current={36} total={50} width='60%' />

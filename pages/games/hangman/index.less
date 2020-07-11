@@ -2,6 +2,7 @@
    overflow: hidden;
    height: 100vh;
    width: 100%; 
+   font-family: 'Martel';
    background-image: url(/images/hangman/fon.png); 
    background-position: center;
    background-repeat: no-repeat;
@@ -10,10 +11,11 @@
    h1{
       text-align: center;
       padding: 5rem 0 1rem;
-      color: #d24444;
+      color: #cfd0c5;
       text-shadow: 0.05rem 0.05rem 0.3rem black;
-      font-family: monospace;
+      font-family: 'Sacramento';
       font-weight: bold;
+      font-size: 7.5rem;
    }
 
    .row{
@@ -31,7 +33,7 @@
             font-size: 2rem;
             padding: 2rem;
             font-weight: bold;
-            color: #f5deb39e;
+            color: #62605d9e;
             span{
                color: #ef5353;
             }
@@ -39,14 +41,14 @@
          .guess{
             font-size: 3rem;
             padding: 2rem;
-            color: #d24444;
+            color: #707070;
             text-shadow: 0.05rem 0.05rem 0.2rem black;
             font-family: monospace;
             font-weight: bold;
 
             span.question{
                font-size: 3rem;
-               color:#e0ffd9 ;
+               color:#ffa1439e ;
             }
          }
          .answer{
@@ -55,7 +57,7 @@
             flex-wrap: wrap;
             justify-content: center;
             span{
-               border: 0.1rem solid #ad1a1a;
+               border: 0.3rem solid #aebcbf;
                width: 3rem;
                height: 4rem;
                padding: 0.7rem 0 0;
@@ -71,13 +73,13 @@
             p{
                font-size: 2.2rem;
                padding: 2rem;
-               color: #f3e5e5;
+               color: #efefef;
                text-shadow: 0.05rem 0.05rem 0.2rem black;
                font-family: monospace;
                font-weight: bold;
                b{
                   font-size: 3rem;
-                  color: brown;
+                  color: #7790b6;
                }
             }
          }
@@ -85,7 +87,11 @@
       .right{
          flex: 0 0 70%;
          max-width: 30%;
-         border: 0.1rem solid black;
+
+         img{
+            opacity: 0.6;
+            width: 35rem;
+         }
       }
    }
 
@@ -114,9 +120,8 @@
          .lose{
             font-size: 3rem;
             padding: 2rem;
-            color: #d24444;
-            text-shadow: 0.05rem 0.05rem 0.2rem black;
-            font-family: monospace;
+            color: #743636;
+            text-shadow: 0.05rem 0.05rem 0.2rem black; 
             font-weight: bold;
          }
       }
@@ -125,9 +130,9 @@
          margin: 3rem 0 0;
          padding: 1rem 2rem;
          color: #ffffff;
+         border: 0.3rem solid #ffffff;
          text-shadow: 0.1rem 0.1rem 0.1rem grey;
-         background-color: #f7bebe;
-         border: none;
+         background-color: #20c6db66;
          font-size: 2.2rem;
          font-weight: bold;
          outline: none;
@@ -140,4 +145,37 @@
       }
    }
    
+}
+
+
+@media (max-width: 770px){
+   .hangman .row .left { 
+      -ms-flex: 0 0 50%;
+      flex: 0 0 50%;
+   }
+   .hangman .row .right {
+      -ms-flex: 0 0 50%;
+      flex: 0 0 50%;
+      max-width: 30%;
+      img { 
+         width: 20rem;
+     }
+  }
+}
+
+@media (max-width: 560px){
+   .hangman h1 { 
+      font-size: 4rem;
+   }
+   .hangman .row {
+      flex-direction: column;
+   }
+   .hangman .row .left {  
+      flex: 0 0 100%;
+      max-width: 100%;
+   }
+   .hangman .row .right { 
+      flex: 0 0 100%;
+      max-width: 100%; 
+  }
 }

@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react'
 import './cardShow.less'
 
 export const CardShow = (props) => {
-  const { addCard, iGuessedTheWord, startTheGame, restartTheGame, restart, data } = props
+  const { setShow, addCard, iGuessedTheWord, startTheGame, restartTheGame, restart, data } = props
 
-  const [showResults, setShowResults] = useState(false) // ----TODO: for showing modal window
   const [gameStart, setGameStart] = useState(false)
   const [allData, setData] = useState([])
   const [words, setWords] = useState([])
@@ -64,23 +63,24 @@ export const CardShow = (props) => {
   }
 
   const showResultWindow = () => {
-    setShowResults(true)
+    setShow();
   }
 
   return (
     <div className='column'>
-      <div className='cardShow-picture'>
-        <img src={imageSrc ? imageSrc : '../images/speakit/start.png'} alt='pic' />
+      <div className='cardShow-picture-cont'>
+          <div className='cardShow-picture'>
+            <img src={imageSrc ? imageSrc : '../images/speakit/start.png'} alt='pic' />
+          </div>
+
+          <p className='cardShow-translation'>{translation ? translation : ''}</p>
+          <input
+            type='text'
+            className={gameStart ? 'cardShow-input go' : 'cardShow-input'}
+            readOnly={true}
+            value={pronouncedWord ? pronouncedWord : ''}
+          />
       </div>
-
-      <p className='cardShow-translation'>{translation ? translation : ''}</p>
-      <input
-        type='text'
-        className={gameStart ? 'cardShow-input go' : 'cardShow-input'}
-        readOnly={true}
-        value={pronouncedWord ? pronouncedWord : ''}
-      />
-
       <div className='cardShow-btns-container'>
         <button
           className={gameStart ? 'btn cardShow-speak' : 'btn cardShow-speak speakPls'}

@@ -9,7 +9,7 @@ export const ButtonsLetters = ({guessed, handleClick}) => {
                  className='letter-btn'
                  key={letter} 
                  value={letter}
-                 onClick={() => handleClick(letter)}
+                 onClick={() => handleClick ? handleClick(letter) : null}
                  disabled={guessed.has(letter)}
                  > {letter}</button>
         ))}

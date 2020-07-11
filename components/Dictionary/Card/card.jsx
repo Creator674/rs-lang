@@ -56,10 +56,8 @@ export function Card(props) {
     isMounted = true
     getImg(props.image).then((result) => {
       if (isMounted) {
-        setTimeout(() => {
-          setLoaded(true)
-          setSrc(result)
-        }, 2000)
+        setLoaded(true)
+        setSrc(result)
       }
     })
     return () => {
