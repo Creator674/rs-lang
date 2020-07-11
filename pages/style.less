@@ -1,5 +1,10 @@
 @import '../styles/variables.less';
 
+html,
+body {
+  scroll-behavior: smooth;
+}
+
 .landing-box {
   ul {
     padding-left: 0;
@@ -26,7 +31,10 @@
 
   /* HEADER */
   .header {
+    width: 100%;
+    position: fixed;
     background: linear-gradient(91.16deg, #0063aa 3.41%, #00a9ce 51.45%, #04a4ae 98.79%);
+    z-index: 5;
   }
 
   .header__wrapper {
@@ -49,7 +57,7 @@
   .header__navigation {
     width: 24.8rem;
     height: 100vh;
-    padding: 6.4rem 0 6.4rem 6.4rem;
+    padding: 6.8rem 0 6.4rem 6.4rem;
     position: absolute;
     top: 0;
     left: -24.8rem;
@@ -164,6 +172,7 @@
 
   /* PROMO */
   .promo {
+    padding-top: 7rem;
     background: rgba(56, 173, 169, 0.2);
   }
 
@@ -339,6 +348,10 @@
   }
 
   @media (min-width: 768px) {
+    .promo {
+      padding-top: 8.4rem;
+    }
+
     .promo__wrapper {
       padding: 1.6rem 4.8rem 4.8rem;
     }
@@ -479,6 +492,10 @@
   }
 
   /* GAMES */
+  .games {
+    scroll-margin-top: 7rem;
+  }
+
   .section-title {
     margin: 0;
     padding: 0;
@@ -517,6 +534,10 @@
   }
 
   @media (min-width: 768px) {
+    .games {
+      scroll-margin-top: 8.2rem;
+    }
+
     .section-title {
       font-size: 6.4rem;
       line-height: 9.3rem;
@@ -525,11 +546,12 @@
 
     .games__wrapper,
     .algorithm__wrapper {
-      padding: 2.4rem 4.8rem 7.2rem;
+      padding: 1.6rem 4.8rem 7.2rem;
     }
 
     .games__list {
       display: grid;
+      grid-template-columns: 1fr 1fr;
       grid-template-areas:
         'a a'
         'a a'
@@ -545,11 +567,12 @@
 
   @media (min-width: 1440px) {
     .games__wrapper {
-      padding: 2.4rem 12rem 7.2rem;
+      padding: 1.6rem 12rem 7.2rem;
     }
 
     .games__list {
       display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
       grid-template-areas:
         'a a a'
         'a a a';
@@ -560,6 +583,7 @@
 
   /* ALGORITHM */
   .algorithm {
+    scroll-margin-top: 7rem;
     background: rgba(56, 173, 169, 0.5);
   }
 
@@ -634,6 +658,10 @@
   }
 
   @media (min-width: 768px) {
+    .algorithm {
+      scroll-margin-top: 8.2rem;
+    }
+
     .algorithm__wrapper {
       padding: 1.6rem 4.8rem 7.2rem;
       overflow: hidden;
@@ -700,6 +728,7 @@
 
   /* ABOUT US */
   .about-us {
+    scroll-margin-top: 7rem;
     background: @color-btn-light;
     padding: 1.6rem 0 5.6rem;
   }
@@ -743,32 +772,59 @@
 
   @media (min-width: 768px) {
     .about-us {
+      scroll-margin-top: 8.2rem;
       padding: 1.6rem 0 7.2rem;
     }
 
     .about-us__list {
       display: grid;
-      grid-template-areas:
-        'a a'
-        'a a'
-        'a a';
+      grid-template-columns: 1fr 1fr 1fr 1fr;
       grid-gap: 2.4rem;
     }
 
-    .about-us__item:not(:last-child) {
+    .about-us__item:nth-child(odd) {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+
+    .about-us__item:nth-child(even) {
+      grid-column-start: 3;
+      grid-column-end: 5;
+    }
+
+    .about-us__item:last-child {
+      grid-column-start: 2;
+      grid-column-end: 4;
+    }
+
+    .about-us__list .about-us__item {
       margin-bottom: 0;
     }
   }
 
   @media (min-width: 1440px) {
     .about-us__list {
-      grid-template-areas:
-        'a a a'
-        'a a a';
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .about-us__item:nth-child(odd) {
+      grid-column-start: auto;
+      grid-column-end: auto;
+    }
+
+    .about-us__item:nth-child(even) {
+      grid-column-start: auto;
+      grid-column-end: auto;
+    }
+
+    .about-us__item:last-child {
+      grid-column-start: auto;
+      grid-column-end: auto;
     }
 
     .about-us__item:last-child {
       grid-column-start: 2;
+      grid-column-end: auto;
     }
   }
 
