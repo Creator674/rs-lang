@@ -43,18 +43,23 @@ const fadeUp = {
 const Audiocall = () => {
   const [activeStep, setActiveStep] = useState(-1)
   const [playWord, setPlayWord] = useState(null)
-  // const [usedCount, setUsedCount] = useState(0)
   const [isResult, toggleResult] = useState(false)
   const [wordsList, setWordsList] = useState([])
-  const [allData, setAllData] = useState([])
   const [gameEnd, setGameEnd] = useState(false)
+
+  const [allGuessed, setAllGuessed] = useState([])
+  const [allnotGuessed, setallnotGuessed] = useState([])
+  const [showResults, setShowResults] = useState(false)
 
   const audio = useRef()
   const wordsDeck = useRef()
   // const wordsList = useRef()
-
   const getRandomWord = () => {
-    if (activeStep >= 9) return null
+    if (activeStep >= 9) {
+      setShowResults(true);
+      setGameEnd(true)
+      return null
+    }
     const idx = Math.floor(Math.random() * (wordsDeck.current.length - 1))
 
     if (!wordsDeck.current[idx].used) {
@@ -88,19 +93,44 @@ const Audiocall = () => {
 
   const setResult = (id, result) => {
     const word = wordsDeck.current.find((item) => item.id === id)
-    if (result) word.right = true
-    else word.wrong = true
+    console.log(word)
+    const addWord = {}
+    addWord.word = word.word
+    addWord.transcription = word.transcription
+    addWord.translate = word.wordTranslate
+    addWord.audio = word.sound
+    if (result){
+      word.right = true;
+      setAllGuessed((guessed) => {
+        if (guessed.some((el) => el.word == word)) {
+          return
+        } else {
+          return [...guessed, addWord]
+        }
+      })
+    } else{ 
+      word.wrong = true;
+      setallnotGuessed((guessed) => {
+        if (guessed.some((el) => el.word == word)) {
+          return
+        } else {
+          return [...guessed, addWord]
+        }
+      })
+    }
     toggleResult(true)
   }
 
   const setupPlayState = () => {
-    const word = getRandomWord()
-    const randomList = getRandomList(word.id).map((idx) => wordsDeck.current[idx])
-    const place = Math.floor(Math.random() * 5)
-    const newList = [...randomList]
-    newList.splice(place, 0, word)
-    toggleResult(false)
-    setWordsList(newList)
+    const word = getRandomWord();
+    if(word){
+      const randomList = getRandomList(word.id).map((idx) => wordsDeck.current[idx])
+      const place = Math.floor(Math.random() * 5)
+      const newList = [...randomList]
+      newList.splice(place, 0, word)
+      toggleResult(false)
+      setWordsList(newList)
+    }
   }
 
   // useEffect(() => {
@@ -111,7 +141,6 @@ const Audiocall = () => {
   useEffect(() => {
     combineWords(1, 1)
       .then((data) => {
-        setAllData(data)
         wordsDeck.current = data
         setupPlayState()
       })
@@ -130,9 +159,8 @@ const Audiocall = () => {
 
   return (
     <div className='game-box audiocall'>
-      <GameStartModalWindow gameId={2} nameOfGame={'audiocall'}/>
-      <StatisticGames allData={allData}/>
-
+      {/* <GameStartModalWindow gameId={2} nameOfGame={'audiocall'}/> */}
+      {showResults && <StatisticGames allGuessed={allGuessed} allnotGuessed={allnotGuessed} />}
 
       <ThemeProvider theme={theme}>
         <MobileStepper variant='progress' steps={11} position='static' activeStep={activeStep} />

@@ -6,10 +6,10 @@ export const Header = ({ start, star, setGameEnd, restart }) => {
 
   useEffect(() => {
     if (start) {
-      setCounter(200)
+      setCounter(120)
     }
     if (restart) {
-      setCounter(200)
+      setCounter(120)
     }
   }, [start])
 
