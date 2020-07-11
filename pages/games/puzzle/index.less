@@ -12,3 +12,42 @@
    flex-wrap: wrap;
    flex-direction: row;
  }
+
+
+ @media (max-width: 868px){
+  .gameboard .gameboard-container, 
+  .phrase .translation-text,
+  .dragging-words-container {
+    max-width: 86rem;
+    width: 100%;
+  }
+  .gameboard-container .draggyWord {
+    padding: 1.5rem 0;
+    width: -webkit-fill-available;
+  }
+ }
+
+ @media (max-width: 720px){
+  .puzzle-header {
+    flex-direction: column;
+    height: auto;
+    .puzzle_column {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+    .puzzle_column.row {
+      margin-top: -8rem;
+    }
+  }
+  .gameboard {
+    margin: 3rem 0 0 0;
+    .draggyWord,
+    .guessed .guessed-word,
+    .translation-text{
+      font-size: 1.2rem !important;
+    }
+    .translation-text{
+      line-height: 2.2rem;
+    }
+  }
+ }

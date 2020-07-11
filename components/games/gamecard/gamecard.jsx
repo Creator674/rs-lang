@@ -4,10 +4,9 @@ import { getWordsAndTranslation } from '../../../lib/crud/auth';
 import { shuffledArray, shuffledRandomArray } from '../../../lib/helpers/shufflefunc';
 
  
-export const Gamecard = ({addToArrayOfAnswers}) => { 
+export const Gamecard = ({addToArrayOfAnswers, setIsCorrect, stopTimer}) => { 
       let  shufeledArray1 = shuffledArray(20);
       let  shufeledArray2 = shuffledRandomArray(20);
-      let isGameEnd = false;
  
       const [countGuessed, setcountGuessed] = useState(0); 
       const [data, setDate] = useState([]);
@@ -15,11 +14,11 @@ export const Gamecard = ({addToArrayOfAnswers}) => {
       const [points, setPoints] = useState(0);
       const [round, setRound] = useState(0);  
 
-      const [words, setWords] = useState();
-      const [translation, setTranslation] = useState();
+      const [words, setWords] = useState([]);
+      const [translation, setTranslation] = useState([]);
 
-      const [currentTranslation, setCurrentTranslation] = useState();
-      const [currentWord, setCurrentWord] = useState();
+      const [currentTranslation, setCurrentTranslation] = useState('');
+      const [currentWord, setCurrentWord] = useState('');
 
       useEffect(() => {
          getWordsAndTranslation(1,1)
@@ -30,6 +29,7 @@ export const Gamecard = ({addToArrayOfAnswers}) => {
              setTranslation(data.map((el) => el[1]));
              setCurrentWord(data[shufeledArray1[count]][0]);
              setCurrentTranslation(data[shufeledArray2[count]][1]);
+             addToArrayOfAnswers(data)
              return data;
            })
            .catch((error) => error);
@@ -47,14 +47,17 @@ export const Gamecard = ({addToArrayOfAnswers}) => {
       }
  
       const handleClick = (bool) => {  
-         const answer = words.indexOf(currentWord) === translation.indexOf(currentTranslation); 
+         const indTrans = translation.indexOf(currentTranslation);
+         const indWord = words.indexOf(currentWord);
+         const answer = words.indexOf(currentWord) === indTrans; 
          if(bool === answer){
             setPoints(points + 10);
             setcountGuessed(countGuessed + 1);
-            addToArrayOfAnswers(currentWord, currentTranslation);
+            setIsCorrect(currentWord, true);
             document.getElementById('yes').play();
          } else {
             setcountGuessed(0);
+            setIsCorrect(currentWord, false);
             document.getElementById('no').play();
          }
          setCount(count + 1); 
@@ -78,9 +81,8 @@ export const Gamecard = ({addToArrayOfAnswers}) => {
           setCurrentTranslation(translation[shufeledArray2[count]]);
 
           if(round === 3){
-            isGameEnd = true;
             console.log("it's the end of game!");
-            //   ToDo: the end of game
+            stopTimer();
           }
       }
  
