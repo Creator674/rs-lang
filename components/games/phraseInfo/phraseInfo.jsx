@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import './phraseInfo.less'
 
 export const PhraseInfo = props => {
-  const { pronunc, translat, currentTranslate, currentAudio} = props;
+  const { autoPronunc, pronunc, translat, currentTranslate, currentAudio} = props;
 
   const audioPlay = () => {
     const audio = new Audio();
@@ -10,11 +10,17 @@ export const PhraseInfo = props => {
     audio.play();
   };
 
+  useEffect(() => {
+    if(autoPronunc){
+      audioPlay()
+    }
+  }, [currentAudio]);
+
   return (
         <div className='phrase'>
           <span onClick={() => audioPlay()}> <img className={`audio-transl ${pronunc ? 'visibilityHid' : ''}`}
                       src='/images/puzzle/play.png'
-                      width='30'
+                      width='40'
                       alt='audio'/>
           </span>
           <p className={`translation-text ${translat ? 'visibilityHid' : ''}`}>

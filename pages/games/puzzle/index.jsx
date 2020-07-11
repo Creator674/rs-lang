@@ -5,6 +5,7 @@ import { GameStartModalWindow } from '../../../components/GameStartModalWindow'
 import { HeaderPuzzle } from '../../../components/games/headerPuzzle'
 import { GameboardPuzzle } from '../../../components/games/gameboardPuzzle'
 import { FooterPuzzle } from '../../../components/games/footerPuzzle'
+import { StatisticGames } from '../../../components/statisticGames'
 import './index.less'
 
 const Puzzle = (props) => {
@@ -23,12 +24,14 @@ const Puzzle = (props) => {
   const [result, setResult] = useState([])
   const [mistakes, setMistakes] = useState([])
 
+  const [allGuessed, setAllGuessed] = useState([])
+  const [allnotGuessed, setallnotGuessed] = useState([])
+  const [showResults, setShowResults] = useState(false)
+
   const pronosBtnClicked = () => {
-    console.log('clicked pronnciation')
     setPronunc((pronunc) => !pronunc)
   }
   const translBtnClicked = () => {
-    console.log('clicked translation')
     setTranslat((translat) => !translat)
   }
   const pictureBtnClicked = () => {
@@ -55,10 +58,22 @@ const Puzzle = (props) => {
   const checktheAnswer = (result) => {
     console.log(result)
     setReadyToCheck(true)
-    if (result[0].join('') === result[1].join('')) {
+    const resultAnswer = result[0].join(' ')
+    const word = {}
+    word.phrase = resultAnswer
+    word.translate = data[count].textTranslate
+    word.audio = data[count].audio
+
+    if (resultAnswer === result[1].join(' ')) {
       console.log('You did it!!!')
       setGoToNext(true)
-      setReadyToCheck(false)
+      setAllGuessed((guessed) => {
+        if (guessed.some((el) => el.phrase === resultAnswer)){
+          return
+        } else {
+          return [...guessed, word]
+        }
+      })
     } else {
       setMistakes(
         result[1].filter((el, ind) => {
@@ -67,21 +82,37 @@ const Puzzle = (props) => {
           }
         })
       )
+      setallnotGuessed((guessed) => {
+        if (guessed.some((el) => el.phrase === resultAnswer)){
+           return
+        } else {
+          return [...guessed, word]
+        }
+      })
+      setReadyToCheck(false)
     }
-    //  checking the answer
-  }
+  };
 
   const clickOnNext = () => {
     setGoToNext(false)
+    setReadyToCheck(false)
     setCount(count + 1)
+    if(count === 9){
+      console.log('the end')
+      setShowResults(true)
+    }
   }
   const clickIdontKnow = () => {
     setDontKnow(true)
+  }
+  const dontKnowDone =()=>{
+    setDontKnow(false)
   }
 
   return (
     <div className='puzzle-wrapper'>
       <GameStartModalWindow gameId={4} nameOfGame={'puzzleenglish'} />
+      {showResults && <StatisticGames allGuessed={allGuessed} allnotGuessed={allnotGuessed} />}
 
       <HeaderPuzzle
         pronosBtnClicked={pronosBtnClicked}
@@ -101,6 +132,7 @@ const Puzzle = (props) => {
         goToNext={goToNext}
         picture={picture}
         mistakes={mistakes}
+        dontKnowDone={dontKnowDone}
       />
 
       <FooterPuzzle

@@ -3,19 +3,26 @@ import './headerPuzzle.less'
 
 export function HeaderPuzzle({ pronosBtnClicked, translBtnClicked, pictureBtnClicked, autopronBtnClicked }) {
   
+  const [pronun, setPronun] = useState(false);
+  const [trans, setTrans] = useState(false);
+  const [show, setShow] = useState(false);
+  const [auto, setAuto] = useState(false);
+
   const pronunciation = () =>{
     pronosBtnClicked();
-    // console.log(this)
-    // event.target.classList.toggle('clicked');
+    setPronun((click) => !click)
   }
   const translation = () =>{
     translBtnClicked();
+    setTrans((click) => !click)
   }
   const showPicture = () =>{
     pictureBtnClicked();
+    setShow((click) => !click)
   }
   const autoPronunc = () =>{
     autopronBtnClicked();
+    setAuto((click) => !click)
   }
 
   return (
@@ -26,25 +33,25 @@ export function HeaderPuzzle({ pronosBtnClicked, translBtnClicked, pictureBtnCli
 
       <div className='puzzle_column row'>
         <button title='Prononsation-icon' 
-                className='prononsation'
+                className={pronun ? 'pronunciation clicked': 'prononsation'}
                 onClick={() => pronunciation()}>
           ♫
         </button>
 
         <button title='Translate the phrase' 
-                className='translation'
+                className={trans ? 'translation clicked' : 'translation'}
                 onClick={() =>translation()}>
           ↔
         </button>
 
         <button title='Show the image' 
-                className='picture'
+                className={show ? 'picture clicked' : 'picture'}
                 onClick={() =>showPicture()}>
           🎴
         </button>
 
         <button title='Auto-prononsation' 
-                className='sentense-pron'
+                className={auto ? 'sentense-pron clicked' : 'sentense-pron'}
                 onClick={() =>autoPronunc()}>
           🔊
         </button>

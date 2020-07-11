@@ -5,7 +5,8 @@ import { PhraseInfo } from '../phraseInfo'
 
 
 export const GameboardPuzzle = props => {
-  const { pronunc, translat, picture, mistakes, showImage, autoPronunc, data, dontKnow, goOn, goToNext} = props;
+  const { pronunc, translat, picture, mistakes, showImage, 
+          autoPronunc, data, dontKnow, dontKnowDone, goOn, goToNext} = props;
 
   const [currentText, setCurrentText] = useState([]);
   const [currentTranslate, setCurrentTranslate] = useState('');
@@ -13,11 +14,8 @@ export const GameboardPuzzle = props => {
 
   const [shuffledArr, setShuffledArr] = useState([]);
   const [shuffledText, setShuffledText] = useState([]);
-  const [dragging, setDragging] = useState(false);
   const [ANSWERS, setANSWERS] = useState([]);
   const [guessedPhrase, setguessedPhrase] = useState([]);
-  const dragItem = useRef();
-  const dragNode = useRef();  
 
   useEffect(() => {
     if(data){
@@ -45,39 +43,24 @@ export const GameboardPuzzle = props => {
     }
   }, [guessedPhrase]);
     
-
-
-  const dragStart = e => {
-    const target = e.target;
-    e.dataTransfer.setData('card_id', target.id);
-    setTimeout( () => {
-      target.style.display = 'none';
-    }, 0);
-  }
-  const dropFunction = (e) => {
-    e.preventDefault();
-    const card_id = e.dataTransfer.getData('card_id');
-    const card = document.getElementById(card_id)
-    card.style.display = 'block';
-    e.target.appendChild(card);
-  }
+  useEffect(() => {
+    if(dontKnow){
+      console.log(currentText)
+      setShuffledText([])
+      setguessedPhrase(currentText);
+      dontKnowDone();
+    }
+  }, [dontKnow]);
 
   const drawGuessedWords = () => {
       return ANSWERS.map(phrase => (
-        <div className='guessed'> {phrase.map( el => (
-              <span className='guessed-word' draggable='false' >{el}</span>
+        <div className='guessed'> {phrase.map( (el, ind) => (
+              <span className='guessed-word' key={el + ind}>{el}</span>
             ))}
         </div>)
       );
   };
-  const dragOver = (e) => {
-    e.preventDefault();
-  }
-
-  const dragCardOver = (e) => {
-    e.stopPropagation();
-  }
-
+ 
   const handleClickWord =(e, word) => {
     setguessedPhrase(guessedPhrase => [...guessedPhrase, word]);
     setShuffledText((shuffledText) => {
@@ -96,7 +79,7 @@ export const GameboardPuzzle = props => {
   return (
       <div className='gameboard'>
         <PhraseInfo currentTranslate={currentTranslate} currentAudio={currentAudio}
-                  pronunc={pronunc} translat={translat}/>
+                  pronunc={pronunc} autoPronunc={autoPronunc} translat={translat}/>
 
         <div className='gameboard-container'>
            <div className='guessed_phrases_board' 
@@ -107,16 +90,16 @@ export const GameboardPuzzle = props => {
            <div className='dragging-words-container'>
               { 
                   <div className='word-container' 
-                      onDrop={dropFunction} 
-                      onDragOver={dragOver}>
+                      // onDrop={dropFunction} 
+                      // onDragOver={dragOver}
+                      >
                     {
                       shuffledText.map((word, ind) => (
-                        <span draggable='true' 
-                              className='draggyWord'
-                              key={ind}
+                        <span className='draggyWord'
+                              key={'draggy'+ind}
                               id={`card-${ind}`}
-                              onDragStart={dragStart}
-                              onDragOver={dragCardOver}
+                              // onDragStart={dragStart}
+                              // onDragOver={dragCardOver}
                               onClick={(e) => handleClickWord(e, word) }>
                                 {word}
                         </span>))
@@ -127,16 +110,16 @@ export const GameboardPuzzle = props => {
            
             <div className='answer-wrapper'>
                       <div className="word-container input-results"
-                           onDrop={dropFunction} 
-                           onDragOver={dragOver}>
+                          //  onDrop={dropFunction} 
+                          //  onDragOver={dragOver}
+                           >
                     {
                       guessedPhrase.map((word, ind) => (
-                        <span draggable='true' 
-                              className={mistakes.indexOf(word)!==-1 ? 'draggyWord false' : 'draggyWord'}
-                              key={ind}
+                        <span className={mistakes.indexOf(word)!==-1 ? 'draggyWord false' : 'draggyWord'}
+                              key={word+ind}
                               id={`card-${ind}`}
-                              onDragStart={dragStart}
-                              onDragOver={dragCardOver}
+                              // onDragStart={dragStart}
+                              // onDragOver={dragCardOver}
                               onClick={(e) => handleClickAnswer(e, word) }>
                                 {word}
                         </span>))

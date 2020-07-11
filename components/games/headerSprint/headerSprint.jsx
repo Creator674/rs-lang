@@ -10,7 +10,7 @@ export function HeaderSprint(props) {
     
     useEffect(() => {
     if(startTimer){
-      setCounter(130);
+      setCounter(90);
     } else {
       setCounter(0);
     }
