@@ -97,11 +97,16 @@ const MainPage = () => {
 
           <div className='container promo__video-wrapper'>
             <div className='promo__video video'>
-              <video className='video__content' src='#' width='260' height='142' preload=''></video>
-              <button className='video__button'>
-                <span className='visually-hidden'>Play</span>
-              </button>
-              <h4 className='video__title'>Learn Words</h4>
+              <div className='video__content'>
+                <iframe
+                  width='1280'
+                  height='720'
+                  src='https://www.youtube.com/embed/8S0FDjFBj8o'
+                  frameborder='0'
+                  allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+                  allowfullscreen
+                ></iframe>
+              </div>
             </div>
 
             <div className='container promo__slogans'>
