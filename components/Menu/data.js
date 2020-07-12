@@ -61,7 +61,7 @@ export const data = {
     },
     {
       id: 7,
-      type: 'dictionary',
+      type: 'modal-dictionary',
       text: 'Dictionary',
       icon: 'images/landing/dictionary.svg',
       link: '/dict',

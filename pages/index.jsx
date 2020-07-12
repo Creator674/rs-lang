@@ -1,19 +1,25 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Context } from 'context'
 import './style.less'
 import { AppLayout } from 'layouts'
 import { LandingCard, dataLandingCards } from 'components/LandingCard'
-import { ButtonLogIn, UserAvatar, SignInSignUpSwitcher } from 'components'
+import { ButtonLogIn, UserAvatar, SignInSignUpSwitcher, withInfo } from 'components'
 
 
 import { getLocalStorageProp } from '../lib/localStorage'
 import { LandingMember, dataLandingMembers } from 'components/LandingMember'
 
-const MainPage = () => {
+const MainPage = ({ showInfo }) => {
   const {
     appSettings: { isAuthorized },
   } = useContext(Context)
+  useEffect(() => {
+    isAuthorized && showInfo({ message: 'Logged in successfully', type: 'success' })
+    isAuthorized === false && showInfo({ message: 'Logged out', type: 'info' })
+  }, [isAuthorized])
+
   return (
+    <AppLayout>
       <div className='landing-box'>
         <header className='header'>
           <div className='container header__wrapper'>
@@ -203,7 +209,8 @@ const MainPage = () => {
           </div>
         </footer>
       </div>
+      </AppLayout>
   )
 }
 
-export default MainPage
+export default withInfo(MainPage)

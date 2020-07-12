@@ -1,9 +1,12 @@
-import React from 'react'
-
+import React, { useContext, useState } from 'react'
+import { Context } from 'context'
+import { saveSettings, getSettings } from 'lib'
 import { makeStyles } from '@material-ui/core/styles'
+import { AccountButton, Account, Statistics, SettingsModal } from 'components'
 
 const useStyle = makeStyles((theme) => ({
   root: {
+    width: '9.6rem',
     display: 'flex',
     cursor: 'pointer',
     borderRadius: '1.4rem',
@@ -20,21 +23,56 @@ const useStyle = makeStyles((theme) => ({
   },
 }))
 
-export default function DropdownMenu() {
+export const DropdownMenu = ({ closePopover }) => {
   const styles = useStyle()
-  const items = ['Statistic', 'Settings', 'Account', 'Log out']
+  const { appSettings, setAppSettings } = useContext(Context)
+
+  const logOut = () => {
+    setAppSettings({ ...appSettings, isAuthorized: false })
+  }
+
+  const items = ['Settings']
   const list = items.map((item, i) => {
     return (
-      <div
-        key={item}
-        className={styles.root}
-        onClick={() => {}}
-      >
-        <div className='title' style={{ userSelect: 'none', lineHeight: '3.2rem' }}>
+      <div key={item} className={styles.root} onClick={close}>
+        <div className='title' style={{ userSelect: 'none', lineHeight: '3.2rem', margin: '0 auto' }}>
           {item}
         </div>
       </div>
     )
   })
-  return <div className={styles.menu}>{list}</div>
+
+  return (
+    <div className={styles.menu}>
+      <AccountButton closeParent={closePopover} name='Statistic'>
+        <Statistics />
+      </AccountButton>
+      <AccountButton closeParent={closePopover} name='Settings'>
+        <SettingsModal />
+      </AccountButton>
+      <AccountButton closeParent={closePopover} name='Account'>
+        <Account />
+      </AccountButton>
+      <div className={styles.root} onClick={logOut}>
+        <div className='title' style={{ userSelect: 'none', lineHeight: '3.2rem', margin: '0 auto' }}>
+          Log out
+        </div>
+      </div>
+
+      {/* remove when cleanup code */}
+      <div className={styles.root} onClick={saveSettings}>
+        <div className='title' style={{ userSelect: 'none', lineHeight: '3.2rem', margin: '0 auto' }}>
+          Save settings
+        </div>
+      </div>
+      <div className={styles.root} onClick={() => {
+        saveSettings().then(response => {
+        }).catch(err => console.log(err))
+      }}>
+        <div className='title' style={{ userSelect: 'none', lineHeight: '3.2rem', margin: '0 auto' }}>
+          Get settings
+        </div>
+      </div>
+    </div>
+  )
 }

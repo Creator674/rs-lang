@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Context } from 'context'
-import { createUser } from 'lib'
+import { createUser, authenticateUser, setLocalStorageProp } from 'lib'
 
 import { withInfo, withSwitcher } from '../HOC/hoc'
 
@@ -15,11 +15,15 @@ import './forms.less'
 const PATTERN = `^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\+\\-_@$!%*?&#.,;:\\[\\]{}]).{8,}$`
 const RegEx = new RegExp(PATTERN, 'g')
 
-const SignUpForm = ({ className, showInfo }) => {
+const SignUpForm = ({ className, showInfo, closeInfo, toggleClose }) => {
   const {
     appSettings: { userID, userName },
     setAppSettings,
+    userData,
+    setUserData
   } = useContext(Context)
+  const { appSettings } = useContext(Context)
+
   const [isLoading, setLoading] = useState(false)
   return (
     <Formik
@@ -36,11 +40,21 @@ const SignUpForm = ({ className, showInfo }) => {
           .required('Is required'),
       })}
       onSubmit={({ name, email, password }) => {
-        showInfo({ message: 'Sending request...', type: 'success' })
+        showInfo({ message: 'Sending request. Wait...', type: 'info' })
         createUser(name, email, password)
           .then((response) => {
-            setLoading(false)
-            console.log(response)
+            showInfo({ message: 'Created new user. Authorizing...', type: 'success' })
+            authenticateUser(email, password)
+              .then((response) => {
+                toggleClose()
+                console.log(response)
+
+                setLoading(false)
+              })
+              .catch((err) => {
+                showInfo({ message: err.response.data, type: 'error' })
+              })
+            console.log(response.data.id)
           })
           .catch((err) => {
             showInfo({ message: err.response.data, type: 'error' })
@@ -90,11 +104,14 @@ const SignUpForm = ({ className, showInfo }) => {
   )
 }
 
-const SignInForm = ({ className, switchRender, showInfo }) => {
+const SignInForm = ({ className, switchRender, showInfo, closeInfo, closeModal }) => {
   const {
     appSettings: { userID, userName },
     setAppSettings,
+    userData,
+    setUserData
   } = useContext(Context)
+  const { appSettings } = useContext(Context)
   const [isLoading, setLoading] = useState(false)
   return (
     <Formik
@@ -106,9 +123,21 @@ const SignInForm = ({ className, switchRender, showInfo }) => {
         email: Yup.string().email('Email is invalid').required('Is required'),
         password: Yup.string().required('Is required'),
       })}
-      onSubmit={(fields) => {
-        console.log(fields)
+      onSubmit={({ email, password }) => {
+        showInfo({ message: 'Wait please...', type: 'info' })
         if (isLoading) return
+        authenticateUser(email, password)
+          .then((response) => {
+            console.log(response)
+            closeModal()
+            setLocalStorageProp('user', { refreshToken: response.data.refreshToken,
+              token: response.data.token, id: response.data.userId})
+            setAppSettings({ ...appSettings, isAuthorized: true })
+            setUserData({ ...userData, name: response.data.name })
+          })
+          .catch((err) => {
+            showInfo({ message: err.response ? err.response.data : err.message, type: 'error' })
+          })
         setLoading(true)
       }}
     >

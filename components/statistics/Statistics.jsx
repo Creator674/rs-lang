@@ -15,7 +15,6 @@ import СardToday from './cardToday/cardToday'
 import СardArchive from './cardArchive/cardArchive'
 import СardGames from './cardMiniGames/cardGames'
 
-
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
@@ -116,18 +115,14 @@ const style = createMuiTheme({
 export function Statistics() {
   const [value, setValue] = useState(1)
 
-
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
 
-
-
   const classes = useStyles()
 
-
   return (
-    <div>
+    <div style={{ width: '100%', diplay: 'flex', flexDirection: 'column' }}>
       <Paper square>
         <MuiThemeProvider theme={style}>
           <Tabs value={value} onChange={handleChange} variant='fullWidth' aria-label='icon label tabs example' centered>
@@ -138,14 +133,40 @@ export function Statistics() {
         </MuiThemeProvider>
       </Paper>
       <TabPanel value={value} index={0}>
-        <СardToday newCards={50}  winrate={79} totalCards={150} studyTime={49} strike={210} repeat={15} userName={'Olga'}/>
+        <СardToday
+          newCards={50}
+          winrate={79}
+          totalCards={150}
+          studyTime={49}
+          strike={210}
+          repeat={15}
+          userName={'Olga'}
+        />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <СardArchive learntWords={553} day1={30} day2={40} day3={55} day4={10} day5={7} day6={30} day7={40}/>
+        <СardArchive learntWords={553} day1={30} day2={40} day3={55} day4={10} day5={7} day6={30} day7={40} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <СardGames game={'Super Mario'} learntWords={553} correctCount={80} mistakesCount={15} day1={30} day2={40} day3={55} day4={10} day5={7} day6={30} day7={40} playedGame0={23} playedGame1={15} playedGame2={17} playedGame3={32} playedGame4={10} playedGame5={51}/>
+        <СardGames
+          game={'Super Mario'}
+          learntWords={553}
+          correctCount={80}
+          mistakesCount={15}
+          day1={30}
+          day2={40}
+          day3={55}
+          day4={10}
+          day5={7}
+          day6={30}
+          day7={40}
+          playedGame0={23}
+          playedGame1={15}
+          playedGame2={17}
+          playedGame3={32}
+          playedGame4={10}
+          playedGame5={51}
+        />
       </TabPanel>
-      </div>
+    </div>
   )
 }

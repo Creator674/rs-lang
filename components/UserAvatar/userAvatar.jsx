@@ -1,6 +1,7 @@
-import React from 'react'
-import Menu from './DropdownMenu/dropdownMenu'
+import React, {useContext} from 'react'
+import { DropdownMenu } from './DropdownMenu/dropdownMenu'
 import { makeStyles } from '@material-ui/core/styles'
+import {Context} from 'context'
 import Popover from '../Dictionary/Popover/popover'
 
 const useStyles = makeStyles((theme) => ({
@@ -56,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const UserAvatar = ({ userName }) => {
+  const {userData} = useContext(Context)
   const [isPopover, setIsPopover] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const classes = useStyles()
@@ -68,7 +70,7 @@ export const UserAvatar = ({ userName }) => {
   return (
     <div className={classes.dropdownMenu}>
       <div className={classes.container}>
-        <div className='userAvatar'>Hi,&nbsp;{userName}&nbsp;</div>
+        <div className='userAvatar'>Hi,&nbsp;{userData.name}&nbsp;</div>
         <button className={classes.avatarBtn} onClick={handleClose}>
           <i className='icon-github-circled'></i>
         </button>
@@ -86,12 +88,13 @@ export const UserAvatar = ({ userName }) => {
               vertical: 'bottom',
               horizontal: 'right',
             }}
+            container={anchorEl.parentNode}
             transformOrigin={{
               vertical: 'top',
               horizontal: 'right',
             }}
           >
-            <Menu />
+            <DropdownMenu closePopover={() => setIsPopover(false)} />
           </Popover>
         ) : null}
       </div>
