@@ -106,9 +106,9 @@ const initialLearnProgress = {
 }
 
 const initialAppSettings = {
-  isAuthorized: false,
-  isModal: false,
+  isAuthorized: null,
 }
+
 
 const GlobalState = (props) => {
   const [words, setWords] = useState(initialWords)
@@ -118,10 +118,16 @@ const GlobalState = (props) => {
   const [newWords, setNewWords] = useState(30)
   const [isAudioOn, setAudio] = useState(true)
 
-  const [cardSettings, setCardSettings] = useState(currentCardSettings)
   const [learnProgress, setLearnProgress] = useState(initialLearnProgress)
+  const [userData, setUserData] = useState({})
+
+  // settings
   const [appSettings, setAppSettings] = useState(initialAppSettings)
+  const [cardSettings, setCardSettings] = useState(currentCardSettings) // SET TO {}
   const [defaultCardSettings, setDefaultCardSettings] = useState(initialCardSettings)
+
+  const [appStatistics, setAppStatistics] = useState({}) 
+
   return (
     <Context.Provider
       value={{
@@ -143,7 +149,11 @@ const GlobalState = (props) => {
         setLearnProgress,
         appSettings,
         setAppSettings,
-        defaultCardSettings
+        defaultCardSettings,
+        userData,
+        setUserData,
+        appStatistics,
+        setAppStatistics,
       }}
     >
       {props.children}

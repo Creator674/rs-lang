@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { dataForPuzzle } from '../../../lib/crud/auth'
 import { getPicture } from '../../../lib/helpers/getPicture'
 import { GameStartModalWindow } from '../../../components/GameStartModalWindow'
@@ -7,6 +7,13 @@ import { GameboardPuzzle } from '../../../components/games/gameboardPuzzle'
 import { FooterPuzzle } from '../../../components/games/footerPuzzle'
 import { StatisticGames } from '../../../components/statisticGames'
 import './index.less'
+
+import { Context } from 'context'
+import { saveStatistic } from 'lib'
+import { addToStatisticfunc } from '../../../lib/helpers/statisticHelp'
+
+import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
+
 
 const Puzzle = (props) => {
   const [data, setData] = useState([])
@@ -27,6 +34,23 @@ const Puzzle = (props) => {
   const [allGuessed, setAllGuessed] = useState([])
   const [allnotGuessed, setallnotGuessed] = useState([])
   const [showResults, setShowResults] = useState(false)
+
+
+  const { appStatistics, setAppStatistics } = useContext(Context)
+  
+  const createStatistic = () => {
+    allGuessed.map(el => {
+      const newStatistic = {...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'puzzle', 'guessed')}
+      setAppStatistics(newStatistic)
+      saveStatistic(newStatistic)
+    })
+    allnotGuessed.map(el => {
+      const newStatistic = {...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'puzzle', 'wrong')}
+      setAppStatistics(newStatistic)
+      saveStatistic(newStatistic)
+    })
+  }
+
 
   const pronosBtnClicked = () => {
     setPronunc((pronunc) => !pronunc)
@@ -63,6 +87,7 @@ const Puzzle = (props) => {
     word.phrase = resultAnswer
     word.translate = data[count].textTranslate
     word.audio = data[count].audio
+    word.id = data[count].id
 
     if (resultAnswer === result[1].join(' ')) {
       console.log('You did it!!!')
@@ -100,6 +125,7 @@ const Puzzle = (props) => {
     if(count === 9){
       console.log('the end')
       setShowResults(true)
+      createStatistic()
     }
   }
   const clickIdontKnow = () => {

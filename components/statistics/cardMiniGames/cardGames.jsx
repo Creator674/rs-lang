@@ -51,7 +51,7 @@ import "./cardGames.less"
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
 import {Pie} from 'react-chartjs-2';
-const СardGames = ({game, correctCount, mistakesCount ,day1, day2, day3, day4, day5, day6, day7}) => {
+const СardGames = ({game, correctCount, mistakesCount ,day1, day2, day3, day4, day5, day6, day7, playedGame0, playedGame1, playedGame2, playedGame3, playedGame4, playedGame5}) => {
 const data2 = {
     labels: [
       '-6',
@@ -76,21 +76,39 @@ const data2 = {
 
   }]
   };
+  const data1 = {
+    labels: ['SpeakIt', 'Savannah', 'Audiocall', 'Hangman', 'English Puzzle', 'Sprint'],
+  datasets: [{
+    data: [playedGame0, playedGame1, playedGame2, playedGame3, playedGame4, playedGame5],
+    backgroundColor: [
+    '#7AB4CC',
+    '#1F658A',
+    '#D3E8ED',
+    '#7AB4CC',
+    '#1F658A',
+    '#2C3E50',
+    '#C00000'
+    ],
+
+  }]
+  };
   
   return (
-  <div className='tab2'>
+  <div className='tab'>
     
   <h2 className='currentGame'><span>{game}</span></h2>
-
-  <div className="currentGameResult">
-      <p>Correct answers</p>
-      <p className="correctCount">{correctCount}</p>
-      <p className="mistakesCount">{mistakesCount}</p>
-      <p>Errors</p>
+  <div className='eagle'>
+    <p className='eagle__text eagle__text_left'>Correct answers</p>
+    <div className='eagle__digs'>
+      <p className='eagle__dig'>{correctCount}</p>
+      <p className='eagle__dig eagle__dig_right-wing eagle__dig_errors'>{mistakesCount}</p>
+    </div>
+    <p className='eagle__text'>Errors</p>
   </div>
+
   <div className="pie-wrapper">
       <Pie
-      data={data2}
+      data={data1}
       width={150}
       height={150}
       options={{ maintainAspectRatio: false,
@@ -98,7 +116,7 @@ const data2 = {
           display: false,
           },
           tooltips:{
-            enabled: false
+            enabled: true
          }
       }
       }

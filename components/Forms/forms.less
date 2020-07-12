@@ -1,6 +1,6 @@
 @import '../../styles/variables.less';
-html{
-  font-size:10px;
+html {
+  font-size: 10px;
 }
 .required {
   color: @color-add-dark;
@@ -9,21 +9,22 @@ html{
   min-height: 1.8rem;
 }
 .register-form {
+  padding: 6rem 0 3rem 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   min-width: 37.5rem;
-  height: 37.4rem;
   background: @color-bg-add;
   box-shadow: 0.4rem 0.4rem 0.8rem rgba(0, 0, 0, 0.25);
   border-radius: 0.8em;
 }
-.action-form-login{
+.action-form-login {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
 }
-.action-form{
+.action-form {
   height: 100%;
   margin: 0 auto;
 }
@@ -33,7 +34,7 @@ html{
   display: flex;
   flex-direction: column;
 }
-.close_form{
+.close_form {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,62 +56,63 @@ html{
 .label-group input:first-child {
   flex-grow: 1;
 }
-.label-group button{
+.label-group button {
   width: 3.2rem;
   height: 3.2rem;
   background: @color-bg-add;
   border: 0.1rem solid @color-main;
   border-radius: 0.4rem;
 }
-.label-group input{
+.label-group input {
   width: 27rem;
   height: 3.2rem;
 }
-.label-group button:focus{
+.label-group button:focus {
   border: 0.1rem solid @color-main;
   border-radius: 0.4rem;
 }
 i.icon-eye {
   color: @color-main;
 }
-i.icon-eye-off{
+i.icon-eye-off {
   color: @color-main;
 }
-i.icon-cancel:before{
+i.icon-cancel:before {
   color: @color-main;
 }
-.form-control{
+.form-control {
   width: 100%;
   height: 3.2rem;
   background: @color-bg-main;
   border: 0.1rem solid @color-main;
   box-sizing: border-box;
   border-radius: 0.4rem;
-  font-family: "Source Sans Pro";
+  font-family: 'Source Sans Pro';
   font-style: normal;
   font-weight: normal;
   font-size: 1.7rem;
   line-height: 2.3rem;
-  color:@color-text;
+  color: @color-text;
   padding: 1rem;
 }
-.form-control:focus{
+.form-control:focus {
   border: 0.1rem solid @color-main;
 }
-button,input,
+button,
+input,
 input:active,
 input:focus,
 button:active,
 button:focus {
   outline: none;
-  border:none;
+  border: none;
 }
-.btn-primary{
+.btn-primary {
   width: 100%;
   height: 4rem;
   background: @color-btn-middle;
   border-radius: 2rem;
-  font-family: "Source Sans Pro";
+  font-family: 'Source Sans Pro';
   font-style: normal;
   font-weight: normal;
   font-size: 1.8rem;
@@ -118,18 +120,18 @@ button:focus {
   color: @color-btn-white;
   margin-top: 1rem;
 }
-.is-invalid{
+.is-invalid {
   background: @color-bg-error;
   border: 0.1rem solid @color-error;
   box-sizing: border-box;
   border-radius: 0.4rem;
-  color:@color-error;
+  color: @color-error;
 }
-.is-invalid:focus{
+.is-invalid:focus {
   border: 0.1rem solid @color-error;
 }
-label{
-  font-family: "Source Sans Pro";
+label {
+  font-family: 'Source Sans Pro';
   font-style: normal;
   font-weight: 300;
   font-size: 1.8rem;

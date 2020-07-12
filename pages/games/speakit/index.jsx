@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Header } from '../../../components/games/header'
 import { CardsContainer } from '../../../components/games/cardsContainer'
 import { CardShow } from '../../../components/games/cardshow'
 import { Card } from '../../../components/games/card'
 import './index.less'
 import { combineWords } from '../../../lib/crud/auth'
+import { addToStatisticfunc } from '../../../lib/helpers/statisticHelp'
 import { GameStartModalWindow} from '../../../components/GameStartModalWindow';
 import { StatisticGames } from '../../../components/statisticGames'
+
+import { Context } from 'context'
+import { saveStatistic } from 'lib'
 
 
 const Speakit = (props) => {
@@ -21,11 +25,29 @@ const Speakit = (props) => {
   const [allnotGuessed, setallnotGuessed] = useState([])
   const [showResults, setShowResults] = useState(false)
 
+ 
+  
+  const { appStatistics, setAppStatistics } = useContext(Context)
+  
+  const createStatistic = () => {
+    allGuessed.map(el => {
+      const newStatistic = {...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'speakit', 'guessed')}
+      setAppStatistics(newStatistic)
+      saveStatistic(newStatistic)
+    })
+    allnotGuessed.map(el => {
+      const newStatistic = {...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'speakit', 'wrong')}
+      setAppStatistics(newStatistic)
+      saveStatistic(newStatistic)
+    })
+  }
+
 
   const setGameEnd = (bool) => {
     if (bool) {
       console.log('END of the game');
       setShowResults(true);
+      createStatistic()
     }
   }
 
@@ -48,6 +70,7 @@ const Speakit = (props) => {
         word.transcription = item.transcription;
         word.translate = item.wordTranslate;
         word.audio = item.sound
+        word.id = item.id
       }
     });
     setAllGuessed((guessed) => {
@@ -88,6 +111,7 @@ const Speakit = (props) => {
           word.transcription = el.transcription;
           word.translate = el.wordTranslate;
           word.audio = el.sound
+          word.id = el.id
           return word
         }))
     })

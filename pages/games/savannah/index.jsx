@@ -1,99 +1,245 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { GameStartModalWindow } from '../../../components/GameStartModalWindow'
 import { StatisticGames } from '../../../components/statisticGames'
-import { getWordsAndTranslation } from '../../../lib/crud/auth'
+import { combineWords } from '../../../lib/crud/auth'
+import { ButtonsList } from '../../../components/games/'
 
 import './savannah.less'
 
-const Savannah = (props) => {
-  const [data, setDate] = useState([])
-  const [count, setCount] = useState(0)
-  const [points, setPoints] = useState(0)
-  const [words, setWords] = useState([])
-  const [translation, setTranslation] = useState([])
-  const [currentTranslation, setCurrentTranslation] = useState('')
-  const [currentWord, setCurrentWord] = useState('')
+import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
 
-  //  for statistic
+
+const Savannah = (props) => {
+  const [activeStep, setActiveStep] = useState(-1)
+  const [playWord, setPlayWord] = useState(null)
+  const [isResult, toggleResult] = useState(false)
+  const [wordsList, setWordsList] = useState([])
+  const [gameEnd, setGameEnd] = useState(false) 
+
+  const [mistakes, setMistakes] = useState(5)
+  const [points, setPoints] = useState(0)
+  const [counter, setCounter] = useState(0)
+
+  const [allnotGuessed, setallnotGuessed] = useState([])
   const [allGuessed, setAllGuessed] = useState([])
   const [showResults, setShowResults] = useState(false)
 
+  const wordsDeck = useRef()
+
+  
+
+  const getRandomWord = () => {
+    if (activeStep >= 9) {
+      setShowResults(true)
+      setGameEnd(true)
+      return null
+    }
+    const idx = Math.floor(Math.random() * (wordsDeck.current.length - 1))
+    // console.log(idx, wordsDeck.current[idx])
+    if (!wordsDeck.current[idx].used) {
+      const item = setWordAsUsed(idx)
+      setPlayWord(item)
+      return item
+    }
+    return getRandomWord()
+  }
+
+  const getRandomList = (word, arr = []) => {
+    let randomList = arr
+    while (randomList.length < 3) {
+      const idx = Math.floor(Math.random() * (wordsDeck.current.length - 1))
+      if (word !== wordsDeck.current[idx]) {
+        randomList.push(idx)
+      }
+    }
+    randomList = [...new Set(randomList)]
+    return randomList.length === 3 ? randomList : getRandomList(word, randomList)
+  }
+
+  const setWordAsUsed = (idx) => {
+    if (idx < 0 || idx > wordsDeck.current.length) throw Error(`Word index must be less than ${wordsDeck.length + 1}`)
+    const word = wordsDeck.current[idx]
+    word.used = true
+    setActiveStep(activeStep + 1)
+    return word
+  }
+
+  let timer 
+
+  const startTheTimer = () => {
+    timer = setInterval(() => {
+      setCounter(counter + 0.5)
+      if(counter === 39.5){
+        clearInterval(timer)
+        setResult(playWord.id, false)
+      }
+    }, 80)
+  }
+
+  // const re = () => {
+  //   clearInterval(timer)
+  //   setCounter(0)
+  //   startTheTimer()
+  // }
+
+  // useEffect(() => {
+  //     counter < 40 && timer;
+  //     if(counter === 39.5){
+  //       setResult(playWord.id, false)
+  //     }
+  // }, [counter]);
+
   useEffect(() => {
-    getWordsAndTranslation(1, 1)
+    if (isResult) {
+      toggleResult(false)
+      clearInterval(timer)
+      startTheTimer()
+      setupPlayState()
+      // re()
+    }
+  }, [isResult])
+
+  useEffect(() => {
+    console.log(mistakes)
+    if (!mistakes) {
+      setGameEnd(true)
+      setCounter(null)
+      clearInterval(timer)
+      setShowResults(true)
+    }
+  }, [mistakes])
+
+  useEffect(()=>{
+    console.log(mistakes)
+    if(!mistakes){
+      setGameEnd(true)
+      setCounter(null)
+      clearTimeout(timer)
+      setShowResults(true)
+    }
+  }, [mistakes])
+
+  const setupPlayState = () => {
+    const word = getRandomWord()
+    if (word) {
+      const randomList = getRandomList(word.id).map((idx) => wordsDeck.current[idx])
+      const place = Math.floor(Math.random() * 4)
+      const newList = [...randomList]
+      newList.splice(place, 0, word)
+      toggleResult(false)
+      setWordsList(newList)
+      console.log(newList)
+    }
+  }
+
+  const setResult = (id, result) => {
+    const word = wordsDeck.current.find((item) => item.id === id)
+    console.log(word)
+    if (result) {
+      word.right = true
+      setPoints((points) => points + 1)
+      document.getElementById('yes').play()
+      setAllGuessed( gues => {
+          const wo = {};
+          wo.word = word.word
+          wo.transcription = word.transcription
+          wo.translate = word.wordTranslate
+          return [...gues, wo]
+        }
+      )
+    } else {
+      setMistakes(mistakes - 1)
+      document.getElementById('no').play()
+      setallnotGuessed( gues => {
+        const wo = {};
+        wo.word = word.word
+        wo.transcription = word.transcription
+        wo.translate = word.wordTranslate
+        return [...gues, wo]
+       }
+     )
+      word.wrong = true
+    }
+    setTimeout(() => {
+      toggleResult(true)
+    }, 500)
+    // clearTimeout(timer)
+  }
+
+
+  useEffect(() => {
+    combineWords(1, 1)
       .then((data) => {
-        console.log(data)
-        setDate(data)
-        setWords(data.map((el) => el[0]))
-        setTranslation(data.map((el) => el[1]))
-        addToArrayOfAnswers(data)
-        return data
+        wordsDeck.current = data
+        setupPlayState()
       })
       .catch((error) => error)
   }, [])
+  // console.log(allGuessed)
 
-  const addToArrayOfAnswers = (data) => {
-    setAllGuessed(
-      data.map((el) => {
-        const word = {}
-        word.word = el[0]
-        word.translate = el[1]
-        word.correct = 0
-        word.incorrect = 0
-        return word
-      })
-    )
-  }
-  console.log(allGuessed)
-
-  // if(gameEnd){
-  //   setShowResults(true)
-  // }
 
   return (
     <div className='savannah'>
-      {/* <GameStartModalWindow gameId={1} nameOfGame={'savanna'}/> */}
-      {/* {showResults && <StatisticGames allGuessed={allGuessed} />} */}
+      <GameStartModalWindow gameId={1} startTheTimer={startTheTimer} nameOfGame={'savanna'} />
+      {showResults && <StatisticGames allGuessed={allGuessed} allnotGuessed={allnotGuessed}/>}
 
       <div className='savannah-main'>
         <div className='lifes'>
-          <img src='/images/savannah/heart.png' alt='Your lifes' />
-          <img src='/images/savannah/heart.png' alt='Your lifes' />
-          <img src='/images/savannah/heart.png' alt='Your lifes' />
-          <img src='/images/savannah/heart.png' alt='Your lifes' />
-          <img src='/images/savannah/heart.png' alt='Your lifes' />
-        </div>
-
-        <div className='fallingWord'>
-          <span>Falling Word</span>
+          <div className='score'>
+            {mistakes ? Array(mistakes).fill(<img src='/images/savannah/heart.png' alt='picture' />) : ''}
+          </div>
         </div>
 
         <div className='listOfWords'>
           <ul>
-            <li>First Word</li>
-            <li>Second Word</li>
-            <li>Third Word</li>
-            <li>Fourth Word</li>
+            {wordsList.length && (
+              <ButtonsList
+                playWord={playWord}
+                list={wordsList}
+                isResult={isResult}
+                handleClick={({ target }) => {
+                  console.log(target)
+                  if (target.dataset.id === playWord.id) {
+                    setResult(playWord.id, true)
+                  } else {
+                    setResult(playWord.id, false)
+                  }
+                }}
+              />
+            )}
           </ul>
         </div>
       </div>
 
       <div className='drop'>
-        <svg width='3rem' viewBox='0 0 30 42'>
-          <path
-            fill='#9ec6ea'
-            stroke='#438ccd'
-            strokeWidth='1.1'
-            d='M15 3
-                  Q16.5 6.8 25 18
-                  A12.8 12.8 0 1 1 5 18
-                  Q13.5 6.8 15 3z'
-          />
-        </svg>
+        {playWord ? (
+          <div className='drop-item' style={{ top: `${counter}rem` }}>
+            <svg width='3rem' viewBox='0 0 30 42'>
+              <path
+                fill='#9ec6ea'
+                stroke='#438ccd'
+                strokeWidth='1.1'
+                d='M15 3
+                Q16.5 6.8 25 18
+                A12.8 12.8 0 1 1 5 18
+                Q13.5 6.8 15 3z'
+              />
+            </svg>
+            <div className='fallingWord'>
+              <span className='word-fall'>{playWord.word}</span>
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
 
       <div className='bucketOfFlowers'>
-        <img className='flover' src='/images/savannah/bucket.png' alt='Flowers feel bad without the water' />
+        <div className='score'>{Array(points).fill(<img src='/images/savannah/bucket.png' alt='points' />)}</div>
       </div>
+
+      <audio src='../audio/drop.mp3' className='audio_word' id='yes'></audio>
+      <audio src='../audio/boom.mp3' className='audio_word' id='no'></audio>
     </div>
   )
 }

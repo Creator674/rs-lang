@@ -84,42 +84,26 @@ const data = {
   };
   
   return (
-  <div className='tab2'>
+  <div className='tab'>
     
   <h2 className='learntWords'><span>{learntWords}</span> of <span>3600</span> words learnt</h2>
   <div className='alpinist'>
-    <img src='./images/marginalia-done.png' alt=""/>
+    <img src='./images/marginalia-done.png' alt="we are crawling"/>
   </div>
+  <div className="bar-wrapper">
     <Bar
-       data={data}
-       options={{
-        legend:{
-          display: false,
+         data={data}
+         options={{
+          legend:{
+            display: false,
+            },
+          tooltips:{
+            enabled: true,
           },
-        tooltips:{
-          enabled: true,
-        },
-       }
-       }
-
-    />
-  
-
-
-    
-    
-    
-    {/* <Doughnut
-       data={data}
-       width={500}
-       height={500}
-    />
-    <div className="today__eagle currentStrike">
-      <p>Correct answers strike</p>
-      <p className="strike">{strike}</p>
-      <p className="wordsToRepeat">{repeat}</p>
-      <p>Words for repetition</p>
-    </div> */}
+         }
+         }
+      />
+    </div>
   </div>
   );
   };

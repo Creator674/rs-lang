@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './index.less'
 import { Phrases } from '../../../components/games/phrases'
 import { ButtonsLetters } from '../../../components/games/buttonsLetters'
@@ -14,6 +14,12 @@ import step4 from '../../../public/images/hangman/4.png'
 import step5 from '../../../public/images/hangman/5.png'
 import step6 from '../../../public/images/hangman/6.png'
 
+import { Context } from 'context'
+import { saveStatistic } from 'lib'
+import { addToStatisticfunc } from '../../../lib/helpers/statisticHelp'
+
+import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
+
 const Hangman = (props) => {
   const maxWrong = 6
   const shuffled = shuffledArray(20)
@@ -27,6 +33,7 @@ const Hangman = (props) => {
   const [clicks, setClicks] = useState(0)
   const [guessed, setGuessed] = useState(new Set([]))
 
+  const [data, setData] = useState([])
   const [answer, setAnswer] = useState('')
   const [translate, setTranslate] = useState('')
   const [example, setExample] = useState('')
@@ -38,19 +45,37 @@ const Hangman = (props) => {
   const gameOver = mistake >= maxWrong
   const startModal = false
 
+
+  const { appStatistics, setAppStatistics } = useContext(Context)
+  
+  const createStatistic = () => {
+    allGuessed.map(el => {
+      const newStatistic = {...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'hangman', 'guessed')}
+      setAppStatistics(newStatistic)
+      saveStatistic(newStatistic)
+    })
+    allnotGuessed.map(el => {
+      const newStatistic = {...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'hangman', 'wrong')}
+      setAppStatistics(newStatistic)
+      saveStatistic(newStatistic)
+    })
+  }
+
+
   useEffect(() => {
     if (next) {
       setCount(count + 1)
       setNext(false)
     }
     const values = Phrases().then((data) => {
-      // console.log(data);
+      setData(data)
       setAnswer(data[0][shuffled[count]])
       setTranslate(data[1][shuffled[count]])
       setExample(data[2][shuffled[count]])
     })
     if (count + 1 > 10) {
       setShowResults(true)
+      createStatistic()
     }
   }, [next])
 
@@ -87,26 +112,29 @@ const Hangman = (props) => {
     [...guessedWord()].forEach((el) => {
       yourAnswer += el.props.children
     })
-    const word = {}
-    word.word = answer
-    word.example = example
-    word.translate = translate
+    if(answer){
+      const word = {}
+      word.word = answer
+      word.example = example
+      word.translate = translate
+      word.id = data[3][data[0].indexOf(answer)]
 
-    if (gameOver) {
-      setallnotGuessed((notGuessed) => [...notGuessed, word])
-      setStopHandling(true)
-    } else if (answer !== '') {
-      areYouRight = answer === yourAnswer
-      if (areYouRight) {
-        setAllGuessed((guessed) => {
-          if (guessed.some((el) => el.word == word)) {
-            return
-          } else {
-            return [...guessed, word]
-          }
-        })
-        setWin(true)
+      if (gameOver) {
+        setallnotGuessed((notGuessed) => [...notGuessed, word])
         setStopHandling(true)
+      } else if (answer !== '') {
+        areYouRight = answer === yourAnswer
+        if (areYouRight) {
+          setAllGuessed((guessed) => {
+            if (guessed.some((el) => el.word == word)) {
+              return
+            } else {
+              return [...guessed, word]
+            }
+          })
+          setWin(true)
+          setStopHandling(true)
+        }
       }
     }
   }, [clicks])
