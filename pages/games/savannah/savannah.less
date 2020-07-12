@@ -9,8 +9,9 @@
   height: 100vh;
   font-family: 'Martel';
   font-size: 2rem;
+  overflow: hidden;
   .savannah-main {
-    height: 90%;
+    height: 86%;
     display: flex;
     flex-direction: column;
     .lifes {
@@ -23,27 +24,39 @@
         opacity: 0.7;
       }
     }
-    .fallingWord {
+    .listOfWords{
+      margin-top: 25%;
+      width: 100%;
       display: flex;
+      flex-direction: row;
       justify-content: center;
-      border-bottom: 2px solid white;
-      height: 30vh;
-      span{
-        text-shadow: 0.1rem 0.1rem 2rem #9ec6ea;
-        font-weight: 600;
-      }
-    }
-    .listOfWords ul {
-      list-style: decimal;
-      display: flex;
-      justify-content: center;
-      height: 4vh;
-      li {
-        margin: 0 2.5rem;
-        padding: 1rem 1.5rem;
-        border: 0.1rem solid green;
-        background-color: #d3d9cc;
-        box-shadow: 0.1rem 0.1rem 1rem beige;
+      z-index: 5;
+      ul {
+        list-style: decimal;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        height: 4vh;
+        .btn-wrapper {
+          cursor: pointer;
+          margin: 1rem 2rem;
+          padding: 1rem 1.5rem;
+          border: 0.1rem solid green;
+          border-radius: 5px;
+          background-color: #d4f368c4;
+          outline: none !important;
+          box-shadow: 0.1rem 0.1rem 1rem beige;
+          .number {
+            color: #02443e;
+            padding-right: 1.5rem;
+          }
+          button{
+            outline: none !important;
+            border: none !important;
+            background-color: transparent;
+            font-size: 2.2rem;
+          }
+        }
       }
     }
    }
@@ -51,23 +64,48 @@
       display: inline-block;
       position: absolute;
       top: 0;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 0;
+      width: 100%;
+      height: 100%;
+      .drop-item{
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        .fallingWord {
+          display: flex;
+          justify-content: center;
+          .word-fall{
+            text-shadow: 0.2rem 0.2rem 7rem #ffffff;
+            font-weight: 600;
+            color: aliceblue;
+            font-size: 2.2rem;
+          }
+        }
+      }
     }
     .bucketOfFlowers {
       display: flex;
       width: 100%;
+      overflow: hidden;
       flex-direction: row;
       justify-content: center;
-      .flover {
-        height: 9rem;
-        object-fit: contain;
-        opacity: 0.7;
+      .score {
+        
+        img{
+          height: 14rem;
+          object-fit: contain;
+          opacity: 0.7;
+          margin: 0 -5rem;
+        }
       }
     }
 }
 
-.fallingWordAnim {
-  margin-top: 30vh;
-  transition: margin-top 5s linear;
-}
+
+// .burst {
+//   transition: all 0.2s linear;
+//   transform: scale(15);
+//   opacity: 0;
+// }
