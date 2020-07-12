@@ -52,7 +52,7 @@ import React from 'react';
 // import {Bar} from 'react-chartjs-2';
 import {Doughnut} from 'react-chartjs-2';
 import { red } from "@material-ui/core/colors";
-const СardToday = ({ newCards, winrate, totalCards, studyTime, strike, repeat }) => {
+const СardToday = ({ newCards, winrate, totalCards, studyTime, strike, repeat, userName }) => {
 const data = {
     labels: [
       'New cards',
@@ -84,34 +84,50 @@ const data = {
   }
   
   return (
-  <div className='tab1'>
+  <div className='tab'>
     
   <h2 className='studyTime'>Study time: <span>{studyTime}</span></h2>
+  <div className="doughnat-wrapper">
     <Doughnut
-       data={data}
-       options={{
-        legend:{
-          display: false,
+         data={data}
+         options={{
+          legend:{
+            display: false,
+            },
+          tooltips:{
+            enabled: false,
           },
-        tooltips:{
-          enabled: false,
-        },
-       }
-       }
-       width={500}
-       height={500}
-    />
+         }
+         }
+         width={500}
+         height={500}
+      />
     <div className="legend">
       <p><span className='legend-newWords'>{newCards}</span> New words</p>
       <p><span className='legend-winrate'>{winrate}</span> Correct answers</p>
       <p><span className='legend-totalCards'>{totalCards}</span> Cards</p>
     </div>
-    <div className="currentStrike">
+    </div>
+
+    <div className='eagle'>
+        <p className='eagle__text eagle__text_left'>Correct answers strike</p>
+        <div className='eagle__digs'>
+            <p className='eagle__dig'>{strike}</p>
+            <p className='eagle__dig eagle__dig_right-wing'>{repeat}</p>
+            {/* <p className={`eagle__dig eagle__dig_right-wing ${isError ? `eagle__dig_errors` : ''}`}>{rightData}</p> */}
+        </div>
+        <p className='eagle__text'>Words for repetition</p>
+    </div>
+    <div className="congrats">
+      <p className="congrats__name">Good job, <span>{userName}</span>!</p>
+      <p className="congrats__text">You've succeded your daily plan.</p>
+    </div>
+    {/* <div className="currentStrike">
       <p>Correct answers strike</p>
       <p className="strike">{strike}</p>
       <p className="wordsToRepeat">{repeat}</p>
       <p>Words for repetition</p>
-    </div>
+    </div> */}
   </div>
   );
   };

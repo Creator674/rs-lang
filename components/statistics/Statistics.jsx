@@ -138,13 +138,13 @@ export function Statistics() {
         </MuiThemeProvider>
       </Paper>
       <TabPanel value={value} index={0}>
-        <СardToday newCards={50}  winrate={79} totalCards={150} studyTime={49} strike={210} repeat={15}/>
+        <СardToday newCards={50}  winrate={79} totalCards={150} studyTime={49} strike={210} repeat={15} userName={'Olga'}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <СardArchive learntWords={553} day1={30} day2={40} day3={55} day4={10} day5={7} day6={30} day7={40}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <СardGames game={'Super Mario'} learntWords={553} correctCount={80} mistakesCount={15} day1={30} day2={40} day3={55} day4={10} day5={7} day6={30} day7={40}/>
+        <СardGames game={'Super Mario'} learntWords={553} correctCount={80} mistakesCount={15} day1={30} day2={40} day3={55} day4={10} day5={7} day6={30} day7={40} playedGame0={23} playedGame1={15} playedGame2={17} playedGame3={32} playedGame4={10} playedGame5={51}/>
       </TabPanel>
       </div>
   )
