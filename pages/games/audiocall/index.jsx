@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { Transition } from 'react-transition-group'
@@ -7,6 +7,10 @@ import { ButtonsList, ButtonAudio } from '../../../components/games/'
 import { GameStartModalWindow} from '../../../components/GameStartModalWindow';
 import { StatisticGames} from '../../../components/statisticGames';
 import './index.less'
+
+import { Context } from 'context'
+import { saveStatistic } from 'lib'
+import { addToStatisticfunc } from '../../../lib/helpers/statisticHelp'
 
 import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
 
@@ -53,11 +57,29 @@ const Audiocall = () => {
 
   const audio = useRef()
   const wordsDeck = useRef()
-  // const wordsList = useRef()
+  
+  
+  const { appStatistics, setAppStatistics } = useContext(Context)
+  
+  const createStatistic = () => {
+    allGuessed.map(el => {
+      const newStatistic = {...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'audiocall', 'guessed')}
+      setAppStatistics(newStatistic)
+      saveStatistic(newStatistic)
+    })
+    allnotGuessed.map(el => {
+      const newStatistic = {...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'audiocall', 'wrong')}
+      setAppStatistics(newStatistic)
+      saveStatistic(newStatistic)
+    })
+  }
+
+
   const getRandomWord = () => {
     if (activeStep >= 9) {
       setShowResults(true);
       setGameEnd(true)
+      createStatistic()
       return null
     }
     const idx = Math.floor(Math.random() * (wordsDeck.current.length - 1))
@@ -99,6 +121,7 @@ const Audiocall = () => {
     addWord.transcription = word.transcription
     addWord.translate = word.wordTranslate
     addWord.audio = word.sound
+    addWord.id = word.id
     if (result){
       word.right = true;
       setAllGuessed((guessed) => {
@@ -132,11 +155,6 @@ const Audiocall = () => {
       setWordsList(newList)
     }
   }
-
-  // useEffect(() => {
-  //   if (!playWord) return
-  //   // audio.current.play()
-  // }, [playWord])
 
   useEffect(() => {
     combineWords(1, 1)

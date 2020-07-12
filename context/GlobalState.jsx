@@ -126,6 +126,7 @@ const GlobalState = (props) => {
   const [cardSettings, setCardSettings] = useState(currentCardSettings) // SET TO {}
   const [defaultCardSettings, setDefaultCardSettings] = useState(initialCardSettings)
 
+  const [appStatistics, setAppStatistics] = useState({}) 
 
   return (
     <Context.Provider
@@ -150,7 +151,9 @@ const GlobalState = (props) => {
         setAppSettings,
         defaultCardSettings,
         userData,
-        setUserData
+        setUserData,
+        appStatistics,
+        setAppStatistics,
       }}
     >
       {props.children}

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Context } from 'context'
-import { createUser, authenticateUser, setLocalStorageProp } from 'lib'
+import { createUser, authenticateUser, setLocalStorageProp, getStatistic } from 'lib'
 
 import { withInfo, withSwitcher } from '../HOC/hoc'
 
@@ -109,7 +109,9 @@ const SignInForm = ({ className, switchRender, showInfo, closeInfo, closeModal }
     appSettings: { userID, userName },
     setAppSettings,
     userData,
-    setUserData
+    setUserData,
+    appStatistics,
+    setAppStatistics
   } = useContext(Context)
   const { appSettings } = useContext(Context)
   const [isLoading, setLoading] = useState(false)
@@ -134,6 +136,10 @@ const SignInForm = ({ className, switchRender, showInfo, closeInfo, closeModal }
               token: response.data.token, id: response.data.userId})
             setAppSettings({ ...appSettings, isAuthorized: true })
             setUserData({ ...userData, name: response.data.name })
+            getStatistic().then((res) => {
+              console.log(res)
+              setAppStatistics({...appStatistics, ...res.data.optional})
+            })
           })
           .catch((err) => {
             showInfo({ message: err.response ? err.response.data : err.message, type: 'error' })

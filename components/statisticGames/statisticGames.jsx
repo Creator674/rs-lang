@@ -42,9 +42,13 @@ export const StatisticGames = ({ allGuessed, allnotGuessed }) => {
                   ) : (
                     ''
                   )}
-                  {Object.entries(el).map((descr, ind) => (
-                    <p key={descr[1]}>{descr[0] !== 'audio' ? (descr[0] !== 'id' ? descr[1] : '') : ''}</p>
-                  ))}
+                  {Object.entries(el).map((descr, ind) => {
+                    let p
+                    if (descr[0] !== 'audio' && descr[0] !== 'id') {
+                      p = <p key={descr[1]}>{descr[1]}</p>
+                    }
+                    return p
+                  })}
                 </div>
               ))
             : ''}
@@ -69,14 +73,13 @@ export const StatisticGames = ({ allGuessed, allnotGuessed }) => {
                   ) : (
                     ''
                   )}
-                  {Object.entries(el).map((descr) => (
-                    <p key={descr[0]}>
-                      {descr[0] !== 'audio' ? descr[1] : ''}
-                      <span key={descr[1] + ind}>
-                        {descr[0] === 'correct' || descr[0] === 'incorrect' ? `<--${descr[0]}` : null}
-                      </span>
-                    </p>
-                  ))}
+                  {Object.entries(el).map((descr, ind) => {
+                    let p
+                    if (descr[0] !== 'audio' && descr[0] !== 'id') {
+                      p = <p key={descr[1]}>{descr[1]}</p>
+                    }
+                    return p
+                  })}
                 </div>
               ))
             : ''}
