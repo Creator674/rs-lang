@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import { Context } from './app-context'
+import {TramRounded} from '@material-ui/icons';
 
 const initialWords = [
   {
@@ -44,37 +45,61 @@ const initialSort = {
   direction: 'asc',
 }
 
-const currentSettings = {
+const initialCardSettings = {
+  learnNew: true,
+  repeatNew: true,
+  difficultOnly: true,
+  autoSoundplay: false,
+  level: "medium",
+  amountOfWords: 12,
+  amountOfCards: 12,
+  showWord: false,
+  showTranslation: false,
+  showTranscription: false,
+  addPronunciation: false,
+  addIllustration: false,
+  showDefenition: false,
+  defenitionTranslation: false,
+  defenitionPronunciation: false,
+  expampleOfUsage: false,
+  exampleOfUsageTranslation: false,
+  exampleOfUsagePronunciation: false,
+  REPEATbutton: false,
+  HARDbutton: true,
+  SHOWANSWERbutton: true,
+  EASYbutton: true,
+}
+
+const currentCardSettings = {
   learnNew: true,
   repeatNew: true,
   difficultOnly: false,
   autoSoundplay: false,
-
+  level: "hard",
+  amountOfWords: 30,
+  amountOfCards: 30,
   showWord: true,
   showTranslation: false,
   showTranscription: true,
   addPronunciation: false,
   addIllustration: true,
-
   showDefenition: false,
   defenitionTranslation: true,
   defenitionPronunciation: false,
-
   expampleOfUsage: true,
   exampleOfUsageTranslation: false,
   exampleOfUsagePronunciation: true,
-
   REPEATbutton: false,
   HARDbutton: true,
   SHOWANSWERbutton: false,
   EASYbutton: true,
 }
-const initialCardSettings = {
-  isTranslation: true,
-  isWordShown: true,
-  isTranscription: false,
-  isMeaning: true,
-}
+// const initialCardSettings = {
+//   isTranslation: true,
+//   isWordShown: true,
+//   isTranscription: false,
+//   isMeaning: true,
+// }
 const initialLearnProgress = {
   total: 50,
   current: 0,
@@ -92,11 +117,11 @@ const GlobalState = (props) => {
   const [toRepeatWords, setToRepeatWords] = useState(22)
   const [newWords, setNewWords] = useState(30)
   const [isAudioOn, setAudio] = useState(true)
-//   const [cardSettings, setCardSettings] = useState(currentSettings)
-  const [cardSettings, setCardSettings] = useState(initialCardSettings)
+
+  const [cardSettings, setCardSettings] = useState(currentCardSettings)
   const [learnProgress, setLearnProgress] = useState(initialLearnProgress)
   const [appSettings, setAppSettings] = useState(initialAppSettings)
-
+  const [defaultCardSettings, setDefaultCardSettings] = useState(initialCardSettings)
   return (
     <Context.Provider
       value={{
@@ -114,11 +139,11 @@ const GlobalState = (props) => {
         setAudio,
         cardSettings,
         setCardSettings,
-          
         learnProgress,
         setLearnProgress,
         appSettings,
         setAppSettings,
+        defaultCardSettings
       }}
     >
       {props.children}
