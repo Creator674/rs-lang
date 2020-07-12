@@ -5,7 +5,6 @@ import { AppLayout } from 'layouts'
 import { LandingCard, dataLandingCards } from 'components/LandingCard'
 import { ButtonLogIn, UserAvatar, SignInSignUpSwitcher, withInfo } from 'components'
 
-
 import { getLocalStorageProp } from '../lib/localStorage'
 import { LandingMember, dataLandingMembers } from 'components/LandingMember'
 
@@ -140,30 +139,74 @@ const MainPage = ({ showInfo }) => {
             <div className='algorithm__content'>
               <div className='algorithm__light'>
                 <p className='algorithm__text'>
-                  What you study is based on what you already know and what you’ll use most, not what someone else says
-                  you should learn. Lingvist is designed to get you into a learning flow with no distractions.
+                  This algorythm is inpired by the &#8220;Spaced repetition&#8221; methodology. It is similar to
+                  &#8220;Leitner system&#8221;, but has several differences.
                 </p>
                 <p className='algorithm__text'>
-                  What you study is based on what you already know and what you’ll use most, not what someone else says
-                  you should learn. What you study is based on what you already know and what you’ll use most, not what
-                  someone else says you should learn.
+                  <a className='algorithm__link' href='https://en.wikipedia.org/wiki/Spaced_repetition' target='_blank'>
+                    <span className='algorithm__subtitle'>Spaced repetition</span>
+                  </a>
+                  <br />
+                  Spaced repetition is an{' '}
+                  <a
+                    className='algorithm__link'
+                    href='https://en.wikipedia.org/wiki/Evidence-based_education'
+                    target='_blank'
+                  >
+                    evidence-based learning
+                  </a>
+                  technique that is usually performed with{' '}
+                  <a className='algorithm__link' href='https://en.wikipedia.org/wiki/Flashcard' target='_blank'>
+                    flashcards
+                  </a>
+                  . Newly introduced and more difficult flashcards are shown more frequently while older and less
+                  difficult flashcards are shown less frequently in order to exploit the psychological{' '}
+                  <a className='algorithm__link' href='https://en.wikipedia.org/wiki/Spacing_effect' target='_blank'>
+                    spacing effect
+                  </a>
+                  . The use of spaced repetition has been shown to increase rate of learning.
                 </p>
                 <p className='algorithm__text'>
-                  Lingvist is designed to get you into a learning flow with no distractions.
+                  <a className='algorithm__link' href='https://en.wikipedia.org/wiki/Leitner_system' target='_blank'>
+                    <span className='algorithm__subtitle'>Leitner system</span>
+                  </a>
+                  <br />
+                  In this method flashcards are sorted into groups according to how well the learner knows each one in
+                  the Leitner's learning box. The learners try to recall the solution written on a flashcard. If they
+                  succeed, they send the card to the next group. If they fail, they send it back to the first group.
                 </p>
               </div>
               <div className='algorithm__dark'>
                 <p className='algorithm__text'>
-                  What you study is based on what you already know and what you’ll use most, not what someone else says
-                  you should learn. Lingvist is designed to get you into a learning flow with no distractions.
+                  <span className='algorithm__subtitle'>Algorithm differentiators</span>
+                  <br />
+                  In this particular algorithm we based on following approach:
                 </p>
+                <ul className='algorithm__list'>
+                  <li className='algorithm__item'>5 level word knowing: 0, 20, 40, 60, 80, 100 (scoring model)</li>
+                  <li className='algorithm__item'>
+                    In case if correct answer provided during training or game knowledge of current world will be
+                    promoted on next level
+                  </li>
+                  <li className='algorithm__item'>
+                    In case if incorrect answer provided during training or game knowledge of current world will be
+                    demoted to previous level
+                  </li>
+                  <li className='algorithm__item'>Each world have 20 score by default</li>
+                  <li className='algorithm__item'>
+                    Each level have different time interval for next repetition: 0&thinsp;&ndash;&thinsp;10&thinsp;sec,
+                    20&thinsp;&ndash;&thinsp;5&nbsp;min, 40&thinsp;&ndash;&thinsp;20&thinsp;min,
+                    60&thinsp;&ndash;&thinsp;1&thinsp;day, 100&thinsp;&ndash;&thinsp;1&thinsp;week
+                  </li>
+                </ul>
                 <p className='algorithm__text'>
-                  What you study is based on what you already know and what you’ll use most, not what someone else says
-                  you should learn. What you study is based on what you already know and what you’ll use most, not what
-                  someone else says you should learn.
-                </p>
-                <p className='algorithm__text'>
-                  Lingvist is designed to get you into a learning flow with no distractions.
+                  <a
+                    className='algorithm__link'
+                    href='https://en.wikipedia.org/wiki/Leitner_system#/media/File:Leitner_system.svg'
+                    target='_blank'
+                  >
+                    Illustration
+                  </a>
                 </p>
               </div>
             </div>
@@ -209,7 +252,7 @@ const MainPage = ({ showInfo }) => {
           </div>
         </footer>
       </div>
-      </AppLayout>
+    </AppLayout>
   )
 }
 
