@@ -12,8 +12,6 @@ export const InputSlider = (props) => {
         setValue(event.target.value === '' ? '' : Number(event.target.value))
     }
 
-
-
     const handleBlur = () => {
         if (value < 0) {
             setValue(0)

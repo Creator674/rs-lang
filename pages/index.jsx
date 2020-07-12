@@ -5,6 +5,7 @@ import { AppLayout } from 'layouts'
 import { LandingCard, dataLandingCards } from 'components/LandingCard'
 import { ButtonLogIn, UserAvatar, SignInSignUpSwitcher } from 'components'
 
+
 import { getLocalStorageProp } from '../lib/localStorage'
 import { LandingMember, dataLandingMembers } from 'components/LandingMember'
 
@@ -13,7 +14,6 @@ const MainPage = () => {
     appSettings: { isAuthorized },
   } = useContext(Context)
   return (
-    <AppLayout>
       <div className='landing-box'>
         <header className='header'>
           <div className='container header__wrapper'>
@@ -102,9 +102,9 @@ const MainPage = () => {
                   width='1280'
                   height='720'
                   src='https://www.youtube.com/embed/8S0FDjFBj8o'
-                  frameborder='0'
+                  frameBorder='0'
                   allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
-                  allowfullscreen
+                  allowFullScreen
                 ></iframe>
               </div>
             </div>
@@ -203,7 +203,6 @@ const MainPage = () => {
           </div>
         </footer>
       </div>
-    </AppLayout>
   )
 }
 
