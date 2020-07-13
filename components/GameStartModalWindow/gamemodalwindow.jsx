@@ -33,7 +33,7 @@ export const GameStartModalWindow = props => {
          text = ( <div>
                      <h1 style={{color : (colors[gameId]) }}>Puzzle English</h1>
                      <p style={{color : (colorsParagr[gameId]) }}>Click on words, collect phrases. <br></br>
-                     Words can be drag and drop. Select tooltips in the top menu.</p>
+                     Select tooltips in the top menu.</p>
                </div>);
          break;
       case "sprint":

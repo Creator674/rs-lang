@@ -1,10 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { GameStartModalWindow } from '../../../components/GameStartModalWindow'
 import { StatisticGames } from '../../../components/statisticGames'
 import { combineWords } from '../../../lib/crud/auth'
 import { ButtonsList } from '../../../components/games/'
 
 import './savannah.less'
+
+import { Context } from 'context'
+import { saveStatistic } from 'lib'
+import { addToStatisticfunc, gamesMiniStatistic } from '../../../lib/helpers/statisticHelp'
 
 import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
 
@@ -27,15 +31,34 @@ const Savannah = (props) => {
   const wordsDeck = useRef()
 
   
+  const { appStatistics, setAppStatistics } = useContext(Context)
+
+  const createStatistic = () => {
+    allGuessed.map((el) => {
+      const newStatistic = { ...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'savannah', 'guessed') }
+      setAppStatistics(newStatistic)
+      saveStatistic(newStatistic)
+    })
+    allnotGuessed.map((el) => {
+      const newStatistic = { ...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'savannah', 'wrong') }
+      setAppStatistics(newStatistic)
+      saveStatistic(newStatistic)
+    })
+    const newMiniGameStatistic = { ...appStatistics, 'savannah': gamesMiniStatistic(appStatistics, 'savannah', allGuessed.length, allnotGuessed.length) }
+    setAppStatistics(newMiniGameStatistic)
+    saveStatistic(newMiniGameStatistic)
+  }
+
+
 
   const getRandomWord = () => {
     if (activeStep >= 9) {
       setShowResults(true)
       setGameEnd(true)
+      createStatistic()
       return null
     }
     const idx = Math.floor(Math.random() * (wordsDeck.current.length - 1))
-    // console.log(idx, wordsDeck.current[idx])
     if (!wordsDeck.current[idx].used) {
       const item = setWordAsUsed(idx)
       setPlayWord(item)
@@ -76,31 +99,16 @@ const Savannah = (props) => {
     }, 80)
   }
 
-  // const re = () => {
-  //   clearInterval(timer)
-  //   setCounter(0)
-  //   startTheTimer()
-  // }
-
-  // useEffect(() => {
-  //     counter < 40 && timer;
-  //     if(counter === 39.5){
-  //       setResult(playWord.id, false)
-  //     }
-  // }, [counter]);
-
   useEffect(() => {
     if (isResult) {
       toggleResult(false)
       clearInterval(timer)
       startTheTimer()
       setupPlayState()
-      // re()
     }
   }, [isResult])
 
   useEffect(() => {
-    console.log(mistakes)
     if (!mistakes) {
       setGameEnd(true)
       setCounter(null)
@@ -110,7 +118,6 @@ const Savannah = (props) => {
   }, [mistakes])
 
   useEffect(()=>{
-    console.log(mistakes)
     if(!mistakes){
       setGameEnd(true)
       setCounter(null)
@@ -128,13 +135,11 @@ const Savannah = (props) => {
       newList.splice(place, 0, word)
       toggleResult(false)
       setWordsList(newList)
-      console.log(newList)
     }
   }
 
   const setResult = (id, result) => {
     const word = wordsDeck.current.find((item) => item.id === id)
-    console.log(word)
     if (result) {
       word.right = true
       setPoints((points) => points + 1)
@@ -144,6 +149,7 @@ const Savannah = (props) => {
           wo.word = word.word
           wo.transcription = word.transcription
           wo.translate = word.wordTranslate
+          wo.id = word.id
           return [...gues, wo]
         }
       )
@@ -155,6 +161,7 @@ const Savannah = (props) => {
         wo.word = word.word
         wo.transcription = word.transcription
         wo.translate = word.wordTranslate
+        wo.id = word.id
         return [...gues, wo]
        }
      )
@@ -163,7 +170,6 @@ const Savannah = (props) => {
     setTimeout(() => {
       toggleResult(true)
     }, 500)
-    // clearTimeout(timer)
   }
 
 
@@ -175,7 +181,6 @@ const Savannah = (props) => {
       })
       .catch((error) => error)
   }, [])
-  // console.log(allGuessed)
 
 
   return (
@@ -198,7 +203,6 @@ const Savannah = (props) => {
                 list={wordsList}
                 isResult={isResult}
                 handleClick={({ target }) => {
-                  console.log(target)
                   if (target.dataset.id === playWord.id) {
                     setResult(playWord.id, true)
                   } else {

@@ -16,7 +16,7 @@ import step6 from '../../../public/images/hangman/6.png'
 
 import { Context } from 'context'
 import { saveStatistic } from 'lib'
-import { addToStatisticfunc } from '../../../lib/helpers/statisticHelp'
+import { addToStatisticfunc, gamesMiniStatistic } from '../../../lib/helpers/statisticHelp'
 
 import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
 
@@ -43,8 +43,6 @@ const Hangman = (props) => {
   const [showResults, setShowResults] = useState(false)
 
   const gameOver = mistake >= maxWrong
-  const startModal = false
-
 
   const { appStatistics, setAppStatistics } = useContext(Context)
   
@@ -59,6 +57,9 @@ const Hangman = (props) => {
       setAppStatistics(newStatistic)
       saveStatistic(newStatistic)
     })
+    const newMiniGameStatistic = { ...appStatistics, 'hangman': gamesMiniStatistic(appStatistics, 'hangman', allGuessed.length, allnotGuessed.length) }
+    setAppStatistics(newMiniGameStatistic)
+    saveStatistic(newMiniGameStatistic)
   }
 
 
@@ -91,7 +92,7 @@ const Hangman = (props) => {
   const guessedWord = () => {
     return (
       (answer &&
-        answer.split('').map((letter, i) => (guessed.has(letter) ? <span key={i}>{letter}</span> : <span> </span>))) ||
+        answer.split('').map((letter, i) => (guessed.has(letter) ? <span key={i+letter}>{letter}</span> : <span key={i+letter}> </span>))) ||
       []
     )
   }
@@ -102,7 +103,9 @@ const Hangman = (props) => {
     setAnswer('')
     setWin(false)
     setStopHandling(false)
-    setNext(true)
+    setTimeout(() => {
+      setNext(true)
+    }, 80) 
   }
 
   let yourAnswer = ''
@@ -115,7 +118,7 @@ const Hangman = (props) => {
     if(answer){
       const word = {}
       word.word = answer
-      word.example = example
+      word.example = data[4][data[0].indexOf(answer)]
       word.translate = translate
       word.id = data[3][data[0].indexOf(answer)]
 
