@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { Context } from './app-context'
-import {TramRounded} from '@material-ui/icons';
+import {TramRounded, TrendingUpRounded} from '@material-ui/icons';
 
 const initialWords = [
   {
@@ -47,37 +47,37 @@ const initialSort = {
 
 const initialCardSettings = {
   learnNew: true,
-  repeatNew: true,
-  difficultOnly: true,
-  autoSoundplay: false,
+  repeatNew: false,
+  difficultOnly: false,
+  autoSoundplay: true,
   level: "medium",
-  amountOfWords: 12,
-  amountOfCards: 12,
-  showWord: false,
-  showTranslation: false,
-  showTranscription: false,
-  addPronunciation: false,
-  addIllustration: false,
+  amountOfWords: 20,
+  amountOfCards: 20,
+  showWord: true,
+  showTranslation: true,
+  showTranscription: true,
+  addPronunciation: true,
+  addIllustration: true,
   showDefenition: false,
   defenitionTranslation: false,
   defenitionPronunciation: false,
-  expampleOfUsage: false,
+  expampleOfUsage: true,
   exampleOfUsageTranslation: false,
-  exampleOfUsagePronunciation: false,
-  REPEATbutton: false,
+  exampleOfUsagePronunciation: true,
+  REPEATbutton: true,
   HARDbutton: true,
   SHOWANSWERbutton: true,
   EASYbutton: true,
 }
 
 const currentCardSettings = {
-  learnNew: true,
-  repeatNew: true,
-  difficultOnly: false,
+  learnNew: false,
+  repeatNew: false,
+  difficultOnly: true,
   autoSoundplay: false,
   level: "hard",
-  amountOfWords: 30,
-  amountOfCards: 30,
+  amountOfWords: 29,
+  amountOfCards: 29,
   showWord: true,
   showTranslation: false,
   showTranscription: true,

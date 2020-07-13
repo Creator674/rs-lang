@@ -54,7 +54,7 @@ export const SelectListDifficulty = (props) => {
       height: 22,
       justifyContent: 'space-around',
       alignItems: 'flex-start',
-      width: 80,
+      width: 132,
       height: 50,
       background: 'white',
       borderRadius: 4,
@@ -70,7 +70,7 @@ export const SelectListDifficulty = (props) => {
   ]
   const changeOption = (e) => {
     setSelectedOption(e)
-    localSettings.level = selectedOption.value
+    localSettings.level = e.value
     setLocalSettings(localSettings)
   }
 
@@ -82,7 +82,7 @@ export const SelectListDifficulty = (props) => {
         options={options}
         styles={customStyles}
         classNamePrefix='difficulty_select'
-        defaultValue={selectedOption}
+        value={selectedOption}
         instanceId='diff'
         onChange={changeOption}
       />
