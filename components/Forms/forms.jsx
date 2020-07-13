@@ -20,7 +20,7 @@ const SignUpForm = ({ className, showInfo, closeInfo, toggleClose }) => {
     appSettings: { userID, userName },
     setAppSettings,
     userData,
-    setUserData
+    setUserData,
   } = useContext(Context)
   const { appSettings } = useContext(Context)
 
@@ -67,9 +67,6 @@ const SignUpForm = ({ className, showInfo, closeInfo, toggleClose }) => {
         <Form className={`action-form ${className}`}>
           <div>{status}</div>
           <div className='form-group'>
-            <span className='close_form'>
-              <i className='icon-cancel'></i>
-            </span>
             <label htmlFor='name'>Name</label>
             <Field name='name' type='text' className='form-control' />
             <div className='error-container'>
@@ -111,7 +108,7 @@ const SignInForm = ({ className, switchRender, showInfo, closeInfo, closeModal }
     userData,
     setUserData,
     appStatistics,
-    setAppStatistics
+    setAppStatistics,
   } = useContext(Context)
   const { appSettings } = useContext(Context)
   const [isLoading, setLoading] = useState(false)
@@ -132,13 +129,16 @@ const SignInForm = ({ className, switchRender, showInfo, closeInfo, closeModal }
           .then((response) => {
             console.log(response)
             closeModal()
-            setLocalStorageProp('user', { refreshToken: response.data.refreshToken,
-              token: response.data.token, id: response.data.userId})
+            setLocalStorageProp('user', {
+              refreshToken: response.data.refreshToken,
+              token: response.data.token,
+              id: response.data.userId,
+            })
             setAppSettings({ ...appSettings, isAuthorized: true })
             setUserData({ ...userData, name: response.data.name })
             getStatistic().then((res) => {
               console.log(res)
-              setAppStatistics({...appStatistics, ...res.data.optional})
+              setAppStatistics({ ...appStatistics, ...res.data.optional })
             })
           })
           .catch((err) => {

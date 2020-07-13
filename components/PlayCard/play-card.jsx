@@ -8,26 +8,26 @@ import { ProgressChart } from '../Progress'
 import { PlayImage, PlayFooter, PlayGuessField } from '.'
 import { getAudio } from 'lib/helpers'
 import { Context } from 'context'
-
+import { combineWordsForDictionary } from '../../lib/crud/auth'
 import './play-card.less'
 
-const word = {
-  id: '5e9f5ee35eb9e72bc21af4a0',
-  group: 0,
-  page: 0,
-  word: 'alcohol',
-  image: 'files/01_0002.jpg',
-  audio: 'files/01_0002.mp3',
-  audioMeaning: 'files/01_0002_meaning.mp3',
-  audioExample: 'files/01_0002_example.mp3',
-  textMeaning: '<i>Alcohol</i> is a type of drink that can make people drunk.',
-  textExample: 'A person should not drive a car after he or she has been drinking <b>alcohol</b>.',
-  transcription: '[ǽlkəhɔ̀ːl]',
-  textExampleTranslate: 'Человек не должен водить машину после того, как он выпил алкоголь',
-  textMeaningTranslate: 'Алкоголь - это тип напитка, который может сделать людей пьяными',
-  wordTranslate: 'алкоголь',
-  wordsPerExampleSentence: 15,
-}
+// const word = {
+//   id: '5e9f5ee35eb9e72bc21af4a0',
+//   group: 0,
+//   page: 0,
+//   word: 'alcohol',
+//   image: 'files/01_0002.jpg',
+//   audio: 'files/01_0002.mp3',
+//   audioMeaning: 'files/01_0002_meaning.mp3',
+//   audioExample: 'files/01_0002_example.mp3',
+//   textMeaning: '<i>Alcohol</i> is a type of drink that can make people drunk.',
+//   textExample: 'A person should not drive a car after he or she has been drinking <b>alcohol</b>.',
+//   transcription: '[ǽlkəhɔ̀ːl]',
+//   textExampleTranslate: 'Человек не должен водить машину после того, как он выпил алкоголь',
+//   textMeaningTranslate: 'Алкоголь - это тип напитка, который может сделать людей пьяными',
+//   wordTranslate: 'алкоголь',
+//   wordsPerExampleSentence: 15,
+// }
 
 const useStyles = makeStyles((theme) => ({
   btnRow: {
@@ -86,62 +86,106 @@ export const PlayCard = (props) => {
     cardSettings: { isMeaning },
   } = useContext(Context)
   const classes = useStyles()
+
+  const [data, setData] = useState([])
+  const [count, setCount] = useState(0)
+  const [currentWord, setCurrentWord] = useState(null)
+
   const [audioWord, setAudioWord] = useState(null)
   const [audioMeaning, setAudioMeaning] = useState(null)
   const [audioExample, setAudioExample] = useState(null)
   const [isAudioLock, setAudioLock] = useState(true)
   const [isImageMinimized, setImageMinimized] = useState(false)
 
+  const [showTheAnswer, setShowAnswer] = useState(false)
   const [isGuessed, setIsGuessed] = useState(false)
 
   let isMounted = false
 
   useEffect(() => {
     isMounted = true
-    getAudio(word.audio).then((url) => {
-      isMounted && setAudioWord(url)
+    combineWordsForDictionary(1,1).then((res)=>{
+      console.log(res, isMounted)
+      isMounted && setData(res)
+      isMounted && setCurrentWord(res[0])
     })
-    isMeaning &&
-      getAudio(word.audioMeaning).then((url) => {
-        isMounted && setAudioMeaning(url)
-      })
-    getAudio(word.audioExample).then((url) => {
-      isMounted && setAudioExample(url)
-    })
-
     return () => {
       isMounted = false
     }
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if(data.length){
+      setCurrentWord(data[count])
+      setAudioWord(data[count].sound)
+      setAudioMeaning(data[count].audioMeaning)
+      setAudioExample(data[count].audioExample)
+    }
+  }, [data])
+
+  useEffect(() => {
+    if(isGuessed){
+      setCount(count + 1)
+      return
+    }
+  }, [isGuessed]);
+
+  console.log(audioWord,audioMeaning, audioExample )
+// console.log(word)
+  const addToHardSection = () => {
+    console.log('haard')
+  }
+  const addToEasySection = () => {
+    console.log('easy')
+  }
+  const repeatWord = () => {
+    console.log('repeatWord')
+  }
+  const showAnswerClick = () => {
+    setShowAnswer(answer => !answer)
+  }
+
+
 
   return (
     <div className='play-card'>
       <div className='card-box'>
         <div className={classes.btnRow}>
           <div className='btn-wrapper card-wrapper'>
-            <MuiButton themeName='hard'>Hard</MuiButton>
-            <MuiButton themeName='repeat'>Repeat</MuiButton>
-            <MuiButton themeName='easy'>Easy</MuiButton>
+            <MuiButton themeName='hard'
+                       action={addToHardSection}>Hard</MuiButton>
+            <MuiButton themeName='repeat'
+                       action={repeatWord}>Repeat</MuiButton>
+            <MuiButton themeName='easy'
+                       action={addToEasySection}>Easy</MuiButton>
           </div>
-          <MuiButton themeName='answer'>Answer</MuiButton>
+          <MuiButton themeName='answer'
+                     action={showAnswerClick}>Answer</MuiButton>
+
         </div>
         <div className='play-image'>
-          <PlayImage src={word.image} isImageMinimized={isImageMinimized} setImageMinimized={setImageMinimized} />
+          <PlayImage src={currentWord ? currentWord.image : ''} isImageMinimized={isImageMinimized}
+                     setImageMinimized={setImageMinimized} />
         </div>
         <div className={`${classes.gameboard} card-wrapper`}>
-          <CardText className='border-top-0' outerStyles={classes.styleDictionary} index='textExample' word={word}>
+          <CardText className='border-top-0'
+                    outerStyles={classes.styleDictionary} index='textExample'
+                    word={currentWord? currentWord : null}>
             <PlayGuessField
-              word={word.word}
+              showTheAnswer={showTheAnswer}
+              word={currentWord ? currentWord.word : null}
               setAudioLock={setAudioLock}
               setIsGuessed={setIsGuessed}
               isGuessed={isGuessed}
             />
           </CardText>
           {isMeaning ? (
-            <CardText className='second-row' outerStyles={classes.styleDictionary} index='textMeaning' word={word} />
+            <CardText className='second-row'
+                      outerStyles={classes.styleDictionary} index='textMeaning'
+                      word={currentWord? currentWord : ''} />
           ) : null}
           <PlayFooter
-            word={word}
+            word={currentWord? currentWord : ''}
             audio={isGuessed === true ? audioExample : [audioWord, isMeaning ? audioMeaning : null]}
             isAudioLock={isAudioLock}
             isGuessed={isGuessed}

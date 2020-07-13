@@ -2,11 +2,12 @@ import React, { useContext, useEffect } from 'react'
 import { Context } from 'context'
 import './style.less'
 import { AppLayout } from 'layouts'
-import { LandingCard, dataLandingCards } from 'components/LandingCard'
+import Link from 'next/link'
 import { ButtonLogIn, UserAvatar, SignInSignUpSwitcher, withInfo } from 'components'
 
 import { getLocalStorageProp } from '../lib/localStorage'
 import { LandingMember, dataLandingMembers } from 'components/LandingMember'
+import { LandingCard, dataLandingCards } from 'components/LandingCard'
 
 const MainPage = ({ showInfo }) => {
   const {
@@ -95,7 +96,9 @@ const MainPage = ({ showInfo }) => {
                   Our application has 6&nbsp;different difficulty levels in each of 6&nbsp;games , that will suit
                   everyone.
                 </p>
-                <button className='btn-start promo__button'>Start Learning</button>
+                <Link href='/learn'>
+                  <button className='btn-start promo__button'>Start Learning</button>
+                </Link>
               </div>
             </div>
           </div>
@@ -154,7 +157,7 @@ const MainPage = ({ showInfo }) => {
                     target='_blank'
                   >
                     evidence-based learning
-                  </a>
+                  </a>{' '}
                   technique that is usually performed with{' '}
                   <a className='algorithm__link' href='https://en.wikipedia.org/wiki/Flashcard' target='_blank'>
                     flashcards

@@ -18,7 +18,27 @@ export const SettingsModal = () => {
   const { cardSettings, setCardSettings, defaultCardSettings } = useContext(Context)
 
   const [localSettings, setLocalSettings] = useState(cardSettings)
-  useEffect(() => {}, [localSettings])
+
+  const findTrue = (obj) => {
+    for (let val in obj) {
+      if (obj[val]) {
+        return val
+      }
+    }
+  }
+
+  const [checkedRadio, setCheckedRadio] = useState(findTrue(localSettings))
+
+  const changeRadioSetting = (e) => {
+    document.querySelectorAll("input[type='radio']").forEach((elem) => {
+      elem.checked = false
+    })
+    localSettings[checkedRadio] = false
+    e.target.checked = true
+    localSettings[e.target.value] = true
+    setLocalSettings(localSettings)
+    setCheckedRadio(e.target.value)
+  }
 
   const changeSetting = (e) => {
     const currValue = e.target.value
@@ -31,15 +51,23 @@ export const SettingsModal = () => {
 
   const applySettings = () => {
     setCardSettings(localSettings)
+    console.log(localSettings)
   }
-
+  const [inputNewValue, setInputNewValue] = useState(cardSettings.amountOfCards)
   const resetSettings = () => {
+    setInputNewValue(defaultCardSettings.amountOfCards)
+    setLocalSettings(Object.assign({}, defaultCardSettings))
+    setCardSettings(Object.assign({}, defaultCardSettings))
     document.querySelectorAll("input[type='radio'],input[type='checkbox']").forEach((elem) => {
       elem.checked = defaultCardSettings[elem.value]
     })
-    setLocalSettings(Object.assign({}, defaultCardSettings))
-    setCardSettings(Object.assign({}, defaultCardSettings))
     document.querySelector('.difficulty_select__single-value').innerHTML = defaultCardSettings.level
+    document.querySelectorAll('.rangeInput').forEach((e) => {
+      e.value = defaultCardSettings[e.id]
+    })
+    document.querySelectorAll('.rangeSlider').forEach((e) => {
+      e.value = defaultCardSettings[e.id]
+    })
   }
 
   return (
@@ -47,13 +75,13 @@ export const SettingsModal = () => {
       <div className='settingsWrapper'>
         <section className='appSettingsWrapper'>
           <FormWrapper legendText='Application'>
-            <SettingsItem type='radio' labelText='learn new words' value='learnNew' onClick={changeSetting} />
-            <SettingsItem type='radio' labelText='repeat' value='repeatNew' onClick={changeSetting} />
+            <SettingsItem type='radio' labelText='learn new words' value='learnNew' onClick={changeRadioSetting} />
+            <SettingsItem type='radio' labelText='repeat' value='repeatNew' onClick={changeRadioSetting} />
             <SettingsItem
               type='radio'
               labelText='learn difficult words'
               value='difficultOnly'
-              onClick={changeSetting}
+              onClick={changeRadioSetting}
             />
             <SettingsItem labelText='auto soundplay' value='autoSoundplay' onClick={changeSetting} />
             <SelectListDifficulty
@@ -61,8 +89,22 @@ export const SettingsModal = () => {
               onChange={changeSetting}
               setLocalSettings={setLocalSettings}
             />
-            <InputSlider labelText='amount of new words per day' onClick={changeSetting} />
-            <InputSlider labelText='amount of cards per day' onClick={changeSetting} />
+            <InputSlider
+              labelText='amount of new words per day'
+              onClick={changeSetting}
+              localSettings={localSettings}
+              id='amountOfWords'
+              setLocalSettings={setLocalSettings}
+              value={localSettings.amountOfWords}
+            />
+            <InputSlider
+              labelText='amount of cards per day'
+              onClick={changeSetting}
+              localSettings={localSettings}
+              id='amountOfCards'
+              setLocalSettings={setLocalSettings}
+              value={localSettings.amountOfCards}
+            />
           </FormWrapper>
         </section>
 

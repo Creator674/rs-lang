@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert from '@material-ui/lab/Alert'
 import { Popup } from 'components'
@@ -77,6 +77,39 @@ export const withSwitcher = (FirstComponent, SecondComponent) => {
           <FirstComponent {...props} switchRender={() => setRender(false)} />
         ) : (
           <SecondComponent {...props} />
+        )}
+      </>
+    )
+  }
+
+  return NewComponent
+}
+
+
+export const withAuth = (WrappedComponent) => {
+  const NewComponent = (isAuthorized, ...props) => {
+    const [showModal, toggleModal] = useState(false)
+    const updateChildrenWithProps = React.Children.map(props.children, (child, i) => {
+      return React.cloneElement(child, {
+        closeModal: () => toggleModal(null),
+      })
+    })
+
+    useEffect(() => {
+      if (!isAuthorized) toggleModal(true)
+    }, [isAuthorized])
+
+    return (
+      <>
+        <WrappedComponent {...props} showModal={() => toggleModal(true)} />
+        {showModal && (
+          <Popup
+            toggleClose={() => {
+              console.log('redirect user')
+            }}
+          >
+            <div className='register-form'>{updateChildrenWithProps}</div>
+          </Popup>
         )}
       </>
     )

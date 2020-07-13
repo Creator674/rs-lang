@@ -3,50 +3,56 @@ import React, { useState } from 'react'
 import './input-slider.less'
 
 export const InputSlider = (props) => {
+  const { labelText, localSettings, setLocalSettings, id, value } = props
 
-    const { labelText } = props
+  const [currValue, setCurrValue] = useState(value)
 
-    const [value, setValue] = useState(5)
+  const handleNumberChange = (event) => {
+    document.querySelectorAll(`#${id}`).forEach((e) => {
+      e.value = Number(event.target.value)
+    })
+    setCurrValue(Number(event.target.value))
+    localSettings[id] = Number(event.target.value)
+    setLocalSettings(localSettings)
+  }
 
-    const handleNumberChange = (event) => {
-        setValue(event.target.value === '' ? '' : Number(event.target.value))
+  const handleBlur = () => {
+    if (currValue < 5) {
+      setCurrValue(5)
+    } else if (currValue > 30) {
+      setCurrValue(30)
     }
+  }
 
-    const handleBlur = () => {
-        if (value < 0) {
-            setValue(0)
-        } else if (value > 30) {
-            setValue(30)
-        }
-    }
+  return (
+    <li className='rangeInputSliderWrapper'>
+      <input
+        className='rangeInput'
+        type='number'
+        min='5'
+        max='30'
+        step='1'
+        id={id}
+        defaultValue={typeof value === 'number' ? currValue : value}
+        onChange={handleNumberChange}
+        onBlur={handleBlur}
+      />
 
-    return (
-        <li className="rangeInputSliderWrapper">
-            <input
-                className="rangeInput"
-                type="number"
-                min="5"
-                max="30"
-                step="1"
-                value={typeof value === 'number' ? value : 10}
-                onChange={handleNumberChange}
-                onBlur={handleBlur}
-            />
-
-            <div className="rangeSliderWrapper">
-                <input
-                    className="rangeSlider"
-                    type="range"
-                    min="5"
-                    max="30"
-                    step="1"
-                    onChange={handleNumberChange}
-                    value={typeof value === 'number' ? value : 10}
-                    id="input-slider"
-                />
-                <label className="sliderText" htmlFor="input-slider">{labelText}</label>
-            </div>
-
-        </li>
-    )
+      <div className='rangeSliderWrapper'>
+        <input
+          className='rangeSlider'
+          type='range'
+          min='5'
+          max='30'
+          step='1'
+          onChange={handleNumberChange}
+          defaultValue={typeof value === 'number' ? currValue : value}
+          id={id}
+        />
+        <label className='sliderText' htmlFor='input-slider'>
+          {labelText}
+        </label>
+      </div>
+    </li>
+  )
 }

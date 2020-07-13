@@ -20,14 +20,18 @@ const useStyle = makeStyles((theme) => {
 })
 
 function StringParsed({ string, children }) {
-  const [, part1, , part2, part3] = string.match(/(.*)<(.*)>(.*)<\/\2>(.*)/)
-  return (
-    <>
-      {part1}
-      {children}
-      {part3}
-    </>
-  )
+  if(string){
+    const [, part1, , part2, part3] = string.match(/(.*)<(.*)>(.*)<\/\2>(.*)/)
+    return (
+      <>
+        {part1}
+        {children}
+        {part3}
+      </>
+    )
+  } else {
+    return null
+  }
 }
 
 export const CardText = ({ word, index, outerStyles, children, className }) => {
@@ -39,10 +43,10 @@ export const CardText = ({ word, index, outerStyles, children, className }) => {
         <p className='sentence' dangerouslySetInnerHTML={{ __html: word[index] }} />
       ) : (
         <p className='sentence'>
-          <StringParsed string={word[index]}>{children}</StringParsed>
+          <StringParsed string={word? word[index] : ''}>{children}</StringParsed>
         </p>
       )}
-      <p className='translation' dangerouslySetInnerHTML={{ __html: word[translateKey] }} />
+      <p className='translation' dangerouslySetInnerHTML={{ __html: word? word[translateKey] : ''}} />
     </div>
   )
 }
