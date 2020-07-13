@@ -154,7 +154,7 @@ const MainPage = ({ showInfo }) => {
                     target='_blank'
                   >
                     evidence-based learning
-                  </a>
+                  </a>{' '}
                   technique that is usually performed with{' '}
                   <a className='algorithm__link' href='https://en.wikipedia.org/wiki/Flashcard' target='_blank'>
                     flashcards
