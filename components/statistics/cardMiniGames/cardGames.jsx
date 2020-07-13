@@ -1,146 +1,140 @@
-// import React, {useEffect} from "react";
-import "./cardGames.less"
-// import {CanvasJSChart} from 'canvasjs-react-charts'
-// // var CanvasJSReact = require('./canvasjs.react');
-// // var CanvasJSReact = require('../../../lib/canvasjs/canvasjs.react');
-// // var CanvasJSChart = CanvasJSReact.CanvasJSChart;
-// // import CanvasJSReact from "../../../lib/canvasjs/canvasjs.react"
+import React, { useEffect, useState } from 'react'
+import './cardGames.less'
+import { Bar } from 'react-chartjs-2'
+import { Pie } from 'react-chartjs-2'
 
-// console.log({CanvasJSChart})
+const СardGames = ({
+  game,
+  correctCount,
+  mistakesCount,
+  day1,
+  day2,
+  day3,
+  day4,
+  day5,
+  day6,
+  day7,
+  playedGame0,
+  playedGame1,
+  playedGame2,
+  playedGame3,
+  playedGame4,
+  playedGame5,
+  savannah,speakit,sprint, audiocall, hangman, puzzle,
+}) => {
+  
 
-// const СardArchive = (props) => {
-//     const options = {
-//         animationEnabled: true,
-//         subtitles: [{
-//             text: "71% Positive",
-//             verticalAlign: "center",
-//             fontSize: 24,
-//             dockInsidePlotArea: true
-//         }],
-//         data: [{
-//             type: "doughnut",
-//             showInLegend: true,
-//             indexLabel: "{name}: {y}",
-//             yValueFormatString: "#,###'%'",
-//             dataPoints: [
-//                 { name: "Unsatisfied", y: 5 },
-//                 { name: "Very Unsatisfied", y: 31 },
-//                 { name: "Very Satisfied", y: 40 },
-//                 { name: "Satisfied", y: 17 },
-//                 { name: "Neutral", y: 7 }
-//             ]
-//         }]
-//     }
-//     // useEffect(() => {var CanvasJSChart = CanvasJSReact.CanvasJSChart})
+  const [gameName, setGameName] = useState('speakit')
+  const [ind, setInd] = useState(0)
+  const [dateData, setDateData] = useState(0)
+  const [date, setDate] = useState(0)
+  const [amountWords, setamountWords] = useState(0)
+  const [amountErrors, setamountErrors] = useState(0)
+  const [amountGuessed, setamountGuessed] = useState(0)
 
-//     return (
-//       <div>
-//         <div class="study-time">
-//             <p>Study Time: 46 min</p>
-//         </div>
-//         <div className="chartContainer">
-//          {/* <CanvasJSChart options = {options} /> */}
-//         </div>
-//       </div>
-//     )
-//   };
- 
-//   export default СardArchive;
+  const games = [savannah, speakit, sprint, audiocall, hangman, puzzle];
+  const gamesNames = ['savannah', 'speakit', 'sprint', 'audiocall', 'hangman', 'puzzle'];
+
+  const settoGameName = (name) => {
+    setGameName(name)
+    setInd(gamesNames.indexOf(name))
+    const Isdata = Object.entries(games[gamesNames.indexOf(name)])
+    if(Isdata[0]){
+      setDateData(Isdata[0][1][1]) 
+    }
+  }
+   
+  useEffect(() => {
+    if(dateData){
+      setDate(Object.keys(dateData) )         // дата
+      const countOfGame = Object.entries(dateData)[1]
+      if(countOfGame){
+        setamountWords(Object.entries(dateData)[1][1].amount)
+        setamountErrors(Object.entries(dateData)[1][1].faults)
+        setamountGuessed(Object.entries(dateData)[1][1].guessed)
+      }
+    }
+  }, [gameName]) 
+
+  
 
 
-import React from 'react';
-import {Bar} from 'react-chartjs-2';
-import {Pie} from 'react-chartjs-2';
-const СardGames = ({game, correctCount, mistakesCount ,day1, day2, day3, day4, day5, day6, day7, playedGame0, playedGame1, playedGame2, playedGame3, playedGame4, playedGame5}) => {
-const data2 = {
-    labels: [
-      '-6',
-      '-5',
-      '-4',
-      '-3',
-      '-2',
-      '-1',
-      'Today',
-  ],
-  datasets: [{
-    data: [day1, day2, day3, day4, day5, day6, day7],
-    backgroundColor: [
-    '#7AB4CC',
-    '#1F658A',
-    '#D3E8ED',
-    '#7AB4CC',
-    '#1F658A',
-    '#2C3E50',
-    '#C00000'
+  const data2 = {
+    labels: date ,
+    datasets: [
+      {
+        data: [day1, day2, day3, day4, day5, day6, day7],
+        backgroundColor: ['#7AB4CC', '#1F658A', '#D3E8ED', '#7AB4CC', '#1F658A', '#2C3E50', '#C00000'],
+      },
     ],
-
-  }]
-  };
+  }
   const data1 = {
     labels: ['SpeakIt', 'Savannah', 'Audiocall', 'Hangman', 'English Puzzle', 'Sprint'],
-  datasets: [{
-    data: [playedGame0, playedGame1, playedGame2, playedGame3, playedGame4, playedGame5],
-    backgroundColor: [
-    '#7AB4CC',
-    '#1F658A',
-    '#D3E8ED',
-    '#7AB4CC',
-    '#1F658A',
-    '#2C3E50',
-    '#C00000'
+    datasets: [
+      {
+        data: [playedGame0, playedGame1, playedGame2, playedGame3, playedGame4, playedGame5],
+        backgroundColor: ['#7AB4CC', '#1F658A', '#D3E8ED', '#7AB4CC', '#1F658A', '#2C3E50', '#C00000'],
+      },
     ],
+  }
 
-  }]
-  };
+
   
+
   return (
-  <div className='tab'>
-    
-  <h2 className='currentGame'><span>{game}</span></h2>
-  <div className='eagle'>
-    <p className='eagle__text eagle__text_left'>Correct answers</p>
-    <div className='eagle__digs'>
-      <p className='eagle__dig'>{correctCount}</p>
-      <p className='eagle__dig eagle__dig_right-wing eagle__dig_errors'>{mistakesCount}</p>
+    <div className='tab'>
+      <h2 className='currentGame'>
+        <button onClick={() => {settoGameName('savannah')}}>savannah</button>
+        <button onClick={() => {settoGameName('speakit')}} >speakit</button>
+        <button onClick={() => {settoGameName('sprint')}}>sprint</button>
+        <button onClick={() => {settoGameName('audiocall')}}>audiocall</button>
+        <button onClick={() => {settoGameName('hangman')}}>hangman</button>
+        <button onClick={() => {settoGameName('puzzle')}}>puzzle</button>
+      </h2>
+      <h2 style={{textAlign: 'center'}}>{gameName}</h2>
+      <div className='eagle'>
+        <p className='eagle__text eagle__text_left'>Correct answers</p>
+        <div className='eagle__digs'>
+          <p className='eagle__dig'>
+            {amountGuessed}
+            </p>
+          <p className='eagle__dig eagle__dig_right-wing eagle__dig_errors'>
+            {amountErrors}
+            </p>
+        </div>
+        <p className='eagle__text'>Errors</p>
+      </div>
+
+      <div className='pie-wrapper'>
+        <Pie
+          data={data1}
+          width={150}
+          height={150}
+          options={{
+            maintainAspectRatio: false,
+            legend: {
+              display: false,
+            },
+            tooltips: {
+              enabled: true,
+            },
+          }}
+        />
+      </div>
+      <div className='bar-wrapper'>
+        <Bar
+          data={data2}
+          options={{
+            legend: {
+              display: false,
+            },
+            tooltips: {
+              enabled: true,
+            },
+          }}
+        />
+      </div>
     </div>
-    <p className='eagle__text'>Errors</p>
-  </div>
-
-  <div className="pie-wrapper">
-      <Pie
-      data={data1}
-      width={150}
-      height={150}
-      options={{ maintainAspectRatio: false,
-        legend:{
-          display: false,
-          },
-          tooltips:{
-            enabled: true
-         }
-      }
-      }
-      />
-  </div>
-  <div className="bar-wrapper">
-    <Bar
-       data={data2}
-       options={{
-        legend:{
-          display: false,
-          },
-        tooltips:{
-          enabled: true,
-        },
-       }}/>
-  </div>
-  
-
-
-    
-    
-    
-  </div>
-  );
-  };
-  export default СardGames
+  )
+}
+export default СardGames
