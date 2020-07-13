@@ -15,9 +15,9 @@ export const StatisticGames = ({ allGuessed, allnotGuessed }) => {
     setHidden((hidden) => !hidden)
   }
 
-  useEffect(() => {
-    console.log(allnotGuessed, allGuessed)
-  }, [allnotGuessed, allGuessed])
+  // useEffect(() => {
+  //   console.log(allnotGuessed, allGuessed)
+  // }, [allnotGuessed, allGuessed])
 
   return (
     <div className={ishidden ? 'results_pop hidden' : 'results_pop '}>
@@ -45,7 +45,7 @@ export const StatisticGames = ({ allGuessed, allnotGuessed }) => {
                   {Object.entries(el).map((descr, ind) => {
                     let p
                     if (descr[0] !== 'audio' && descr[0] !== 'id') {
-                      p = <p key={descr[1]}>{descr[1]}</p>
+                      p = <p key={descr[1]+ind}>{descr[1]}</p>
                     }
                     return p
                   })}
@@ -76,7 +76,7 @@ export const StatisticGames = ({ allGuessed, allnotGuessed }) => {
                   {Object.entries(el).map((descr, ind) => {
                     let p
                     if (descr[0] !== 'audio' && descr[0] !== 'id') {
-                      p = <p key={descr[1]}>{descr[1]}</p>
+                      p = <p key={descr[1]+ind}>{descr[1]}</p>
                     }
                     return p
                   })}

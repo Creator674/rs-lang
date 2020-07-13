@@ -23,7 +23,6 @@ export const Gamecard = ({addToArrayOfAnswers, setIsCorrect, stopTimer}) => {
       useEffect(() => {
          getWordsAndTranslation(1,1)
           .then( (data) => {
-            console.log( data ) 
              setDate(data);
              setWords(data.map((el) => el[0]));
              setTranslation(data.map((el) => el[1]));
@@ -81,7 +80,6 @@ export const Gamecard = ({addToArrayOfAnswers, setIsCorrect, stopTimer}) => {
           setCurrentTranslation(translation[shufeledArray2[count]]);
 
           if(round === 3){
-            console.log("it's the end of game!");
             stopTimer();
           }
       }

@@ -30,7 +30,7 @@ export const Header = ({ start, star, setGameEnd, restart }) => {
         <div className='timer'>
           Time is left: <span>{start && counter}</span>
         </div>
-        <div className='score'>{Array(star).fill(<img src='../images/speakit/star1.png' />)}</div>
+        <div className='score'>{Array(star).fill(<img src='../images/speakit/star1.png' alt='pix'/>)}</div>
       </div>
     </div>
   )

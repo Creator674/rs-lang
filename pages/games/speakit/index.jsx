@@ -5,7 +5,7 @@ import { CardShow } from '../../../components/games/cardshow'
 import { Card } from '../../../components/games/card'
 import './index.less'
 import { combineWords } from '../../../lib/crud/auth'
-import { addToStatisticfunc } from '../../../lib/helpers/statisticHelp'
+import { addToStatisticfunc, gamesMiniStatistic } from '../../../lib/helpers/statisticHelp'
 import { GameStartModalWindow} from '../../../components/GameStartModalWindow';
 import { StatisticGames } from '../../../components/statisticGames'
 
@@ -24,6 +24,7 @@ const Speakit = (props) => {
   const [allGuessed, setAllGuessed] = useState([])
   const [allnotGuessed, setallnotGuessed] = useState([])
   const [showResults, setShowResults] = useState(false)
+  const [gameStart, setGameStart] = useState(false)
 
  
   
@@ -40,12 +41,14 @@ const Speakit = (props) => {
       setAppStatistics(newStatistic)
       saveStatistic(newStatistic)
     })
+    const newMiniGameStatistic = { ...appStatistics, 'speakit': gamesMiniStatistic(appStatistics, 'speakit', allGuessed.length, allnotGuessed.length) }
+    setAppStatistics(newMiniGameStatistic)
+    saveStatistic(newMiniGameStatistic)
   }
 
 
   const setGameEnd = (bool) => {
     if (bool) {
-      console.log('END of the game');
       setShowResults(true);
       createStatistic()
     }
@@ -101,6 +104,10 @@ const Speakit = (props) => {
     }
   }
 
+  const startTheTimer = () => {
+    setGameStart(true)
+  }
+
   useEffect(() => {
     combineWords(1, 1).then((data) => { 
       setData(data.filter((el, ind) => ind < 10));
@@ -120,7 +127,7 @@ const Speakit = (props) => {
   return (
     <div className='wrapper-speakit'>
       <GameStartModalWindow gameId={0} nameOfGame={'speakit'}/>
-      {showResults && <StatisticGames allGuessed={allGuessed} allnotGuessed={allnotGuessed} />}
+      {showResults && <StatisticGames startTheTimer={startTheTimer} allGuessed={allGuessed} allnotGuessed={allnotGuessed} />}
 
       <Header star={star} start={startGame} setGameEnd={setGameEnd} 
               restart={restart}  />

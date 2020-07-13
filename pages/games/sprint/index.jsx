@@ -8,7 +8,7 @@ import './index.less'
 
 import { Context } from 'context'
 import { saveStatistic } from 'lib'
-import { addToStatisticfunc } from '../../../lib/helpers/statisticHelp'
+import { addToStatisticfunc, gamesMiniStatistic } from '../../../lib/helpers/statisticHelp'
 
 import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
 
@@ -26,8 +26,10 @@ const Sprint = (props) => {
       setAppStatistics(newStatistic)
       saveStatistic(newStatistic)
     })
+    const newMiniGameStatistic = { ...appStatistics, 'sprint': gamesMiniStatistic(appStatistics, 'sprint', allGuessed.length) }
+    setAppStatistics(newMiniGameStatistic)
+    saveStatistic(newMiniGameStatistic)
   }
-  console.log(allGuessed)
 
   const startTheTimer = () => {
     setStartTimer(true)
@@ -37,7 +39,6 @@ const Sprint = (props) => {
     setStartTimer(false)
     createStatistic()
   }
-  console.log(allGuessed)
 
   const addToArrayOfAnswers = (data) => {
       setAllGuessed(data.map(el => {
@@ -52,7 +53,6 @@ const Sprint = (props) => {
   };
 
   const setIsCorrect = (answer, bool) => {
-     console.log(answer)
     setAllGuessed((guessed) => {
       if (bool) {
          guessed.map(el => {

@@ -45,7 +45,7 @@ export const GameboardPuzzle = props => {
     
   useEffect(() => {
     if(dontKnow){
-      console.log(currentText)
+      // console.log(currentText)
       setShuffledText([])
       setguessedPhrase(currentText);
       dontKnowDone();

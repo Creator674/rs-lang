@@ -10,7 +10,7 @@ import './index.less'
 
 import { Context } from 'context'
 import { saveStatistic } from 'lib'
-import { addToStatisticfunc } from '../../../lib/helpers/statisticHelp'
+import { addToStatisticfunc, gamesMiniStatistic } from '../../../lib/helpers/statisticHelp'
 
 import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
 
@@ -49,6 +49,9 @@ const Puzzle = (props) => {
       setAppStatistics(newStatistic)
       saveStatistic(newStatistic)
     })
+    const newMiniGameStatistic = { ...appStatistics, 'puzzle': gamesMiniStatistic(appStatistics, 'puzzle', allGuessed.length, allnotGuessed.length) }
+    setAppStatistics(newMiniGameStatistic)
+    saveStatistic(newMiniGameStatistic)
   }
 
 
@@ -59,11 +62,11 @@ const Puzzle = (props) => {
     setTranslat((translat) => !translat)
   }
   const pictureBtnClicked = () => {
-    console.log('clicked picture show')
+    // console.log('clicked picture show')
     setShowImage((showImage) => !showImage)
   }
   const autopronBtnClicked = () => {
-    console.log('clicked autoPronunc')
+    // console.log('clicked autoPronunc')
     setAutoPronunc((autoPronunc) => !autoPronunc)
   }
 
@@ -80,7 +83,7 @@ const Puzzle = (props) => {
   }
 
   const checktheAnswer = (result) => {
-    console.log(result)
+    // console.log(result)
     setReadyToCheck(true)
     const resultAnswer = result[0].join(' ')
     const word = {}
@@ -90,7 +93,7 @@ const Puzzle = (props) => {
     word.id = data[count].id
 
     if (resultAnswer === result[1].join(' ')) {
-      console.log('You did it!!!')
+      // console.log('You did it!!!')
       setGoToNext(true)
       setAllGuessed((guessed) => {
         if (guessed.some((el) => el.phrase === resultAnswer)){
@@ -123,7 +126,7 @@ const Puzzle = (props) => {
     setReadyToCheck(false)
     setCount(count + 1)
     if(count === 9){
-      console.log('the end')
+      // console.log('the end')
       setShowResults(true)
       createStatistic()
     }

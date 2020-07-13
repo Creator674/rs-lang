@@ -4,13 +4,13 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { Transition } from 'react-transition-group'
 import { combineWords } from 'lib/crud/auth'
 import { ButtonsList, ButtonAudio } from '../../../components/games/'
-import { GameStartModalWindow} from '../../../components/GameStartModalWindow';
-import { StatisticGames} from '../../../components/statisticGames';
+import { GameStartModalWindow } from '../../../components/GameStartModalWindow'
+import { StatisticGames } from '../../../components/statisticGames'
 import './index.less'
 
 import { Context } from 'context'
 import { saveStatistic } from 'lib'
-import { addToStatisticfunc } from '../../../lib/helpers/statisticHelp'
+import { addToStatisticfunc, gamesMiniStatistic } from '../../../lib/helpers/statisticHelp'
 
 import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
 
@@ -49,7 +49,7 @@ const Audiocall = () => {
   const [playWord, setPlayWord] = useState(null)
   const [isResult, toggleResult] = useState(false)
   const [wordsList, setWordsList] = useState([])
-  const [gameEnd, setGameEnd] = useState(false)
+  const [gameStart, setGameStart] = useState(false)
 
   const [allGuessed, setAllGuessed] = useState([])
   const [allnotGuessed, setallnotGuessed] = useState([])
@@ -57,28 +57,28 @@ const Audiocall = () => {
 
   const audio = useRef()
   const wordsDeck = useRef()
-  
-  
-  const { appStatistics, setAppStatistics } = useContext(Context)
-  
-  const createStatistic = () => {
-    allGuessed.map(el => {
-      const newStatistic = {...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'audiocall', 'guessed')}
-      setAppStatistics(newStatistic)
-      saveStatistic(newStatistic)
-    })
-    allnotGuessed.map(el => {
-      const newStatistic = {...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'audiocall', 'wrong')}
-      setAppStatistics(newStatistic)
-      saveStatistic(newStatistic)
-    })
-  }
 
+  const { appStatistics, setAppStatistics } = useContext(Context)
+
+  const createStatistic = () => {
+    allGuessed.map((el) => {
+      const newStatistic = { ...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'audiocall', 'guessed') }
+      setAppStatistics(newStatistic)
+      saveStatistic(newStatistic)
+    })
+    allnotGuessed.map((el) => {
+      const newStatistic = { ...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'audiocall', 'wrong') }
+      setAppStatistics(newStatistic)
+      saveStatistic(newStatistic)
+    })
+    const newMiniGameStatistic = { ...appStatistics, 'audiocall': gamesMiniStatistic(appStatistics, 'audiocall', allGuessed.length, allnotGuessed.length) }
+    setAppStatistics(newMiniGameStatistic)
+    saveStatistic(newMiniGameStatistic)
+  }
 
   const getRandomWord = () => {
     if (activeStep >= 9) {
-      setShowResults(true);
-      setGameEnd(true)
+      setShowResults(true)
       createStatistic()
       return null
     }
@@ -115,15 +115,15 @@ const Audiocall = () => {
 
   const setResult = (id, result) => {
     const word = wordsDeck.current.find((item) => item.id === id)
-    console.log(word)
+    // console.log(word)
     const addWord = {}
     addWord.word = word.word
     addWord.transcription = word.transcription
     addWord.translate = word.wordTranslate
     addWord.audio = word.sound
     addWord.id = word.id
-    if (result){
-      word.right = true;
+    if (result) {
+      word.right = true
       setAllGuessed((guessed) => {
         if (guessed.some((el) => el.word == word)) {
           return
@@ -131,8 +131,8 @@ const Audiocall = () => {
           return [...guessed, addWord]
         }
       })
-    } else{ 
-      word.wrong = true;
+    } else {
+      word.wrong = true
       setallnotGuessed((guessed) => {
         if (guessed.some((el) => el.word == word)) {
           return
@@ -145,8 +145,8 @@ const Audiocall = () => {
   }
 
   const setupPlayState = () => {
-    const word = getRandomWord();
-    if(word){
+    const word = getRandomWord()
+    if (word) {
       const randomList = getRandomList(word.id).map((idx) => wordsDeck.current[idx])
       const place = Math.floor(Math.random() * 5)
       const newList = [...randomList]
@@ -156,14 +156,19 @@ const Audiocall = () => {
     }
   }
 
+  const startTheTimer = () => {
+    setGameStart(true)
+    document.getElementById('audio1').play();
+  }
   useEffect(() => {
-    combineWords(1, 1)
-      .then((data) => {
-        wordsDeck.current = data
-        setupPlayState()
-      })
-      .catch((error) => error)
-  }, [])
+      combineWords(1, 1)
+        .then((data) => {
+          // console.log(data)
+          wordsDeck.current = data
+          setupPlayState()
+        })
+        .catch((error) => error)
+  },[])
 
   const getAudioRef = () => audio.current
 
@@ -177,8 +182,10 @@ const Audiocall = () => {
 
   return (
     <div className='game-box audiocall'>
-      <GameStartModalWindow gameId={2} nameOfGame={'audiocall'}/>
-      {showResults && <StatisticGames allGuessed={allGuessed} allnotGuessed={allnotGuessed} />}
+      <GameStartModalWindow gameId={2} nameOfGame={'audiocall'} startTheTimer={startTheTimer}/>
+      {showResults && (
+        <StatisticGames allGuessed={allGuessed} allnotGuessed={allnotGuessed} />
+      )}
 
       <ThemeProvider theme={theme}>
         <MobileStepper variant='progress' steps={11} position='static' activeStep={activeStep} />
@@ -241,9 +248,9 @@ const Audiocall = () => {
           </div>
         </div>
       </div>
-      <audio id='audio1' ref={audio} src={playWord && playWord.sound} autoPlay type='audio/mp3' />
+      <audio id='audio1' ref={audio} src={playWord && playWord.sound} autoPlay={gameStart} type='audio/mp3' />
     </div>
   )
 }
 
-export default Audiocall;
+export default Audiocall
