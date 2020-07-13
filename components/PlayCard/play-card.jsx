@@ -105,9 +105,9 @@ export const PlayCard = (props) => {
   useEffect(() => {
     isMounted = true
     combineWordsForDictionary(1,1).then((res)=>{
-      console.log(res)
+      console.log(res, isMounted)
       isMounted && setData(res)
-      isMounted && setCurrentWord(res[0]) 
+      isMounted && setCurrentWord(res[0])
     })
     return () => {
       isMounted = false
@@ -144,8 +144,8 @@ export const PlayCard = (props) => {
   const showAnswerClick = () => {
     setShowAnswer(answer => !answer)
   }
- 
-  
+
+
 
   return (
     <div className='play-card'>
@@ -164,12 +164,12 @@ export const PlayCard = (props) => {
 
         </div>
         <div className='play-image'>
-          <PlayImage src={currentWord ? currentWord.image : ''} isImageMinimized={isImageMinimized} 
+          <PlayImage src={currentWord ? currentWord.image : ''} isImageMinimized={isImageMinimized}
                      setImageMinimized={setImageMinimized} />
         </div>
         <div className={`${classes.gameboard} card-wrapper`}>
-          <CardText className='border-top-0' 
-                    outerStyles={classes.styleDictionary} index='textExample' 
+          <CardText className='border-top-0'
+                    outerStyles={classes.styleDictionary} index='textExample'
                     word={currentWord? currentWord : null}>
             <PlayGuessField
               showTheAnswer={showTheAnswer}
@@ -180,8 +180,8 @@ export const PlayCard = (props) => {
             />
           </CardText>
           {isMeaning ? (
-            <CardText className='second-row' 
-                      outerStyles={classes.styleDictionary} index='textMeaning' 
+            <CardText className='second-row'
+                      outerStyles={classes.styleDictionary} index='textMeaning'
                       word={currentWord? currentWord : ''} />
           ) : null}
           <PlayFooter

@@ -1,14 +1,12 @@
 import { ServerStyleSheets } from '@material-ui/core/styles'
 import Document, { Head, Main, NextScript } from 'next/document'
 import React from 'react'
-// import theme from './theme'
 
 export default class MyDocument extends Document {
   render() {
     return (
       <html lang='en'>
         <Head>
-          {/* PWA primary color */}
           <link
             href='https://fonts.googleapis.com/css2?family=Sacramento:wght@400&family=Martel:wght@300;400;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap'
             rel='stylesheet'

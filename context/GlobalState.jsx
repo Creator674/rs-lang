@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { Context } from './app-context'
 import {TramRounded, TrendingUpRounded} from '@material-ui/icons';
 
@@ -111,6 +111,9 @@ const initialAppSettings = {
 
 
 const GlobalState = (props) => {
+  const { pathname, events } = useRouter()
+  const [ path, setPath ] = useState('/')
+
   const [words, setWords] = useState(initialWords)
   const [sort, setSort] = useState(initialSort)
   const [activeMenu, setActiveMenu] = useState(0)
@@ -126,7 +129,28 @@ const GlobalState = (props) => {
   const [cardSettings, setCardSettings] = useState(currentCardSettings) // SET TO {}
   const [defaultCardSettings, setDefaultCardSettings] = useState(initialCardSettings)
 
-  const [appStatistics, setAppStatistics] = useState({}) 
+  const [appStatistics, setAppStatistics] = useState({})
+
+  useEffect(() => {
+    const handleRouteChange = url => {
+      if (url !== '/' && !appSettings.isAuthorized) {
+        window.location.href = '/'
+      }
+    }
+
+    if (pathname !== '/' && appSettings.isAuthorized === null) {
+      window.location.href = '/'
+    }
+
+    if (!appSettings.isAuthorized && pathname !== '/') {
+      window.location.href = '/'
+    }
+
+    events.on('routeChangeStart', handleRouteChange)
+    return () => {
+      events.off('routeChangeStart', handleRouteChange)
+    }
+  }, [appSettings.isAuthorized])
 
   return (
     <Context.Provider
@@ -156,7 +180,7 @@ const GlobalState = (props) => {
         setAppStatistics,
       }}
     >
-      {props.children}
+      {pathname === '/' || (pathname !== '/' && appSettings.isAuthorized) ? props.children : null}
     </Context.Provider>
   )
 }
