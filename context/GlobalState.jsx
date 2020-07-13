@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { Context } from './app-context'
-import {TramRounded, TrendingUpRounded} from '@material-ui/icons';
+import { isAuthenticated, getLocalStorageProp } from 'lib'
+import { TramRounded, TrendingUpRounded } from '@material-ui/icons';
 
 const initialWords = [
   {
@@ -131,19 +132,47 @@ const GlobalState = (props) => {
 
   const [appStatistics, setAppStatistics] = useState({})
 
+
   useEffect(() => {
+    const {id, token} = getLocalStorageProp('user') || {}
+
+    const isLogged = () => {
+      return new Promise((resolve, reject) => {
+        if (!id || !token) resolve(false)
+        isAuthenticated(id, token).then(response => {
+          setUserData({...userData, name: response.data.name})
+          setAppSettings({...appSettings, isAuthorized: true})
+          resolve(true)
+        }).catch(err => {
+          console.log('error: ', err.response ? err.response.data : err.message)
+          resolve(false)
+        })
+      })
+    }
+
+
     const handleRouteChange = url => {
       if (url !== '/' && !appSettings.isAuthorized) {
-        window.location.href = '/'
+        isLogged().then(result => {
+          if (!result) window.location.href = '/'
+        })
       }
     }
 
     if (pathname !== '/' && appSettings.isAuthorized === null) {
-      window.location.href = '/'
+      isLogged().then(result => {
+        if (!result) window.location.href = '/'
+      })
     }
 
     if (!appSettings.isAuthorized && pathname !== '/') {
-      window.location.href = '/'
+      isLogged().then(result => {
+        if (!result) window.location.href = '/'
+      })
+    } else {
+      isLogged().then(result => {
+        if (!result && pathname !== '/') window.location.href = '/'
+      })
     }
 
     events.on('routeChangeStart', handleRouteChange)
