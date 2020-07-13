@@ -239,7 +239,7 @@ body {
     line-height: 2rem;
     border-radius: 3.6rem;
     background: @color-bg-add;
-    border: 2px solid @color-btn-middle;
+    border: 0.2rem solid @color-btn-middle;
   }
 
   .promo__slogan::before {
@@ -270,7 +270,7 @@ body {
     line-height: 2.3rem;
     color: @color-btn-white;
     background: @color-btn-middle;
-    border-radius: 20px;
+    border-radius: 2rem;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease-out;
@@ -596,7 +596,8 @@ body {
     z-index: 1;
   }
 
-  .algorithm__text {
+  .algorithm__text,
+  .algorithm__list {
     font-family: 'Martel';
     font-weight: normal;
     font-size: 1.4rem;
@@ -606,6 +607,31 @@ body {
 
   .algorithm__text:not(:last-child) {
     padding-bottom: 1.2rem;
+  }
+
+  .algorithm__link {
+    color: @color-bg-success;
+  }
+
+  .algorithm__link:visited {
+    color: @color-add-light;
+  }
+
+  .algorithm__subtitle {
+    font-family: 'Source Sans Pro';
+    font-weight: 600;
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+  }
+
+  .algorithm__item {
+    list-style-type: disc;
+    padding-bottom: 1.6rem;
+  }
+
+  .algorithm__dark .algorithm__text:last-child {
+    text-indent: 0;
+    text-align: center;
   }
 
   @media (min-width: 768px) {
@@ -631,9 +657,20 @@ body {
       left: calc(50% + 8rem);
     }
 
-    .algorithm__text {
+    .algorithm__text,
+    .algorithm__list {
       font-size: 1.6rem;
       line-height: 2.7rem;
+    }
+
+    .algorithm__subtitle {
+      font-size: 2rem;
+      line-height: 2.8rem;
+    }
+
+    .algorithm__dark .algorithm__text:last-child {
+      text-indent: 4rem;
+      text-align: left;
     }
 
     .algorithm__light::after {
@@ -651,6 +688,11 @@ body {
 
     .algorithm__content {
       display: flex;
+    }
+
+    .algorithm__light,
+    .algorithm__dark {
+      width: 50%;
     }
 
     .algorithm__light {
