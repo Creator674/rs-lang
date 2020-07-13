@@ -10,7 +10,7 @@ const attrs = {
   spellCheck: false,
 }
 
-export const PlayGuessField = ({ word, setAudioLock, setIsGuessed, isGuessed }) => {
+export const PlayGuessField = ({ showTheAnswer, word, setAudioLock, setIsGuessed, isGuessed }) => {
   const { learnProgress, setLearnProgress } = useContext(Context)
 
   const [value, setValue] = useState('')
@@ -39,6 +39,13 @@ export const PlayGuessField = ({ word, setAudioLock, setIsGuessed, isGuessed }) 
     !input.current.value && setIsCorrect(null)
   }
 
+  useEffect(() => {
+    if(showTheAnswer){
+      setIsCorrect(true)
+      setIsGuessed(true)
+    }
+  }, [showTheAnswer])
+  
   const checkResult = (result) => {
     if (!value.length) {
       isPressed = false
@@ -137,7 +144,7 @@ export const PlayGuessField = ({ word, setAudioLock, setIsGuessed, isGuessed }) 
             className='answer-input'
             type='text'
             {...attrs}
-            value={value}
+            value={!showTheAnswer ? value : word}
             onChange={handleChange}
             onFocus={handleChange}
           />

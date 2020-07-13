@@ -38,7 +38,7 @@ export function MuiButton({ children, action = () => {}, themeName }) {
         // }}
         variant='outlined'
         disableElevation
-        // onClick={({ target }) => action()}
+        onClick={({ target }) => action()}
       >
         {children}
       </Button>
