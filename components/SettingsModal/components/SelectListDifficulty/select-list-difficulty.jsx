@@ -38,9 +38,6 @@ export const SelectListDifficulty = (props) => {
       color: '#1F658A',
       cursor: 'pointer',
     }),
-    menuList: () => ({
-      color: 'red',
-    }),
     indicatorsContainer: () => ({
       padding: 0,
       cursor: 'pointer',
@@ -51,11 +48,9 @@ export const SelectListDifficulty = (props) => {
     }),
     menu: () => ({
       display: 'flex',
-      height: 22,
       justifyContent: 'space-around',
       alignItems: 'flex-start',
       width: 132,
-      height: 50,
       background: 'white',
       borderRadius: 4,
       margin: '8px auto',
