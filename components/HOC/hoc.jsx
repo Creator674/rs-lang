@@ -86,34 +86,34 @@ export const withSwitcher = (FirstComponent, SecondComponent) => {
 }
 
 
-export const withAuth = (WrappedComponent) => {
-  const NewComponent = (isAuthorized, ...props) => {
-    const [showModal, toggleModal] = useState(false)
-    const updateChildrenWithProps = React.Children.map(props.children, (child, i) => {
-      return React.cloneElement(child, {
-        closeModal: () => toggleModal(null),
-      })
-    })
+// export const withAuth = (WrappedComponent) => {
+//   const NewComponent = (isAuthorized, ...props) => {
+//     const [showModal, toggleModal] = useState(false)
+//     const updateChildrenWithProps = React.Children.map(props.children, (child, i) => {
+//       return React.cloneElement(child, {
+//         closeModal: () => toggleModal(null),
+//       })
+//     })
 
-    useEffect(() => {
-      if (!isAuthorized) toggleModal(true)
-    }, [isAuthorized])
+//     useEffect(() => {
+//       if (!isAuthorized) toggleModal(true)
+//     }, [isAuthorized])
 
-    return (
-      <>
-        <WrappedComponent {...props} showModal={() => toggleModal(true)} />
-        {showModal && (
-          <Popup
-            toggleClose={() => {
-              console.log('redirect user')
-            }}
-          >
-            <div className='register-form'>{updateChildrenWithProps}</div>
-          </Popup>
-        )}
-      </>
-    )
-  }
+//     return (
+//       <>
+//         <WrappedComponent {...props} showModal={() => toggleModal(true)} />
+//         {showModal && (
+//           <Popup
+//             toggleClose={() => {
+//               console.log('redirect user')
+//             }}
+//           >
+//             <div className='register-form'>{updateChildrenWithProps}</div>
+//           </Popup>
+//         )}
+//       </>
+//     )
+//   }
 
-  return NewComponent
-}
+//   return NewComponent
+// }
