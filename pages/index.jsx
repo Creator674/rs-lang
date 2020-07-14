@@ -219,7 +219,11 @@ const MainPage = ({ showInfo }) => {
         <section className='about-us' id='about-us'>
           <div className='container'>
             <h2 className='section-title about-us__title'>About Us</h2>
-            <p className='about-us__subtitle'>Snow White and the 7 dwarfs</p>
+            <p className='about-us__subtitle'>
+              <a className='about-us__link' href='https://github.com/s-squad/rs-lang' target='_blank'>
+                Snow White and the 7 Dwarfs
+              </a>
+            </p>
             <div className='about-us__mentor'>
               <img
                 className='about-us__picture-mentor'

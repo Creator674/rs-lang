@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Context } from 'context'
-import { saveSettings, getSettings, saveStatistic, getStatistic } from 'lib'
+import { saveSettings, getSettings, saveStatistic, getStatistic, setLocalStorageProp } from 'lib'
 import { makeStyles } from '@material-ui/core/styles'
 import { AccountButton, Account, Statistics, SettingsModal } from 'components'
 
@@ -28,6 +28,7 @@ export const DropdownMenu = ({ closePopover }) => {
   const { appSettings, setAppSettings } = useContext(Context)
 
   const logOut = () => {
+    setLocalStorageProp('user', {})
     setAppSettings({ ...appSettings, isAuthorized: false })
   }
 

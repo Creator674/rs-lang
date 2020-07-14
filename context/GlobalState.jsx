@@ -1,68 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { Context } from './app-context'
-import {TramRounded, TrendingUpRounded} from '@material-ui/icons';
-
-const initialWords = [
-  {
-    id: '5e9f5ee35eb9e72bc21af4a1',
-    group: 0,
-    page: 0,
-    word: 'agree',
-    image: 'files/01_0001.jpg',
-    audio: 'files/01_0001.mp3',
-    audioMeaning: 'files/01_0001_meaning.mp3',
-    audioExample: 'files/01_0001_example.mp3',
-    textMeaning: 'To <i>agree</i> is to have the same opinion or belief as another person.',
-    textExample: 'The students <b>agree</b> they have too much homework.',
-    transcription: '[əgríː]',
-    textExampleTranslate: 'Студенты согласны, что у них слишком много домашней работы',
-    textMeaningTranslate: 'Согласиться - значит иметь то же мнение или убеждение, что и другой человек',
-    wordTranslate: 'согласна',
-    wordsPerExampleSentence: 8,
-  },
-  {
-    id: '5e9f5ee35eb9e72bc21af4a0',
-    group: 0,
-    page: 0,
-    word: 'alcohol',
-    image: 'files/01_0002.jpg',
-    audio: 'files/01_0002.mp3',
-    audioMeaning: 'files/01_0002_meaning.mp3',
-    audioExample: 'files/01_0002_example.mp3',
-    textMeaning: '<i>Alcohol</i> is a type of drink that can make people drunk.',
-    textExample: 'A person should not drive a car after he or she has been drinking <b>alcohol</b>.',
-    transcription: '[ǽlkəhɔ̀ːl]',
-    textExampleTranslate: 'Человек не должен водить машину после того, как он выпил алкоголь',
-    textMeaningTranslate: 'Алкоголь - это тип напитка, который может сделать людей пьяными',
-    wordTranslate: 'алкоголь',
-    wordsPerExampleSentence: 15,
-  },
-]
-
-const initialSort = {
-  field: 0,
-  direction: 'asc',
-}
+import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords } from 'lib' // getWords
+import { TramRounded, TrendingUpRounded } from '@material-ui/icons'
 
 const initialCardSettings = {
-  learnNew: true,
+  learnNew: false,
   repeatNew: false,
   difficultOnly: false,
   autoSoundplay: true,
-  level: "medium",
-  amountOfWords: 20,
-  amountOfCards: 20,
+  level: 0,
+  levels: '0,1,2,3,4,5',
+  perPage: 20,
+  amountOfWords: 5,
+  amountOfCards: 30,
   showWord: true,
   showTranslation: true,
-  showTranscription: true,
+  showTranscription: false,
   addPronunciation: true,
-  addIllustration: true,
+  addIllustration: false,
   showDefenition: false,
   defenitionTranslation: false,
   defenitionPronunciation: false,
   expampleOfUsage: true,
-  exampleOfUsageTranslation: false,
+  exampleOfUsageTranslation: true,
   exampleOfUsagePronunciation: true,
   REPEATbutton: true,
   HARDbutton: true,
@@ -73,33 +34,39 @@ const initialCardSettings = {
 const currentCardSettings = {
   learnNew: false,
   repeatNew: false,
-  difficultOnly: true,
-  autoSoundplay: false,
-  level: "hard",
-  amountOfWords: 29,
-  amountOfCards: 29,
+  difficultOnly: false,
+  autoSoundplay: true,
+  level: 0,
+  levels: '0,1,2,3,4,5',
+  perPage: 20,
+  wordsFetched: {
+    level: 0
+  },
+
+  amountOfWords: 5,
+  amountOfCards: 30,
   showWord: true,
-  showTranslation: false,
-  showTranscription: true,
-  addPronunciation: false,
-  addIllustration: true,
+  showTranslation: true,
+  showTranscription: false,
+  addPronunciation: true,
+  addIllustration: false,
   showDefenition: false,
-  defenitionTranslation: true,
+  defenitionTranslation: false,
   defenitionPronunciation: false,
   expampleOfUsage: true,
-  exampleOfUsageTranslation: false,
+  exampleOfUsageTranslation: true,
   exampleOfUsagePronunciation: true,
-  REPEATbutton: false,
+  REPEATbutton: true,
   HARDbutton: true,
-  SHOWANSWERbutton: false,
+  SHOWANSWERbutton: true,
   EASYbutton: true,
 }
-// const initialCardSettings = {
-//   isTranslation: true,
-//   isWordShown: true,
-//   isTranscription: false,
-//   isMeaning: true,
-// }
+
+const initialSort = {
+  field: 0,
+  direction: 'asc',
+}
+
 const initialLearnProgress = {
   total: 50,
   current: 0,
@@ -109,16 +76,15 @@ const initialAppSettings = {
   isAuthorized: null,
 }
 
-
 const GlobalState = (props) => {
   const { pathname, events } = useRouter()
-  const [ path, setPath ] = useState('/')
+  const [path, setPath] = useState('/')
 
-  const [words, setWords] = useState(initialWords)
+  const [words, setWords] = useState([])
   const [sort, setSort] = useState(initialSort)
   const [activeMenu, setActiveMenu] = useState(0)
-  const [toRepeatWords, setToRepeatWords] = useState(22)
-  const [newWords, setNewWords] = useState(30)
+  const [toRepeatWords, setToRepeatWords] = useState(0)
+  const [newWords, setNewWords] = useState(0)
   const [isAudioOn, setAudio] = useState(true)
 
   const [learnProgress, setLearnProgress] = useState(initialLearnProgress)
@@ -126,24 +92,71 @@ const GlobalState = (props) => {
 
   // settings
   const [appSettings, setAppSettings] = useState(initialAppSettings)
-  const [cardSettings, setCardSettings] = useState(currentCardSettings) // SET TO {}
-  const [defaultCardSettings, setDefaultCardSettings] = useState(initialCardSettings)
 
+  const [defaultCardSettings] = useState(initialCardSettings)
+  const [cardSettings, setCardSettings] = useState(currentCardSettings)
+
+  // statistic
   const [appStatistics, setAppStatistics] = useState({})
 
   useEffect(() => {
-    const handleRouteChange = url => {
+    const { id, token } = getLocalStorageProp('user') || {}
+
+    const isLogged = () => {
+      return new Promise((resolve, reject) => {
+        if (!id || !token) resolve(false)
+        isAuthenticated(id, token)
+          .then((response) => {
+            setUserData({ ...userData, name: response.data.name })
+            setAppSettings({ ...appSettings, isAuthorized: true })
+            updateAppState()
+            resolve(true)
+          })
+          .catch((err) => {
+            // console.log('error: ', err.response ? err.response.data : err.message)
+            resolve(false)
+          })
+      })
+    }
+
+    const updateAppState = () => {
+      getAllUserWords().then(response => {
+        console.log('RESPONSE WORDS', response.data)
+      })
+      getStatistic().then((response) => {
+        setAppStatistics({ ...appStatistics, ...response.data.optional })
+      })
+      getSettings().then((response) => {
+        console.log(response.data, 'APP SETTINGS')
+        setCardSettings({ ...cardSettings, ...response.data.optional })
+      })
+    }
+
+    const handleRouteChange = (url) => {
       if (url !== '/' && !appSettings.isAuthorized) {
-        window.location.href = '/'
+        isLogged().then((result) => {
+          if (!result) window.location.href = '/'
+        })
       }
     }
 
     if (pathname !== '/' && appSettings.isAuthorized === null) {
-      window.location.href = '/'
+      isLogged().then((result) => {
+        if (!result) window.location.href = '/'
+      })
     }
 
     if (!appSettings.isAuthorized && pathname !== '/') {
-      window.location.href = '/'
+      isLogged().then((result) => {
+        if (!result) window.location.href = '/'
+      })
+    } else {
+      isLogged().then((result) => {
+        if (!result && pathname !== '/') window.location.href = '/'
+        else if (result) {
+          updateAppState()
+        }
+      })
     }
 
     events.on('routeChangeStart', handleRouteChange)

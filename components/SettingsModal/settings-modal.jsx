@@ -12,12 +12,24 @@ import { Button } from '../Button'
 
 import { Context } from 'context'
 
+import { saveSettings } from 'lib'
+
+import { withInfo } from '../HOC/hoc'
+
 import './settings-modal.less'
 
-export const SettingsModal = () => {
+const SettingsModalComponent = ({showInfo}) => {
   const { cardSettings, setCardSettings, defaultCardSettings } = useContext(Context)
+  console.log(cardSettings)
+  const { cardSettings: { level, levels } } = useContext(Context)
+
 
   const [localSettings, setLocalSettings] = useState(cardSettings)
+  const [selected, setSelected] = useState(level)
+
+  // useEffect(()=>{
+  //   setLocalSettings(cardSettings)
+  // }, [cardSettings])
 
   const findTrue = (obj) => {
     for (let val in obj) {
@@ -49,8 +61,18 @@ export const SettingsModal = () => {
     })
   }
 
+  const updateServerData = (isReset) => {
+    showInfo({message: `${isReset ? 'Restoring' : 'Saving'} data in progress...`, type: 'info'})
+    saveSettings({...cardSettings, ...(isReset ? defaultCardSettings : localSettings)}).then(response => {
+      showInfo({message: `All settings ${isReset ? 'restored!' : 'updated!' }`, type: 'success'})
+    }).catch(err => {
+      showInfo({message: err.response ? err.response.data : err.message, type: 'error'})
+    })
+  }
+
   const applySettings = () => {
-    setCardSettings(localSettings)
+    setCardSettings({...cardSettings, ...localSettings})
+    updateServerData()
     console.log(localSettings)
   }
   const [inputNewValue, setInputNewValue] = useState(cardSettings.amountOfCards)
@@ -58,6 +80,7 @@ export const SettingsModal = () => {
     setInputNewValue(defaultCardSettings.amountOfCards)
     setLocalSettings(Object.assign({}, defaultCardSettings))
     setCardSettings(Object.assign({}, defaultCardSettings))
+    updateServerData(true)
     document.querySelectorAll("input[type='radio'],input[type='checkbox']").forEach((elem) => {
       elem.checked = defaultCardSettings[elem.value]
     })
@@ -83,12 +106,21 @@ export const SettingsModal = () => {
               value='difficultOnly'
               onClick={changeRadioSetting}
             />
-            <SettingsItem labelText='auto soundplay' value='autoSoundplay' onClick={changeSetting} />
-            <SelectListDifficulty
+            <SettingsItem labelText='auto sound play' value='autoSoundplay' onClick={changeSetting} />
+            {/* <SelectListDifficulty
               localSettings={localSettings}
               onChange={changeSetting}
               setLocalSettings={setLocalSettings}
-            />
+            /> */}
+            <li>
+              <select defaultValue={selected} onChange={({target: {value}}) => {
+                setSelected(value)
+                setLocalSettings({...localSettings, level: +value})
+                setCardSettings({...localSettings, level: +value})
+              }}>
+              {levels.split(',').map((item) => <option key={item} value={item}>{`Level ${+item + 1}`}</option>)}
+              </select>
+            </li>
             <InputSlider
               labelText='amount of new words per day'
               onClick={changeSetting}
@@ -111,9 +143,9 @@ export const SettingsModal = () => {
         <section className='cardSettingsWrapper'>
           <FormWrapper legendText='Card'>
             <SettingsItem labelText='show word' value='showWord' onClick={changeSetting} />
-            <SettingsItem labelText='show translation' value='showTranslation' onClick={changeSetting} />
-            <SettingsItem labelText='show transcription' value='showTranscription' onClick={changeSetting} />
-            <SettingsItem labelText='add pronunciation' value='addPronunciation' onClick={changeSetting} />
+            <SettingsItem labelText='show word translation' value='showTranslation' onClick={changeSetting} />
+            <SettingsItem labelText='show word transcription' value='showTranscription' onClick={changeSetting} />
+           <SettingsItem labelText='add pronunciation' value='addPronunciation' onClick={changeSetting} />
             <SettingsItem labelText='add illustration' value='addIllustration' onClick={changeSetting} />
             <li className='separatingLine'></li>
             <SettingsItem labelText='show defenition' value='showDefenition' onClick={changeSetting} />
@@ -148,10 +180,16 @@ export const SettingsModal = () => {
         </section>
 
         <div className='settingsButton_wrapper'>
-          <Button children='reset' className='settingsButton--RESET' onClick={resetSettings} />
-          <Button children='ok' className='settingsButton--OK' onClick={applySettings} />
+          <Button children='reset' className='settingsButton--RESET' onClick={() => {
+            resetSettings()
+          }} />
+          <Button children='ok' className='settingsButton--OK' onClick={() => {
+            applySettings()
+          }} />
         </div>
       </div>
     </div>
   )
 }
+
+export const SettingsModal = withInfo(SettingsModalComponent)

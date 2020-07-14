@@ -9,14 +9,18 @@ html {
   min-height: 1.8rem;
 }
 .register-form {
-  padding: 6rem 0 3rem 0;
+  padding: 6rem 0 0 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  min-width: 37.5rem;
+  height: 100%;
   background: @color-bg-add;
   box-shadow: 0.4rem 0.4rem 0.8rem rgba(0, 0, 0, 0.25);
-  border-radius: 0.8em;
+  border-radius: 0.4em;
+}
+.action-form-login,
+.action-form {
+  padding: 0 3.2rem 5.6rem;
 }
 .action-form-login {
   display: flex;
@@ -29,7 +33,7 @@ html {
   margin: 0 auto;
 }
 .form-group {
-  width: 31.1rem;
+  width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -39,7 +43,6 @@ html {
   justify-content: space-between;
   align-items: center;
 }
-
 .label-group input:first-child {
   flex-grow: 1;
 }
@@ -51,7 +54,6 @@ html {
   border-radius: 0.4rem;
 }
 .label-group input {
-  width: 27rem;
   height: 3.2rem;
 }
 .label-group button:focus {
@@ -126,4 +128,11 @@ label {
   font-size: 1.2rem;
   padding: 0.5rem 0 0.5rem 0;
   max-width: 25rem;
+}
+
+@media (min-width: 375px) {
+  .action-form-login,
+  .action-form {
+    width: 375px;
+  }
 }

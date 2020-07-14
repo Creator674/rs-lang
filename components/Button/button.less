@@ -76,11 +76,11 @@
 
 .settingsButton_wrapper {
   display: flex;
-  width: 311px;
+  width: 100%;
   justify-content: space-between;
   margin-top: 16px;
   & *{
-    width: 147px;
+    width: 48%;
     height: 40px;
     border-radius: 20px;
     box-sizing: border-box;
@@ -88,24 +88,24 @@
     font-size: 18px;
     font-family: 'Source Sans Pro';
     line-height: 23px;
-    border: 2px solid #7AB4CC;
+    border: 2px solid @color-btn-middle;
   }
   & .settingsButton--RESET {
     background: white;
-    color: #7AB4CC;
+    color: @color-btn-middle;
   }
   & .settingsButton--RESET:hover {
-    border: 2px solid #C00000;
-    background: #C00000;
-    color: white;
+    border: 2px solid #1F658A;
+    background: @color-btn-light;
+    color: #1F658A;
   }
   & .settingsButton--OK {
-    background: #7AB4CC;
+    background: @color-btn-middle;
     color: white;
   }
   & .settingsButton--OK:hover {
-    border: 2px solid #38ADA9;
-    background: #38ADA9;
+    border: 2px solid @color-main;
+    background: @color-main;
     color: white;
   }
 }

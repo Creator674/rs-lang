@@ -4,6 +4,10 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import theme from './theme'
 
+import { getStatistic } from 'lib'
+import { Context } from 'context'
+
+
 import './statistics.less'
 
 import Paper from '@material-ui/core/Paper'
@@ -113,11 +117,60 @@ const style = createMuiTheme({
 })
 
 export function Statistics() {
+  
   const [value, setValue] = useState(1)
+
+  const [amountOfWords, setAmountOfWords] = useState(0)
+  const [allWords, setAllWords] = useState([])
+
+  const [savannah, setSavannah] = useState([])
+  const [speakit, setSpeakit] = useState([])
+  const [sprint, setSprint] = useState([])
+  const [audiocall, setAudiocall] = useState([])
+  const [hangman, setHangman] = useState([])
+  const [puzzle, setPuzzle] = useState([])
+
+
+  const {
+    appSettings: { userID, userName },
+    appStatistics,
+    setAppStatistics,
+  } = useContext(Context)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
+
+  useEffect(()=>{
+    getStatistic().then((res) => {
+      console.log(res.data.optional)
+      setAppStatistics({ ...appStatistics, ...res.data.optional })
+      
+      console.log(  Object.entries(res.data.optional)  )
+      setAmountOfWords(  Object.entries(res.data.optional).reduce((acc, el) => {
+        if(el[0].length > 20){
+          console.log(el)
+          acc += 1
+        }
+        return acc
+      }, 0) )
+
+      // setAllWords((all)=> Object.entries(res.data.optional).map(el => {
+      //   console.log(el[0])
+      //   if(/\d/g.test(el[0])){    // ---значит это дата
+      //      return el[0]  
+      //   }
+      // }))
+
+      setSavannah(  Object.entries(res.data.optional).filter((el) => el[0] == 'savannah')) 
+      setSpeakit(  Object.entries(res.data.optional).filter((el) => el[0] == 'speakit')) 
+      setSprint(  Object.entries(res.data.optional).filter((el) => el[0] == 'sprint')) 
+      setAudiocall((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'audiocall')) 
+      setHangman((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'hangman')) 
+      setPuzzle((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'puzzle')) 
+
+    })
+  }, [])
 
   const classes = useStyles()
 
@@ -165,6 +218,13 @@ export function Statistics() {
           playedGame3={32}
           playedGame4={10}
           playedGame5={51}
+
+          savannah={savannah}
+          speakit={speakit}
+          sprint={sprint}
+          audiocall={audiocall}
+          hangman={hangman}
+          puzzle={puzzle}
         />
       </TabPanel>
     </div>

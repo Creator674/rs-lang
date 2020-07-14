@@ -19,8 +19,8 @@ export const InputSlider = (props) => {
   const handleBlur = () => {
     if (currValue < 5) {
       setCurrValue(5)
-    } else if (currValue > 30) {
-      setCurrValue(30)
+    } else if (currValue > 50) {
+      setCurrValue(50)
     }
   }
 
@@ -30,7 +30,7 @@ export const InputSlider = (props) => {
         className='rangeInput'
         type='number'
         min='5'
-        max='30'
+        max='50'
         step='1'
         id={id}
         defaultValue={typeof value === 'number' ? currValue : value}
@@ -43,7 +43,7 @@ export const InputSlider = (props) => {
           className='rangeSlider'
           type='range'
           min='5'
-          max='30'
+          max='50'
           step='1'
           onChange={handleNumberChange}
           defaultValue={typeof value === 'number' ? currValue : value}

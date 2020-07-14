@@ -38,9 +38,6 @@ export const SelectListDifficulty = (props) => {
       color: '#1F658A',
       cursor: 'pointer',
     }),
-    menuList: () => ({
-      color: 'red',
-    }),
     indicatorsContainer: () => ({
       padding: 0,
       cursor: 'pointer',
@@ -51,11 +48,9 @@ export const SelectListDifficulty = (props) => {
     }),
     menu: () => ({
       display: 'flex',
-      height: 22,
       justifyContent: 'space-around',
       alignItems: 'flex-start',
       width: 132,
-      height: 50,
       background: 'white',
       borderRadius: 4,
       margin: '8px auto',
@@ -64,9 +59,12 @@ export const SelectListDifficulty = (props) => {
   }
 
   const options = [
-    { label: 'easy', value: 'easy' },
-    { label: 'medium', value: 'medium' },
-    { label: 'hard', value: 'hard' },
+    { label: 'level 1', value: 'level1' },
+    { label: 'level 2', value: 'level2' },
+    { label: 'level 3', value: 'level3' },
+    { label: 'level 4', value: 'level4' },
+    { label: 'level 5', value: 'level5' },
+    { label: 'level 6', value: 'level6' },
   ]
   const changeOption = (e) => {
     setSelectedOption(e)
