@@ -63,7 +63,7 @@ export const PlayFooter = ({
   const classes = useStyle()
   const audioElement = useRef()
   const {
-    cardSettings: { isTranscription, isWordShown, isTranslation },
+    cardSettings: { showTranscription, showWord, showTranslation },
   } = useContext(Context)
 
   const playAudio = () => {
@@ -98,13 +98,13 @@ export const PlayFooter = ({
         ></i>
       </div>
       <div>
-        {isWordShown ? (
+        {showWord ? (
           <p className={classes.word} style={{ display: 'flex' }}>
             {word}
           </p>
         ) : null}
-        {isTranscription ? <p className={classes.transcription}>{transcription}</p> : null}
-        {isTranslation ? <p className={classes.translation}>{wordTranslate}</p> : null}
+        {showTranscription ? <p className={classes.transcription}>{transcription}</p> : null}
+        {showTranslation ? <p className={classes.translation}>{wordTranslate}</p> : null}
       </div>
       <div className='card-chart'>{children}</div>
       <audio ref={audioElement}></audio>
