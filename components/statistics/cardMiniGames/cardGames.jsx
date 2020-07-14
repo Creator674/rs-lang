@@ -4,9 +4,6 @@ import { Bar } from 'react-chartjs-2'
 import { Pie } from 'react-chartjs-2'
 
 const СardGames = ({
-  learntWords,
-  correctCount,
-  mistakesCount,
   savannah,speakit,sprint, audiocall, hangman, puzzle,
 }) => {
   
@@ -44,10 +41,8 @@ const СardGames = ({
     }
   }, [gameName]) 
 
-  
 
-
-  const data2 = {
+   const data2 = {
     labels: date ,
     datasets: [
       {

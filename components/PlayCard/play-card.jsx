@@ -11,6 +11,11 @@ import { Context } from 'context'
 import { combineWordsForDictionary } from '../../lib/crud/auth'
 import './play-card.less'
 
+import { saveStatistic } from 'lib'
+import { learnWordsStatistic } from 'lib/helpers/statisticHelp'
+
+import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
+
 // const word = {
 //   id: '5e9f5ee35eb9e72bc21af4a0',
 //   group: 0,
@@ -84,6 +89,8 @@ const useStyles = makeStyles((theme) => ({
 export const PlayCard = (props) => {
   const {
     cardSettings: { isMeaning },
+    appStatistics,
+    setAppStatistics,
   } = useContext(Context)
   const classes = useStyles()
 
@@ -102,20 +109,26 @@ export const PlayCard = (props) => {
 
   let isMounted = false
 
+  const createStatistic = (bool) => {
+    const newStatistic = { ...appStatistics, id: learnWordsStatistic(appStatistics, currentWord.id, bool) }
+    setAppStatistics(newStatistic)
+    saveStatistic(newStatistic)
+  }
+
   useEffect(() => {
     isMounted = true
-    combineWordsForDictionary(1,1).then((res)=>{
-      console.log(res, isMounted)
+    combineWordsForDictionary(1, 1).then((res) => {
+      console.log(res)
       isMounted && setData(res)
       isMounted && setCurrentWord(res[0])
     })
     return () => {
       isMounted = false
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    if(data.length){
+    if (data.length) {
       setCurrentWord(data[count])
       setAudioWord(data[count].sound)
       setAudioMeaning(data[count].audioMeaning)
@@ -124,14 +137,13 @@ export const PlayCard = (props) => {
   }, [data])
 
   useEffect(() => {
-    if(isGuessed){
+    if (isGuessed) {
       setCount(count + 1)
       return
     }
-  }, [isGuessed]);
+  }, [isGuessed])
 
-  console.log(audioWord,audioMeaning, audioExample )
-// console.log(word)
+  // console.log(word)
   const addToHardSection = () => {
     console.log('haard')
   }
@@ -142,50 +154,61 @@ export const PlayCard = (props) => {
     console.log('repeatWord')
   }
   const showAnswerClick = () => {
-    setShowAnswer(answer => !answer)
+    setShowAnswer((answer) => !answer)
   }
-
-
 
   return (
     <div className='play-card'>
       <div className='card-box'>
         <div className={classes.btnRow}>
           <div className='btn-wrapper card-wrapper'>
-            <MuiButton themeName='hard'
-                       action={addToHardSection}>Hard</MuiButton>
-            <MuiButton themeName='repeat'
-                       action={repeatWord}>Repeat</MuiButton>
-            <MuiButton themeName='easy'
-                       action={addToEasySection}>Easy</MuiButton>
+            <MuiButton themeName='hard' action={addToHardSection}>
+              Hard
+            </MuiButton>
+            <MuiButton themeName='repeat' action={repeatWord}>
+              Repeat
+            </MuiButton>
+            <MuiButton themeName='easy' action={addToEasySection}>
+              Easy
+            </MuiButton>
           </div>
-          <MuiButton themeName='answer'
-                     action={showAnswerClick}>Answer</MuiButton>
-
+          <MuiButton themeName='answer' action={showAnswerClick}>
+            Answer
+          </MuiButton>
         </div>
         <div className='play-image'>
-          <PlayImage src={currentWord ? currentWord.image : ''} isImageMinimized={isImageMinimized}
-                     setImageMinimized={setImageMinimized} />
+          <PlayImage
+            src={currentWord ? currentWord.image : ''}
+            isImageMinimized={isImageMinimized}
+            setImageMinimized={setImageMinimized}
+          />
         </div>
         <div className={`${classes.gameboard} card-wrapper`}>
-          <CardText className='border-top-0'
-                    outerStyles={classes.styleDictionary} index='textExample'
-                    word={currentWord? currentWord : null}>
+          <CardText
+            className='border-top-0'
+            outerStyles={classes.styleDictionary}
+            index='textExample'
+            word={currentWord ? currentWord : null}
+          >
             <PlayGuessField
               showTheAnswer={showTheAnswer}
               word={currentWord ? currentWord.word : null}
               setAudioLock={setAudioLock}
               setIsGuessed={setIsGuessed}
               isGuessed={isGuessed}
+              createStatistic={createStatistic}
             />
           </CardText>
           {isMeaning ? (
-            <CardText className='second-row'
-                      outerStyles={classes.styleDictionary} index='textMeaning'
-                      word={currentWord? currentWord : ''} />
+            <CardText
+              className='second-row'
+              outerStyles={classes.styleDictionary}
+              index='textMeaning'
+              word={currentWord ? currentWord : ''}
+            />
           ) : null}
           <PlayFooter
-            word={currentWord? currentWord : ''}
+            word={currentWord ? currentWord : ''}
             audio={isGuessed === true ? audioExample : [audioWord, isMeaning ? audioMeaning : null]}
             isAudioLock={isAudioLock}
             isGuessed={isGuessed}

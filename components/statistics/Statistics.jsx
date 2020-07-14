@@ -122,6 +122,7 @@ export function Statistics() {
 
   const [amountOfWords, setAmountOfWords] = useState(0)
   const [allcorrectAnswers, setCorrectAnswers] = useState(0)
+  const [datesArray, setDatesArray] = useState([])
 
   const [savannah, setSavannah] = useState([])
   const [speakit, setSpeakit] = useState([])
@@ -134,7 +135,6 @@ export function Statistics() {
   const {
     appStatistics,
     setAppStatistics,
-    words,
     userData,
   } = useContext(Context)
 
@@ -145,46 +145,59 @@ export function Statistics() {
   useEffect(()=>{
     getStatistic().then((res) => {
       if(res.data.optional){
-        console.log(res.data.optional)
         setAppStatistics({ ...appStatistics, ...res.data.optional })
-        
-        console.log(  Object.entries(res.data.optional)  )
+        // console.log(  Object.entries(res.data.optional)  )
+
+
+
+        //    just amount of all words, ---  Num
         setAmountOfWords(  Object.entries(res.data.optional).reduce((acc, el) => {
           if(el[0].length > 20){
-            console.log(el)
             acc += 1
           }
           return acc
         }, 0) )
+
+        //   array of Dates ---  ['Monday July 13', {...},  'Monday July 14', {...},]
+        setDatesArray(  Object.entries(res.data.optional).reduce((acc, el) => {
+          if(el[0].length > 20){
+            const entries = Object.entries(el[1])
+            // console.log( entries )
+            entries.forEach((el) => {
+              if(/\d/.test(el[0])){
+                console.log(el)
+                acc.push(el)
+              }
+            })
+          }
+          return acc.sort()
+        }, []) )
+
+        //    all correct answers from Dates ---- Num
         setCorrectAnswers(  Object.entries(res.data.optional).reduce((acc, el) => {
           if(el[0].length > 20){
             const entries = Object.entries(el[1])
-            console.log( entries )
+            // console.log( entries )
             entries.forEach((el) => {
-              if(el[1].guessed){
-                acc += +el[1].guessed
+              if(/\d/.test(el[0])){
+                acc += el[1].guessed ? el[1].guessed : 0;
               }
-            }) 
+            })
           }
           return acc
         }, 0) )
 
 
+        //    data for each game
         setSavannah(  Object.entries(res.data.optional).filter((el) => el[0] == 'savannah')) 
         setSpeakit(  Object.entries(res.data.optional).filter((el) => el[0] == 'speakit')) 
         setSprint(  Object.entries(res.data.optional).filter((el) => el[0] == 'sprint')) 
         setAudiocall((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'audiocall')) 
         setHangman((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'hangman')) 
         setPuzzle((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'puzzle')) 
-      
-      }
-
-      
+      } 
     })
   }, [])
-
-  
-
 
 
   return (
@@ -198,30 +211,26 @@ export function Statistics() {
           </Tabs>
         </MuiThemeProvider>
       </Paper>
+
       <TabPanel value={value} index={0}>
         <СardToday
           newCards={amountOfWords}
-          winrate={amountOfWords}
+          winrate={allcorrectAnswers}
           totalCards={amountOfWords}
-          studyTime={''}
-          strike={amountOfWords / allcorrectAnswers * 100}
+          studyTime={datesArray ? datesArray[0] ? datesArray[0][0] : datesArray[0] : 'today'}   
+                           // just the last time you was here learning
+          strike={amountOfWords / allcorrectAnswers}
           repeat={''}
           userName={userData.name}
         />
       </TabPanel>
 
-
       <TabPanel value={value} index={1}>
-        <СardArchive learntWords={amountOfWords} day1={30} day2={40} day3={55} day4={10} day5={7} day6={30} day7={40} />
+        <СardArchive learntWords={amountOfWords} days={datesArray} />
       </TabPanel>
-
 
       <TabPanel value={value} index={2}>
         <СardGames
-          learntWords={amountOfWords}
-          correctCount={allcorrectAnswers}
-          mistakesCount={amountOfWords - allcorrectAnswers}
-
           savannah={savannah}
           speakit={speakit}
           sprint={sprint}
