@@ -1,54 +1,6 @@
 // import React, {useEffect} from "react";
 import './cardToday.less'
-// import {CanvasJSChart} from 'canvasjs-react-charts'
-// // var CanvasJSReact = require('./canvasjs.react');
-// // var CanvasJSReact = require('../../../lib/canvasjs/canvasjs.react');
-// // var CanvasJSChart = CanvasJSReact.CanvasJSChart;
-// // import CanvasJSReact from "../../../lib/canvasjs/canvasjs.react"
-
-// console.log({CanvasJSChart})
-
-// const СardArchive = (props) => {
-//     const options = {
-//         animationEnabled: true,
-//         subtitles: [{
-//             text: "71% Positive",
-//             verticalAlign: "center",
-//             fontSize: 24,
-//             dockInsidePlotArea: true
-//         }],
-//         data: [{
-//             type: "doughnut",
-//             showInLegend: true,
-//             indexLabel: "{name}: {y}",
-//             yValueFormatString: "#,###'%'",
-//             dataPoints: [
-//                 { name: "Unsatisfied", y: 5 },
-//                 { name: "Very Unsatisfied", y: 31 },
-//                 { name: "Very Satisfied", y: 40 },
-//                 { name: "Satisfied", y: 17 },
-//                 { name: "Neutral", y: 7 }
-//             ]
-//         }]
-//     }
-//     // useEffect(() => {var CanvasJSChart = CanvasJSReact.CanvasJSChart})
-
-//     return (
-//       <div>
-//         <div class="study-time">
-//             <p>Study Time: 46 min</p>
-//         </div>
-//         <div className="chartContainer">
-//          {/* <CanvasJSChart options = {options} /> */}
-//         </div>
-//       </div>
-//     )
-//   };
-
-//   export default СardArchive;
-
 import React from 'react'
-// import {Bar} from 'react-chartjs-2';
 import { Doughnut } from 'react-chartjs-2'
 import { red } from '@material-ui/core/colors'
 const СardToday = ({ newCards, winrate, totalCards, studyTime, strike, repeat, userName }) => {
@@ -57,8 +9,6 @@ const СardToday = ({ newCards, winrate, totalCards, studyTime, strike, repeat, 
     datasets: [
       {
         data: [newCards, winrate, totalCards],
-        // data: [300, 50, 100],
-        // borderWidth: 8,
         backgroundColor: ['#C00000', '#38ADA9', '#1e658a'],
       },
     ],
@@ -103,9 +53,9 @@ const СardToday = ({ newCards, winrate, totalCards, studyTime, strike, repeat, 
       </div>
 
       <div className='eagle'>
-        <p className='eagle__text eagle__text_left'>Correct answers strike</p>
+        <p className='eagle__text eagle__text_left'>Correct answers persent</p>
         <div className='eagle__digs'>
-          <p className='eagle__dig'>{strike}</p>
+          <p className='eagle__dig'>{Math.floor(strike)} % </p>
           <p className='eagle__dig eagle__dig_right-wing'>{repeat}</p>
           {/* <p className={`eagle__dig eagle__dig_right-wing ${isError ? `eagle__dig_errors` : ''}`}>{rightData}</p> */}
         </div>

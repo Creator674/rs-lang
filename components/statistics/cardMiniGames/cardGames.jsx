@@ -4,22 +4,9 @@ import { Bar } from 'react-chartjs-2'
 import { Pie } from 'react-chartjs-2'
 
 const СardGames = ({
-  game,
+  learntWords,
   correctCount,
   mistakesCount,
-  day1,
-  day2,
-  day3,
-  day4,
-  day5,
-  day6,
-  day7,
-  playedGame0,
-  playedGame1,
-  playedGame2,
-  playedGame3,
-  playedGame4,
-  playedGame5,
   savannah,speakit,sprint, audiocall, hangman, puzzle,
 }) => {
   
@@ -27,7 +14,7 @@ const СardGames = ({
   const [gameName, setGameName] = useState('speakit')
   const [ind, setInd] = useState(0)
   const [dateData, setDateData] = useState(0)
-  const [date, setDate] = useState(0)
+  const [date, setDate] = useState('today')
   const [amountWords, setamountWords] = useState(0)
   const [amountErrors, setamountErrors] = useState(0)
   const [amountGuessed, setamountGuessed] = useState(0)
@@ -48,6 +35,7 @@ const СardGames = ({
     if(dateData){
       setDate(Object.keys(dateData) )         // дата
       const countOfGame = Object.entries(dateData)[1]
+      console.log(countOfGame)
       if(countOfGame){
         setamountWords(Object.entries(dateData)[1][1].amount)
         setamountErrors(Object.entries(dateData)[1][1].faults)
@@ -63,7 +51,7 @@ const СardGames = ({
     labels: date ,
     datasets: [
       {
-        data: [day1, day2, day3, day4, day5, day6, day7],
+        data: [amountWords],
         backgroundColor: ['#7AB4CC', '#1F658A', '#D3E8ED', '#7AB4CC', '#1F658A', '#2C3E50', '#C00000'],
       },
     ],
@@ -72,14 +60,11 @@ const СardGames = ({
     labels: ['SpeakIt', 'Savannah', 'Audiocall', 'Hangman', 'English Puzzle', 'Sprint'],
     datasets: [
       {
-        data: [playedGame0, playedGame1, playedGame2, playedGame3, playedGame4, playedGame5],
+        data: [amountWords],
         backgroundColor: ['#7AB4CC', '#1F658A', '#D3E8ED', '#7AB4CC', '#1F658A', '#2C3E50', '#C00000'],
       },
     ],
-  }
-
-
-  
+  } 
 
   return (
     <div className='tab'>

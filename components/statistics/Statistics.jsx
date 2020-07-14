@@ -121,7 +121,7 @@ export function Statistics() {
   const [value, setValue] = useState(1)
 
   const [amountOfWords, setAmountOfWords] = useState(0)
-  const [allWords, setAllWords] = useState([])
+  const [allcorrectAnswers, setCorrectAnswers] = useState(0)
 
   const [savannah, setSavannah] = useState([])
   const [speakit, setSpeakit] = useState([])
@@ -129,12 +129,13 @@ export function Statistics() {
   const [audiocall, setAudiocall] = useState([])
   const [hangman, setHangman] = useState([])
   const [puzzle, setPuzzle] = useState([])
-
+  const classes = useStyles()
 
   const {
-    appSettings: { userID, userName },
     appStatistics,
     setAppStatistics,
+    words,
+    userData,
   } = useContext(Context)
 
   const handleChange = (event, newValue) => {
@@ -143,36 +144,48 @@ export function Statistics() {
 
   useEffect(()=>{
     getStatistic().then((res) => {
-      console.log(res.data.optional)
-      setAppStatistics({ ...appStatistics, ...res.data.optional })
+      if(res.data.optional){
+        console.log(res.data.optional)
+        setAppStatistics({ ...appStatistics, ...res.data.optional })
+        
+        console.log(  Object.entries(res.data.optional)  )
+        setAmountOfWords(  Object.entries(res.data.optional).reduce((acc, el) => {
+          if(el[0].length > 20){
+            console.log(el)
+            acc += 1
+          }
+          return acc
+        }, 0) )
+        setCorrectAnswers(  Object.entries(res.data.optional).reduce((acc, el) => {
+          if(el[0].length > 20){
+            const entries = Object.entries(el[1])
+            console.log( entries )
+            entries.forEach((el) => {
+              if(el[1].guessed){
+                acc += +el[1].guessed
+              }
+            }) 
+          }
+          return acc
+        }, 0) )
+
+
+        setSavannah(  Object.entries(res.data.optional).filter((el) => el[0] == 'savannah')) 
+        setSpeakit(  Object.entries(res.data.optional).filter((el) => el[0] == 'speakit')) 
+        setSprint(  Object.entries(res.data.optional).filter((el) => el[0] == 'sprint')) 
+        setAudiocall((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'audiocall')) 
+        setHangman((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'hangman')) 
+        setPuzzle((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'puzzle')) 
       
-      console.log(  Object.entries(res.data.optional)  )
-      setAmountOfWords(  Object.entries(res.data.optional).reduce((acc, el) => {
-        if(el[0].length > 20){
-          console.log(el)
-          acc += 1
-        }
-        return acc
-      }, 0) )
+      }
 
-      // setAllWords((all)=> Object.entries(res.data.optional).map(el => {
-      //   console.log(el[0])
-      //   if(/\d/g.test(el[0])){    // ---значит это дата
-      //      return el[0]  
-      //   }
-      // }))
-
-      setSavannah(  Object.entries(res.data.optional).filter((el) => el[0] == 'savannah')) 
-      setSpeakit(  Object.entries(res.data.optional).filter((el) => el[0] == 'speakit')) 
-      setSprint(  Object.entries(res.data.optional).filter((el) => el[0] == 'sprint')) 
-      setAudiocall((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'audiocall')) 
-      setHangman((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'hangman')) 
-      setPuzzle((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'puzzle')) 
-
+      
     })
   }, [])
 
-  const classes = useStyles()
+  
+
+
 
   return (
     <div style={{ width: '100%', diplay: 'flex', flexDirection: 'column' }}>
@@ -187,37 +200,27 @@ export function Statistics() {
       </Paper>
       <TabPanel value={value} index={0}>
         <СardToday
-          newCards={50}
-          winrate={79}
-          totalCards={150}
-          studyTime={49}
-          strike={210}
-          repeat={15}
-          userName={'Olga'}
+          newCards={amountOfWords}
+          winrate={amountOfWords}
+          totalCards={amountOfWords}
+          studyTime={''}
+          strike={amountOfWords / allcorrectAnswers * 100}
+          repeat={''}
+          userName={userData.name}
         />
       </TabPanel>
+
+
       <TabPanel value={value} index={1}>
-        <СardArchive learntWords={553} day1={30} day2={40} day3={55} day4={10} day5={7} day6={30} day7={40} />
+        <СardArchive learntWords={amountOfWords} day1={30} day2={40} day3={55} day4={10} day5={7} day6={30} day7={40} />
       </TabPanel>
+
+
       <TabPanel value={value} index={2}>
         <СardGames
-          game={'Super Mario'}
-          learntWords={553}
-          correctCount={80}
-          mistakesCount={15}
-          day1={30}
-          day2={40}
-          day3={55}
-          day4={10}
-          day5={7}
-          day6={30}
-          day7={40}
-          playedGame0={23}
-          playedGame1={15}
-          playedGame2={17}
-          playedGame3={32}
-          playedGame4={10}
-          playedGame5={51}
+          learntWords={amountOfWords}
+          correctCount={allcorrectAnswers}
+          mistakesCount={amountOfWords - allcorrectAnswers}
 
           savannah={savannah}
           speakit={speakit}
