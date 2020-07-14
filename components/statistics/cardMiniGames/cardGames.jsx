@@ -16,37 +16,48 @@ const СardGames = ({
   const [amountErrors, setamountErrors] = useState(0)
   const [amountGuessed, setamountGuessed] = useState(0)
 
+  const [arrayOfAllGuessedWords, setArrayOfAllGuessedWords] = useState([])
+
+
+
   const games = [savannah, speakit, sprint, audiocall, hangman, puzzle];
   const gamesNames = ['savannah', 'speakit', 'sprint', 'audiocall', 'hangman', 'puzzle'];
 
   const settoGameName = (name) => {
     setGameName(name)
     setInd(gamesNames.indexOf(name))
-    const Isdata = Object.entries(games[gamesNames.indexOf(name)])
-    if(Isdata[0]){
-      setDateData(Isdata[0][1][1]) 
-    }
+    const chooseTheGame = Object.entries(games[gamesNames.indexOf(name)])
+    setDateData(chooseTheGame.map(el =>  el[1][1] )) 
   }
    
   useEffect(() => {
     if(dateData){
-      setDate(Object.keys(dateData) )         // дата
-      const countOfGame = Object.entries(dateData)[1]
-      console.log(countOfGame)
+      setDate(dateData.map(el =>  Object.keys(el) ) )   // array of Dates ['Thu, Jul, 13', ...]
+      const countOfGame = Object.entries(dateData)
       if(countOfGame){
-        setamountWords(Object.entries(dateData)[1][1].amount)
-        setamountErrors(Object.entries(dateData)[1][1].faults)
-        setamountGuessed(Object.entries(dateData)[1][1].guessed)
+        setamountWords(countOfGame.map(el =>   Object.values(el[1])[0]['amount'] ))
+        setamountErrors(countOfGame.map(el =>   Object.values(el[1])[0]['faults'] ))
+        setamountGuessed(countOfGame.map(el =>   Object.values(el[1])[0]['guessed'] ))
       }
     }
+
+    //     amount of guessed words learned per EACH GAME
+    games.forEach(el => {
+      const dat = el.map(el =>  el[1] )
+      setArrayOfAllGuessedWords(dat.map(el => {
+         if(el){
+           return Object.values(el)[0]['guessed'] 
+         }
+      }))
+    })
   }, [gameName]) 
 
 
    const data2 = {
-    labels: date ,
+    labels: [...date] ,
     datasets: [
       {
-        data: [amountWords],
+        data: [...amountWords],
         backgroundColor: ['#7AB4CC', '#1F658A', '#D3E8ED', '#7AB4CC', '#1F658A', '#2C3E50', '#C00000'],
       },
     ],
@@ -55,7 +66,7 @@ const СardGames = ({
     labels: ['SpeakIt', 'Savannah', 'Audiocall', 'Hangman', 'English Puzzle', 'Sprint'],
     datasets: [
       {
-        data: [amountWords],
+        data: [...arrayOfAllGuessedWords],
         backgroundColor: ['#7AB4CC', '#1F658A', '#D3E8ED', '#7AB4CC', '#1F658A', '#2C3E50', '#C00000'],
       },
     ],

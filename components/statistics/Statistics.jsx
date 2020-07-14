@@ -165,7 +165,7 @@ export function Statistics() {
             // console.log( entries )
             entries.forEach((el) => {
               if(/\d/.test(el[0])){
-                console.log(el)
+                // console.log(el)
                 acc.push(el)
               }
             })
