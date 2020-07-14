@@ -59,41 +59,6 @@ export const DropdownMenu = ({ closePopover }) => {
           Log out
         </div>
       </div>
-
-      {/* remove when cleanup code */}
-      <div className={styles.root} onClick={saveSettings}>
-        <div className='title' style={{ userSelect: 'none', lineHeight: '3.2rem', margin: '0 auto' }}>
-          Save settings
-        </div>
-      </div>
-      <div className={styles.root} onClick={() => {
-        saveSettings().then(response => {
-        }).catch(err => console.log(err))
-      }}>
-        <div className='title' style={{ userSelect: 'none', lineHeight: '3.2rem', margin: '0 auto' }}>
-          Get settings
-        </div>
-      </div>
-
-      <div className={styles.root} onClick={saveStatistic}>
-        <div className='title' style={{ userSelect: 'none', lineHeight: '3.2rem', margin: '0 auto' }}>
-          Save statistic
-        </div>
-      </div>
-      <div
-        className={styles.root}
-        onClick={() => {
-          saveStatistic()
-            .then((response) => {
-              console.log(response)
-            })
-            .catch((err) => console.log(err))
-        }}
-      >
-        <div className='title' style={{ userSelect: 'none', lineHeight: '3.2rem', margin: '0 auto' }}>
-          Get statistic
-        </div>
-      </div>
     </div>
   )
 }

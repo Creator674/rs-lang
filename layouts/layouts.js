@@ -13,7 +13,6 @@ export const AppLayout = ({ children }) => {
 
   useEffect(() => {
     AOS.init()
-    if (!isAuthorized) console.log("User didn't authorized")
   })
 
   return <>{children}</>

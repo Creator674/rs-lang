@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { Context } from './app-context'
-import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords } from 'lib' // getWords
+import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords, fetchWordsFromDB } from 'lib' // getWords
 import { TramRounded, TrendingUpRounded } from '@material-ui/icons'
 
 const initialCardSettings = {
@@ -12,6 +12,7 @@ const initialCardSettings = {
   level: 0,
   levels: '0,1,2,3,4,5',
   perPage: 20,
+  wordsFetched: [],
   amountOfWords: 5,
   amountOfCards: 30,
   showWord: true,
@@ -31,6 +32,12 @@ const initialCardSettings = {
   EASYbutton: true,
 }
 
+// wordsFetched: [
+//   {
+//     userWords: 0
+//   }
+// ]
+
 const currentCardSettings = {
   learnNew: false,
   repeatNew: false,
@@ -39,10 +46,7 @@ const currentCardSettings = {
   level: 0,
   levels: '0,1,2,3,4,5',
   perPage: 20,
-  wordsFetched: {
-    level: 0
-  },
-
+  wordsFetched: [],
   amountOfWords: 5,
   amountOfCards: 30,
   showWord: true,
@@ -68,7 +72,7 @@ const initialSort = {
 }
 
 const initialLearnProgress = {
-  total: 50,
+  total: 0,
   current: 0,
 }
 
@@ -109,7 +113,7 @@ const GlobalState = (props) => {
           .then((response) => {
             setUserData({ ...userData, name: response.data.name })
             setAppSettings({ ...appSettings, isAuthorized: true })
-            updateAppState()
+            // updateAppState()
             resolve(true)
           })
           .catch((err) => {
@@ -120,15 +124,26 @@ const GlobalState = (props) => {
     }
 
     const updateAppState = () => {
-      getAllUserWords().then(response => {
-        console.log('RESPONSE WORDS', response.data)
-      })
+
       getStatistic().then((response) => {
         setAppStatistics({ ...appStatistics, ...response.data.optional })
       })
       getSettings().then((response) => {
         console.log(response.data, 'APP SETTINGS')
         setCardSettings({ ...cardSettings, ...response.data.optional })
+      })
+      getAllUserWords().then(response => {
+        console.log('RESPONSE WORDS', response.data)
+        if (response.data.length) {
+          setWords(response.data)
+        } else {
+          fetchWordsFromDB(0, 0).then(response => {
+            console.log('WORDS FROM DB', response.data)
+            setWords(response.data)
+          })
+        }
+        setLearnProgress({...learnProgress, total: cardSettings.amountOfCards})
+        // setup initial state for application
       })
     }
 
