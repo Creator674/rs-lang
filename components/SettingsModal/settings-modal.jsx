@@ -83,7 +83,7 @@ export const SettingsModal = () => {
               value='difficultOnly'
               onClick={changeRadioSetting}
             />
-            <SettingsItem labelText='auto soundplay' value='autoSoundplay' onClick={changeSetting} />
+            <SettingsItem labelText='auto sound play' value='autoSoundplay' onClick={changeSetting} />
             <SelectListDifficulty
               localSettings={localSettings}
               onChange={changeSetting}
@@ -111,9 +111,9 @@ export const SettingsModal = () => {
         <section className='cardSettingsWrapper'>
           <FormWrapper legendText='Card'>
             <SettingsItem labelText='show word' value='showWord' onClick={changeSetting} />
-            <SettingsItem labelText='show translation' value='showTranslation' onClick={changeSetting} />
-            <SettingsItem labelText='show transcription' value='showTranscription' onClick={changeSetting} />
-            <SettingsItem labelText='add pronunciation' value='addPronunciation' onClick={changeSetting} />
+            <SettingsItem labelText='show word translation' value='showTranslation' onClick={changeSetting} />
+            <SettingsItem labelText='show word transcription' value='showTranscription' onClick={changeSetting} />
+           <SettingsItem labelText='add pronunciation' value='addPronunciation' onClick={changeSetting} />
             <SettingsItem labelText='add illustration' value='addIllustration' onClick={changeSetting} />
             <li className='separatingLine'></li>
             <SettingsItem labelText='show defenition' value='showDefenition' onClick={changeSetting} />

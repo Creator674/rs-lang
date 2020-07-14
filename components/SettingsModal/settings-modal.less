@@ -2,11 +2,45 @@
 @import '../../styles/variables.less';
 
 .settingsModalWrapper {
-    width: 37.5rem;
-    height: 100rem;
+    position: relative;
+    width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
+    padding: 0 3.2rem 5.6rem;
+    overflow: hidden;
+    transition: 2s ease;
+    &:before {
+        content: '';
+        position: absolute;
+        top: 1rem;
+        right: -10.5rem;
+        width: 24rem;
+        height: 24rem;
+        background-image: url('../../public/images/popup/gear-big.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        z-index: -1;
+        transform: rotate(-13deg);
+    }
+    &:after {
+        width: 15rem;
+        height: 15rem;
+        bottom: -2.5rem;
+        left: -3rem;
+        background-image: url('../../public/images/popup/gear-small.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        content: '';
+        position: absolute;
+        z-index: -1;
+        transform: rotate(-58deg);
+    }
+    &:hover::before{
+        transform: rotate(58deg);
+    }
 
     & input {
         margin: auto 0;
