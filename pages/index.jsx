@@ -118,7 +118,7 @@ const MainPage = ({ showInfo }) => {
                 <iframe
                   width='1280'
                   height='720'
-                  src='https://www.youtube.com/embed/8S0FDjFBj8o'
+                  src='https://www.youtube.com/embed/5_redSecXHM'
                   frameBorder='0'
                   allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
                   allowFullScreen
