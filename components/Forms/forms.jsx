@@ -29,8 +29,8 @@ const SignUpForm = ({ className, showInfo, closeInfo, toggleClose }) => {
     <Formik
       initialValues={{
         name: 'whoIs',
-        email: 'japost@wp.pl',
-        password: 'Qq12345&',
+        email: 'japost1111@wp.pl',
+        password: 'Qq12345&1111',
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string().email('Email is invalid').required('Is required'),
@@ -44,16 +44,16 @@ const SignUpForm = ({ className, showInfo, closeInfo, toggleClose }) => {
         createUser(name, email, password)
           .then((response) => {
             showInfo({ message: 'Created new user. Authorizing...', type: 'success' })
-            authenticateUser(email, password)
-              .then((response) => {
-                toggleClose()
-                console.log(response)
+            // authenticateUser(email, password)
+            //   .then((response) => {
+            //     toggleClose()
+            //     console.log(response)
 
-                setLoading(false)
-              })
-              .catch((err) => {
-                showInfo({ message: err.response.data, type: 'error' })
-              })
+            //     setLoading(false)
+            //   })
+            //   .catch((err) => {
+            //     showInfo({ message: err.response ? err.response.data : err.message, type: 'error' })
+            //   })
             console.log(response.data.id)
           })
           .catch((err) => {
@@ -115,8 +115,8 @@ const SignInForm = ({ className, switchRender, showInfo, closeInfo, closeModal }
   return (
     <Formik
       initialValues={{
-        email: 'japost@wp.pl',
-        password: 'Qq12345&',
+        email: 'japost1111@wp.pl',
+        password: 'Qq12345&1111',
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string().email('Email is invalid').required('Is required'),
@@ -139,7 +139,7 @@ const SignInForm = ({ className, switchRender, showInfo, closeInfo, closeModal }
             getStatistic().then((res) => {
               console.log(res)
               setAppStatistics({ ...appStatistics, ...res.data.optional })
-            })
+            }).catch(err=> {    })
           })
           .catch((err) => {
             showInfo({ message: err.response ? err.response.data : err.message, type: 'error' })

@@ -13,30 +13,45 @@ export const Learn = () => {
 
   if (isWordOnLearning !== -1) setCurrIndex(isWordOnLearning)
 
+  console.log({words})
+
   function setNextCard(idx) {
     if (idx >= amountOfCards) {
       console.log('End of learning')
       return
     }
 
-    if (words[idx].learnIndex === undefined) {
-      words[idx].learnIndex = 20
-      isNew.current = true
-    }
-    words[idx].level = level
+    if (!words[idx]) return
 
+    if(words[idx].optional) {
+      if (words[idx].optional.learnIndex === undefined) {
+        words[idx].optional.learnIndex = 20
+        isNew.current = true
+      }
+      words[idx].optional.level = level
+    } else {
+      if (words[idx].learnIndex === undefined) {
+        words[idx].learnIndex = 20
+        isNew.current = true
+      }
+      words[idx].level = level
+    }
+
+    updateWordsDB(words[idx])
     // const prevIdx = idx - 1 >= 0 ? idx - 1 : 0
     const subWords = words.slice(idx, idx + 1)
-    return subWords.map((word, i ) => <PlayCard key={word.word} word={word} next={() => {
+    return subWords.map((word, i ) => <PlayCard key={word.id || word._id} word={word.optional ? word.optional :  word} next={() => {
       setCurrIndex(currIndex+1)}} updateWordsDB={updateWordsDB} />)
   }
 
   const updateWordsDB = (word) => {
     if (isNew.current === true) {
         createUserWord(word).then(response => {
-      })
+          console.log(response)
+      }).catch(err => {})
     } else {
         updateUserWord(word).then(response => {
+          console.log(response)
       })
     }
   }

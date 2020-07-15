@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { Context } from './app-context'
-import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords, fetchWordsFromDB, saveSettings } from 'lib' // getWords
+import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords, fetchWordsFromDB, aggregatedWords, saveSettings } from 'lib' // getWords
 import { TramRounded, TrendingUpRounded } from '@material-ui/icons'
 
 const initialCardSettings = {
@@ -133,7 +133,7 @@ const GlobalState = (props) => {
 
       getStatistic().then((response) => {
         setAppStatistics({ ...appStatistics, ...response.data.optional })
-      })
+      }).catch(err => {})
       getSettings().then((response) => {
         console.log(response.data, 'APP SETTINGS')
         setCardSettings({ ...cardSettings, ...response.data.optional })
@@ -141,40 +141,48 @@ const GlobalState = (props) => {
 
          // FETCH WORDS LOGIC
 
-        getAllUserWords().then(response => {
-          console.log('RESPONSE WORDS', response.data)
-          if (response.data.length) {
-            // смотрим хватает ли нам этих слов на сегодняшнее изучение
+       fetchWords(response.data.optional.amountOfCards)
+      }).catch(err => {
+        fetchWords(response.data.optional.amountOfCards)
+      })
+    }
 
+    const fetchWords = (amountOfCards) => {
+      // getAllUserWords().then(response => {
+      aggregatedWords(cardSettings.level, amountOfCards).then(response => {
+        console.log('RESPONSE WORDS', response.data)
+
+        // if (response.data.length) {
+        if (response.data[0].paginatedResults.length) {
+          // смотрим хватает ли нам этих слов на сегодняшнее изучение
+          // setWords(response.data)
+          setWords(response.data[0].paginatedResults)
+        } else {
+          fetchWordsFromDB(cardSettings.level, getWordsPage()).then(response => {
+            console.log('WORDS FROM DB', response.data)
             setWords(response.data)
-          } else {
-            fetchWordsFromDB(cardSettings.level, getWordsPage()).then(response => {
-              console.log('WORDS FROM DB', response.data)
-              setWords(response.data)
-            })
-          }
+          })
+        }
 
-        })
       })
     }
 
     const getWordsPage = () => {
       // setCardSettings({...cardSettings, wordsFetched: {}})
       // saveSettings({...cardSettings, wordsFetched: {}})
-      // if (cardSettings.wordsFetched[cardSettings.level]) {
-      //   wordsPage.current = cardSettings.wordsFetched[cardSettings.level].page
-      //   return wordsPage.current
-      // } else {
-      //   wordsPage.current = 0
-      //   console.log(cardSettings.wordsFetched, '55555')
-      //   const tempWordsFetchedArray = [...cardSettings.wordsFetched]
-      //   tempWordsFetchedArray[cardSettings.level] = {
-      //     page: wordsPage.current
-      //   }
-      //   setCardSettings({...cardSettings, wordsFetched: [...tempWordsFetchedArray]})
-      //   saveSettings({...cardSettings, wordsFetched: [...tempWordsFetchedArray]})
-      //   return wordsPage.current
-      // }
+      if (cardSettings.wordsFetched[cardSettings.level]) {
+        wordsPage.current = cardSettings.wordsFetched[cardSettings.level].page
+        return wordsPage.current
+      } else {
+        wordsPage.current = 0
+        const tempWordsFetchedObj = { ...cardSettings.wordsFetched }
+        tempWordsFetchedObj[cardSettings.level] = {
+          page: wordsPage.current
+        }
+        setCardSettings({...cardSettings, wordsFetched: tempWordsFetchedObj})
+        saveSettings({...cardSettings, wordsFetched: tempWordsFetchedObj})
+        return wordsPage.current
+      }
     }
 
     // navigate through pages in DB function
