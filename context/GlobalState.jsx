@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { Context } from './app-context'
-import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords, fetchWordsFromDB } from 'lib' // getWords
+import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords, fetchWordsFromDB, saveSettings } from 'lib' // getWords
 import { TramRounded, TrendingUpRounded } from '@material-ui/icons'
 
 const initialCardSettings = {
@@ -12,7 +12,7 @@ const initialCardSettings = {
   level: 0,
   levels: '0,1,2,3,4,5',
   perPage: 20,
-  wordsFetched: [],
+  wordsFetched: {},
   amountOfWords: 5,
   amountOfCards: 30,
   showWord: true,
@@ -34,8 +34,10 @@ const initialCardSettings = {
 
 // wordsFetched: [
 //   {
-//     userWords: 0
-//   }
+//     userWords: 0,
+//     page: 0
+//   },
+//
 // ]
 
 const currentCardSettings = {
@@ -46,7 +48,7 @@ const currentCardSettings = {
   level: 0,
   levels: '0,1,2,3,4,5',
   perPage: 20,
-  wordsFetched: [],
+  wordsFetched: {},
   amountOfWords: 5,
   amountOfCards: 30,
   showWord: true,
@@ -94,6 +96,8 @@ const GlobalState = (props) => {
   const [learnProgress, setLearnProgress] = useState(initialLearnProgress)
   const [userData, setUserData] = useState({})
 
+  const wordsPage = useRef()
+
   // settings
   const [appSettings, setAppSettings] = useState(initialAppSettings)
 
@@ -125,6 +129,7 @@ const GlobalState = (props) => {
     }
 
     const updateAppState = () => {
+      // setup initial state for application
 
       getStatistic().then((response) => {
         setAppStatistics({ ...appStatistics, ...response.data.optional })
@@ -133,21 +138,48 @@ const GlobalState = (props) => {
         console.log(response.data, 'APP SETTINGS')
         setCardSettings({ ...cardSettings, ...response.data.optional })
         setLearnProgress({...learnProgress, total: response.data.optional.amountOfCards})
-      })
-      getAllUserWords().then(response => {
-        console.log('RESPONSE WORDS', response.data)
-        if (response.data.length) {
-          setWords(response.data)
-        } else {
-          fetchWordsFromDB(0, 0).then(response => {
-            console.log('WORDS FROM DB', response.data)
-            setWords(response.data)
-          })
-        }
 
-        // setup initial state for application
+         // FETCH WORDS LOGIC
+
+        getAllUserWords().then(response => {
+          console.log('RESPONSE WORDS', response.data)
+          if (response.data.length) {
+            // смотрим хватает ли нам этих слов на сегодняшнее изучение
+
+            setWords(response.data)
+          } else {
+            fetchWordsFromDB(cardSettings.level, getWordsPage()).then(response => {
+              console.log('WORDS FROM DB', response.data)
+              setWords(response.data)
+            })
+          }
+
+        })
       })
     }
+
+    const getWordsPage = () => {
+      // setCardSettings({...cardSettings, wordsFetched: {}})
+      // saveSettings({...cardSettings, wordsFetched: {}})
+      // if (cardSettings.wordsFetched[cardSettings.level]) {
+      //   wordsPage.current = cardSettings.wordsFetched[cardSettings.level].page
+      //   return wordsPage.current
+      // } else {
+      //   wordsPage.current = 0
+      //   console.log(cardSettings.wordsFetched, '55555')
+      //   const tempWordsFetchedArray = [...cardSettings.wordsFetched]
+      //   tempWordsFetchedArray[cardSettings.level] = {
+      //     page: wordsPage.current
+      //   }
+      //   setCardSettings({...cardSettings, wordsFetched: [...tempWordsFetchedArray]})
+      //   saveSettings({...cardSettings, wordsFetched: [...tempWordsFetchedArray]})
+      //   return wordsPage.current
+      // }
+    }
+
+    // navigate through pages in DB function
+
+
 
     const handleRouteChange = (url) => {
       if (url !== '/' && !appSettings.isAuthorized) {
@@ -216,3 +248,5 @@ const GlobalState = (props) => {
 }
 
 export default GlobalState
+
+

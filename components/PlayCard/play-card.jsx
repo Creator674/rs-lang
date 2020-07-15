@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -7,6 +7,7 @@ import { CardText } from '../Dictionary'
 import { ProgressChart } from '../Progress'
 import { PlayImage, PlayFooter, PlayGuessField } from '.'
 import { getAudio } from 'lib/helpers'
+
 import { Context } from 'context'
 
 import './play-card.less'
@@ -81,8 +82,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const PlayCard = ({ word, next }) => {
-  console.log(word)
+export const PlayCard = ({ word, next, updateWordsDB }) => {
   const {
     cardSettings: { showDefenition, REPEATbutton, HARDbutton, SHOWANSWERbutton, EASYbutton, addIllustration, defenitionTranslation },
   } = useContext(Context)
@@ -115,9 +115,17 @@ export const PlayCard = ({ word, next }) => {
     }
   }, [])
 
-  // useEffect(()=>{
-  //   isGuessed === true && next()
-  // }, [isGuessed])
+  useEffect(() => {
+    if (isGuessed === true) {
+      word.learnIndex = word.learnIndex + 20 <= 100 ?  word.learnIndex + 20 : 100
+      updateWordsDB(word)
+    } else if (isGuessed !== false) {
+      word.learnIndex = word.learnIndex - 20 > 0 ?  word.learnIndex - 20 : 0
+      updateWordsDB(word)
+    }
+  }, [isGuessed])
+
+
 
   return (
     <div className='play-card'>
@@ -136,7 +144,7 @@ export const PlayCard = ({ word, next }) => {
         <div className={`${classes.gameboard} card-wrapper`}>
           <CardText className='border-top-0' outerStyles={classes.styleDictionary} index='textExample' word={word}>
             <PlayGuessField
-              word={word.word}
+              word={word.word.toLowerCase()}
               setAudioLock={setAudioLock}
               setIsGuessed={setIsGuessed}
               isGuessed={isGuessed}
@@ -153,7 +161,7 @@ export const PlayCard = ({ word, next }) => {
             getResult={() => isGuessed}
             next={next}
           >
-            <ProgressChart width={'36px'} value={40} />
+            <ProgressChart width={'36px'} value={word.learnIndex} />
           </PlayFooter>
         </div>
       </div>

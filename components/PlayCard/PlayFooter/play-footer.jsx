@@ -72,7 +72,6 @@ export const PlayFooter = ({
   const playAudio = () => {
 
     const playSecondAudio = () => {
-      console.log(isGuessed, 'res')
       if (isGuessed === true) return next()
       if (!audio[1] || !defenitionPronunciation) return
       audioElement.current.setAttribute('src', audio[1])
