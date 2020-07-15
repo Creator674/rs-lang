@@ -33,11 +33,11 @@ const SignUpForm = ({ className, showInfo, closeInfo, toggleClose }) => {
   return (
     <Formik
       initialValues={{
-        name: '',
-        email: '',
-        password: '',
-        // email: 'japost1111@wp.pl',
-        // password: 'Qq12345&1111',
+        name: '5425424',
+        // email: '',
+        // password: '',
+        email: 'plpost@wp.pl',
+        password: 'Qq12345&1111',
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(8, 'Max 8 characters name length is allowed'),
@@ -152,10 +152,10 @@ const SignInForm = ({
   return (
     <Formik
       initialValues={{
-        email: '',
-        password: '',
-        // email: 'japost1111@wp.pl',
-        // password: 'Qq12345&1111',
+        // email: '',
+        // password: '',
+        email: 'plpost@wp.pl',
+        password: 'Qq12345&1111',
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string().email('Email is invalid').required('Is required'),

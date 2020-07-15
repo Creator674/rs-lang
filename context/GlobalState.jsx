@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { Context } from './app-context'
-import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords, fetchWordsFromDB, aggregatedWords, saveSettings } from 'lib' // getWords
+import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords, fetchWordsFromDB, aggregatedWords, saveSettings, preFetchWords } from 'lib' // getWords
 import { TramRounded, TrendingUpRounded } from '@material-ui/icons'
 
 const initialCardSettings = {
@@ -82,95 +82,108 @@ const initialAppSettings = {
   isAuthorized: null,
 }
 
-const GlobalState = (props) => {
+const GlobalState = ( props ) => {
   const { pathname, events } = useRouter()
-  const [path, setPath] = useState('/')
+  const [path, setPath] = useState( '/' )
 
-  const [words, setWords] = useState([])
-  const [sort, setSort] = useState(initialSort)
-  const [activeMenu, setActiveMenu] = useState(0)
-  const [toRepeatWords, setToRepeatWords] = useState(0)
-  const [newWords, setNewWords] = useState(0)
-  const [isAudioOn, setAudio] = useState(true)
+  const [words, setWords] = useState( [] )
+  const [sort, setSort] = useState( initialSort )
+  const [activeMenu, setActiveMenu] = useState( 0 )
+  const [toRepeatWords, setToRepeatWords] = useState( 0 )
+  const [newWords, setNewWords] = useState( 0 )
+  const [isAudioOn, setAudio] = useState( true )
 
-  const [learnProgress, setLearnProgress] = useState(initialLearnProgress)
-  const [userData, setUserData] = useState({})
+  const [learnProgress, setLearnProgress] = useState( initialLearnProgress )
+  const [userData, setUserData] = useState( {} )
 
   const wordsPage = useRef()
 
   // settings
-  const [appSettings, setAppSettings] = useState(initialAppSettings)
+  const [appSettings, setAppSettings] = useState( initialAppSettings )
 
-  const [defaultCardSettings] = useState(initialCardSettings)
-  const [cardSettings, setCardSettings] = useState(currentCardSettings)
+  const [defaultCardSettings] = useState( initialCardSettings )
+  const [cardSettings, setCardSettings] = useState( currentCardSettings )
 
   // statistic
-  const [appStatistics, setAppStatistics] = useState({})
+  const [appStatistics, setAppStatistics] = useState( {} )
 
-  useEffect(() => {
-    const { id, token } = getLocalStorageProp('user') || {}
+  useEffect( () => {
+    const { id, token } = getLocalStorageProp( 'user' ) || {}
 
     const isLogged = () => {
-      return new Promise((resolve, reject) => {
-        if (!id || !token) resolve(false)
-        isAuthenticated(id, token)
-          .then((response) => {
-            console.log({response})
-            setUserData({ ...userData, name: response.data.name, email: response.data.email })
-            setAppSettings({ ...appSettings, isAuthorized: true })
+      return new Promise( ( resolve, reject ) => {
+        if ( !id || !token ) resolve( false )
+        isAuthenticated( id, token )
+          .then( ( response ) => {
+            console.log( { response } )
+            setUserData( { ...userData, name: response.data.name, email: response.data.email } )
+            setAppSettings( { ...appSettings, isAuthorized: true } )
             // updateAppState()
-            resolve(true)
-          })
-          .catch((err) => {
+            resolve( true )
+          } )
+          .catch( ( err ) => {
             // console.log('error: ', err.response ? err.response.data : err.message)
-            resolve(false)
-          })
-      })
+            resolve( false )
+          } )
+      } )
     }
 
     const updateAppState = () => {
       // setup initial state for application
 
-      getStatistic().then((response) => {
-        setAppStatistics({ ...appStatistics, ...response.data.optional })
-      }).catch(err => {})
-      getSettings().then((response) => {
-        console.log(response.data, 'APP SETTINGS')
-        setCardSettings({ ...cardSettings, ...response.data.optional })
-        setLearnProgress({...learnProgress, total: response.data.optional.amountOfCards})
+      getStatistic().then( ( response ) => {
+        setAppStatistics( { ...appStatistics, ...response.data.optional } )
+      } ).catch( err => { } )
+      getSettings().then( ( response ) => {
+        console.log( response.data, 'APP SETTINGS' )
+        setCardSettings( { ...cardSettings, ...response.data.optional } )
+        setLearnProgress( { ...learnProgress, total: response.data.optional ? response.data.optional.amountOfCards : cardSettings.amountOfCards } )
 
-         // FETCH WORDS LOGIC
-
-       fetchWords(response.data.optional.amountOfCards)
-      }).catch(err => {
-        fetchWords(response.data.optional.amountOfCards)
-      })
+        // FETCH WORDS LOGIC
+        const amountOfCards = response.data.optional ? response.data.optional.amountOfCards : cardSettings.amountOfCards
+        const level = response.data.optional ? response.data.optional.level : cardSettings.level
+        fetchWords( amountOfCards, level )
+      } ).catch( err => {
+        console.log(err)
+        fetchWords( cardSettings.amountOfCards, cardSettings.level )
+      } )
     }
 
-    const fetchWords = (amountOfCards) => {
-      // getAllUserWords().then(response => {
-      aggregatedWords(cardSettings.level, amountOfCards).then(response => {
-        console.log('RESPONSE WORDS', response.data)
+    const fetchWords = ( amountOfCards, group ) => {
 
-        // if (response.data.length) {
-        if (response.data[0].paginatedResults.length) {
-          // смотрим хватает ли нам этих слов на сегодняшнее изучение
-          // setWords(response.data)
-          setWords(response.data[0].paginatedResults)
-        } else {
-          fetchWordsFromDB(cardSettings.level, getWordsPage()).then(response => {
-            console.log('WORDS FROM DB', response.data)
-            setWords(response.data)
-          })
-        }
-
+      preFetchWords(amountOfCards, group).then(response => {
+        console.log(response)
+        setWords( response )
       })
+      // TEST
+      // getAllUserWords().then( response => {
+      //   console.log( "USER WORDS", response.data )
+      // } )
+
+      // TEST END
+      // getAllUserWords().then(response => {
+      // aggregatedWords( cardSettings.level, amountOfCards ).then( response => {
+      //   // console.log('RESPONSE WORDS', response.data)
+
+      //   // if (response.data.length) {
+      //   if ( response.data[0].paginatedResults.length ) {
+      //     // смотрим хватает ли нам этих слов на сегодняшнее изучение
+      //     // setWords(response.data)
+      //     setWords( response.data[0].paginatedResults )
+      //   } else {
+      //     fetchWordsFromDB( cardSettings.level, getWordsPage() ).then( response => {
+      //       console.log( 'WORDS FROM DB', response.data )
+      //       setWords( response.data )
+      //     } )
+      //   }
+
+      // } )
     }
 
     const getWordsPage = () => {
       // setCardSettings({...cardSettings, wordsFetched: {}})
       // saveSettings({...cardSettings, wordsFetched: {}})
-      if (cardSettings.wordsFetched[cardSettings.level]) {
+      if ( cardSettings.wordsFetched[cardSettings.level] ) {
         wordsPage.current = cardSettings.wordsFetched[cardSettings.level].page
         return wordsPage.current
       } else {
@@ -179,8 +192,8 @@ const GlobalState = (props) => {
         tempWordsFetchedObj[cardSettings.level] = {
           page: wordsPage.current
         }
-        setCardSettings({...cardSettings, wordsFetched: tempWordsFetchedObj})
-        saveSettings({...cardSettings, wordsFetched: tempWordsFetchedObj})
+        setCardSettings( { ...cardSettings, wordsFetched: tempWordsFetchedObj } )
+        saveSettings( { ...cardSettings, wordsFetched: tempWordsFetchedObj } )
         return wordsPage.current
       }
     }
@@ -189,38 +202,38 @@ const GlobalState = (props) => {
 
 
 
-    const handleRouteChange = (url) => {
-      if (url !== '/' && !appSettings.isAuthorized) {
-        isLogged().then((result) => {
-          if (!result) window.location.href = '/'
-        })
+    const handleRouteChange = ( url ) => {
+      if ( url !== '/' && !appSettings.isAuthorized ) {
+        isLogged().then( ( result ) => {
+          if ( !result ) window.location.href = '/'
+        } )
       }
     }
 
-    if (pathname !== '/' && appSettings.isAuthorized === null) {
-      isLogged().then((result) => {
-        if (!result) window.location.href = '/'
-      })
+    if ( pathname !== '/' && appSettings.isAuthorized === null ) {
+      isLogged().then( ( result ) => {
+        if ( !result ) window.location.href = '/'
+      } )
     }
 
-    if (!appSettings.isAuthorized && pathname !== '/') {
-      isLogged().then((result) => {
-        if (!result) window.location.href = '/'
-      })
+    if ( !appSettings.isAuthorized && pathname !== '/' ) {
+      isLogged().then( ( result ) => {
+        if ( !result ) window.location.href = '/'
+      } )
     } else {
-      isLogged().then((result) => {
-        if (!result && pathname !== '/') window.location.href = '/'
-        else if (result) {
+      isLogged().then( ( result ) => {
+        if ( !result && pathname !== '/' ) window.location.href = '/'
+        else if ( result ) {
           updateAppState()
         }
-      })
+      } )
     }
 
-    events.on('routeChangeStart', handleRouteChange)
+    events.on( 'routeChangeStart', handleRouteChange )
     return () => {
-      events.off('routeChangeStart', handleRouteChange)
+      events.off( 'routeChangeStart', handleRouteChange )
     }
-  }, [appSettings.isAuthorized])
+  }, [appSettings.isAuthorized] )
 
   return (
     <Context.Provider
@@ -250,7 +263,7 @@ const GlobalState = (props) => {
         setAppStatistics,
       }}
     >
-      {pathname === '/' || (pathname !== '/' && appSettings.isAuthorized) ? props.children : null}
+      {pathname === '/' || ( pathname !== '/' && appSettings.isAuthorized ) ? props.children : null}
     </Context.Provider>
   )
 }
