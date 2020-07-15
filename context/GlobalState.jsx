@@ -111,7 +111,8 @@ const GlobalState = (props) => {
         if (!id || !token) resolve(false)
         isAuthenticated(id, token)
           .then((response) => {
-            setUserData({ ...userData, name: response.data.name })
+            console.log({response})
+            setUserData({ ...userData, name: response.data.name, email: response.data.email })
             setAppSettings({ ...appSettings, isAuthorized: true })
             // updateAppState()
             resolve(true)
@@ -131,6 +132,7 @@ const GlobalState = (props) => {
       getSettings().then((response) => {
         console.log(response.data, 'APP SETTINGS')
         setCardSettings({ ...cardSettings, ...response.data.optional })
+        setLearnProgress({...learnProgress, total: response.data.optional.amountOfCards})
       })
       getAllUserWords().then(response => {
         console.log('RESPONSE WORDS', response.data)
@@ -142,7 +144,7 @@ const GlobalState = (props) => {
             setWords(response.data)
           })
         }
-        setLearnProgress({...learnProgress, total: cardSettings.amountOfCards})
+
         // setup initial state for application
       })
     }

@@ -34,7 +34,7 @@ function StringParsed({ string, children }) {
   }
 }
 
-export const CardText = ({ word, index, outerStyles, children, className }) => {
+export const CardText = ({ word, index, outerStyles, children, className, defenitionTranslation }) => {
   const translateKey = `${index}Translate`
   const classes = useStyle()
   return (
@@ -46,7 +46,7 @@ export const CardText = ({ word, index, outerStyles, children, className }) => {
           <StringParsed string={word? word[index] : ''}>{children}</StringParsed>
         </p>
       )}
-      <p className='translation' dangerouslySetInnerHTML={{ __html: word? word[translateKey] : ''}} />
+     {defenitionTranslation !== false && <p className='translation' dangerouslySetInnerHTML={{ __html: word? word[translateKey] : ''}} /> }
     </div>
   )
 }

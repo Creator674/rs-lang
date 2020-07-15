@@ -59,25 +59,34 @@ export const PlayFooter = ({
   audio,
   isAudioLock,
   isGuessed,
+  getResult,
+  next
 }) => {
+  console.log({isGuessed})
   const classes = useStyle()
   const audioElement = useRef()
   const {
-    cardSettings: { showTranscription, showWord, showTranslation },
+    cardSettings: { showTranscription, showWord, showTranslation, defenitionPronunciation },
   } = useContext(Context)
 
   const playAudio = () => {
+
+    const playSecondAudio = () => {
+      console.log(isGuessed, 'res')
+      if (isGuessed === true) return next()
+      if (!audio[1] || !defenitionPronunciation) return
+      audioElement.current.setAttribute('src', audio[1])
+      audioElement.current.removeEventListener('ended', playSecondAudio)
+      audioElement.current.play().catch((err) => err)
+    }
+
     if (Array.isArray(audio)) {
-      const playSecondAudio = () => {
-        if (!audio[1]) return
-        audioElement.current.setAttribute('src', audio[1])
-        audioElement.current.removeEventListener('ended', playSecondAudio)
-        audioElement.current.play().catch((err) => err)
-      }
+
       audioElement.current.setAttribute('src', audio[0])
       audioElement.current.addEventListener('ended', playSecondAudio)
       return audioElement.current.play().catch((err) => err)
     } else {
+      audioElement.current.addEventListener('ended', playSecondAudio)
       audioElement.current.setAttribute('src', audio)
       return audioElement.current.play().catch((err) => err)
     }

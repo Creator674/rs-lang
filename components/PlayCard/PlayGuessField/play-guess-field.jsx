@@ -45,7 +45,7 @@ export const PlayGuessField = ({ showTheAnswer, word, setAudioLock, setIsGuessed
       setIsGuessed(true)
     }
   }, [showTheAnswer])
-  
+
   const checkResult = (result) => {
     if (!value.length) {
       isPressed = false
@@ -54,7 +54,7 @@ export const PlayGuessField = ({ showTheAnswer, word, setAudioLock, setIsGuessed
     result = result.trim().toLowerCase()
     setAudioLock(false)
     setIsCorrect(null)
-    if (result === word) {
+    if (result.toLowerCase() === word.toLowerCase()) {
       setIsCorrect(true)
       setIsGuessed(true)
       setLearnProgress({ ...learnProgress, current: learnProgress.current + 1 })

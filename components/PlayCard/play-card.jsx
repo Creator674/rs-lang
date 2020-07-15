@@ -81,9 +81,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const PlayCard = ({word}) => {
+export const PlayCard = ({ word, next }) => {
+  console.log(word)
   const {
-    cardSettings: { isMeaning },
+    cardSettings: { showDefenition, REPEATbutton, HARDbutton, SHOWANSWERbutton, EASYbutton, addIllustration, defenitionTranslation },
   } = useContext(Context)
   const classes = useStyles()
   const [audioWord, setAudioWord] = useState(null)
@@ -101,7 +102,7 @@ export const PlayCard = ({word}) => {
     getAudio(word.audio).then((url) => {
       isMounted && setAudioWord(url)
     })
-    isMeaning &&
+    showDefenition &&
       getAudio(word.audioMeaning).then((url) => {
         isMounted && setAudioMeaning(url)
       })
@@ -114,19 +115,23 @@ export const PlayCard = ({word}) => {
     }
   }, [])
 
+  // useEffect(()=>{
+  //   isGuessed === true && next()
+  // }, [isGuessed])
+
   return (
     <div className='play-card'>
       <div className='card-box'>
         <div className={classes.btnRow}>
           <div className='btn-wrapper card-wrapper'>
-            <MuiButton themeName='hard'>Hard</MuiButton>
-            <MuiButton themeName='repeat'>Repeat</MuiButton>
-            <MuiButton themeName='easy'>Easy</MuiButton>
+            {HARDbutton && <MuiButton themeName='hard'>Hard</MuiButton> }
+            {REPEATbutton && <MuiButton themeName='repeat'>Repeat</MuiButton> }
+           {EASYbutton && <MuiButton themeName='easy'>Easy</MuiButton> }
           </div>
-          <MuiButton themeName='answer'>Answer</MuiButton>
+          { SHOWANSWERbutton && <MuiButton themeName='answer'>Answer</MuiButton> }
         </div>
         <div className='play-image'>
-          <PlayImage src={word.image} isImageMinimized={isImageMinimized} setImageMinimized={setImageMinimized} />
+          {addIllustration && <PlayImage src={word.image} isImageMinimized={isImageMinimized} setImageMinimized={setImageMinimized} /> }
         </div>
         <div className={`${classes.gameboard} card-wrapper`}>
           <CardText className='border-top-0' outerStyles={classes.styleDictionary} index='textExample' word={word}>
@@ -137,14 +142,16 @@ export const PlayCard = ({word}) => {
               isGuessed={isGuessed}
             />
           </CardText>
-          {isMeaning ? (
-            <CardText className='second-row' outerStyles={classes.styleDictionary} index='textMeaning' word={word} />
+          {showDefenition ? (
+            <CardText className='second-row' outerStyles={classes.styleDictionary} index='textMeaning' word={word} defenitionTranslation={defenitionTranslation} />
           ) : null}
           <PlayFooter
             word={word}
-            audio={isGuessed === true ? audioExample : [audioWord, isMeaning ? audioMeaning : null]}
+            audio={isGuessed === true ? audioExample : [audioWord, showDefenition ? audioMeaning : null]}
             isAudioLock={isAudioLock}
             isGuessed={isGuessed}
+            getResult={() => isGuessed}
+            next={next}
           >
             <ProgressChart width={'36px'} value={40} />
           </PlayFooter>
