@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from 'context'
 import './style.less'
 import { AppLayout } from 'layouts'
+import { Waypoint } from 'react-waypoint';
 import Link from 'next/link'
 import { ButtonLogIn, UserAvatar, SignInSignUpSwitcher, withInfo } from 'components'
 
@@ -10,6 +11,8 @@ import { LandingMember, dataLandingMembers } from 'components/LandingMember'
 import { LandingCard, dataLandingCards } from 'components/LandingCard'
 
 const MainPage = ({ showInfo }) => {
+  const [isBurgerOpen, toggleBurger] = useState(false)
+  const [activeLink, setActiveLink] = useState(0)
   const {
     appSettings: { isAuthorized },
   } = useContext(Context)
@@ -19,13 +22,18 @@ const MainPage = ({ showInfo }) => {
   }, [isAuthorized])
   const { userData: {name, email} } = useContext(Context)
 
+  const updateMenuState = (id) => {
+    toggleBurger(false)
+    setActiveLink(id)
+  }
+
   return (
     <AppLayout>
       <div className='landing-box'>
         <header className='header'>
           <div className='container header__wrapper'>
             <div className='logo-wrapper'>
-              <div className='hamburger header__hamburger'>
+              <div className='hamburger header__hamburger' onClick={()=>toggleBurger(!isBurgerOpen)}>
                 <span className='hamburger__line'></span>
               </div>
               <div className='logo'>
@@ -36,26 +44,26 @@ const MainPage = ({ showInfo }) => {
               </div>
             </div>
             <div className='nav-wrapper'>
-              <nav className='header__navigation'>
+              <nav className={`header__navigation ${isBurgerOpen ? 'active' : ''}`}>
                 <ul className='navigation'>
-                  <li className='navigation__item'>
-                    <a className='navigation__link' href='#home'>
+                  <li className={`navigation__item ${activeLink === 0 && 'active'}`} >
+                    <a className='navigation__link' href='#home' onClick={()=>updateMenuState(0)}>
                       Home
                     </a>
                   </li>
-                  <li className='navigation__item'>
-                    <a className='navigation__link' href='#games'>
+                  <li className={`navigation__item ${activeLink === 1 && 'active'}`} >
+                    <a className='navigation__link' href='#games' onClick={()=>updateMenuState(1)}>
                       Games
                     </a>
                   </li>
-                  <li className='navigation__item'>
-                    <a className='navigation__link' href='#algorithm'>
+                  <li className={`navigation__item ${activeLink === 2 && 'active'}`} >
+                    <a className='navigation__link' href='#algorithm' onClick={()=>updateMenuState(2)}>
                       Algorithm
                     </a>
                   </li>
-                  <li className='navigation__item'>
-                    <a className='navigation__link' href='#about-us'>
-                      About Us
+                  <li className={`navigation__item ${activeLink === 3 && 'active'}`} >
+                    <a className='navigation__link' href='#about-us' onClick={()=>updateMenuState(3)}>
+                      About&nbsp;Us
                     </a>
                   </li>
                 </ul>
@@ -72,7 +80,7 @@ const MainPage = ({ showInfo }) => {
             </div>
           </div>
         </header>
-
+        <Waypoint onEnter={() => updateMenuState(0)} topOffset={'150px'}>
         <section className='promo' id='home'>
           <div className='container promo__wrapper'>
             <div className='promo__content'>
@@ -125,7 +133,8 @@ const MainPage = ({ showInfo }) => {
             </div>
           </div>
         </section>
-
+        </Waypoint>
+        <Waypoint onEnter={() => updateMenuState(1)} topOffset={'150px'}>
         <section className='games' id='games'>
           <div className='container games__wrapper'>
             <h2 className='section-title'>Games</h2>
@@ -136,7 +145,8 @@ const MainPage = ({ showInfo }) => {
             </ul>
           </div>
         </section>
-
+        </Waypoint>
+        <Waypoint onEnter={() => updateMenuState(2)} topOffset={'150px'}>
         <section className='algorithm' id='algorithm'>
           <div className='container algorithm__wrapper'>
             <h2 className='section-title'>Algorithm</h2>
@@ -216,7 +226,8 @@ const MainPage = ({ showInfo }) => {
             </div>
           </div>
         </section>
-
+        </Waypoint>
+        <Waypoint onEnter={() => updateMenuState(3)} topOffset={'150px'}>
         <section className='about-us' id='about-us'>
           <div className='container'>
             <h2 className='section-title about-us__title'>About Us</h2>
@@ -241,7 +252,7 @@ const MainPage = ({ showInfo }) => {
             </ul>
           </div>
         </section>
-
+        </Waypoint>
         <footer className='footer'>
           <div className='container footer__wrapper'>
             <div className='footer__logo-line'>

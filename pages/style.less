@@ -80,6 +80,7 @@ body {
     transform: rotate(-90deg);
     transition: all 0.3s ease-out;
     z-index: 2;
+    cursor: pointer;
   }
 
   .hamburger.active {
@@ -136,9 +137,12 @@ body {
     color: @color-btn-white;
   }
 
-  .navigation__item:active {
+  .navigation__item:active, .navigation__item.active {
     border-top: 0.2rem solid @color-btn-white;
     background: linear-gradient(180deg, #54bfe0 0%, rgba(255, 255, 255, 0) 79.91%);
+    & a {
+      color: @color-btn-white;
+    }
   }
 
   @media (min-width: 768px) {

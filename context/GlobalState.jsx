@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { Context } from './app-context'
-import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords } from 'lib' // getWords
+import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords, fetchWordsFromDB, aggregatedWords, saveSettings } from 'lib' // getWords
 import { TramRounded, TrendingUpRounded } from '@material-ui/icons'
 
 const initialCardSettings = {
@@ -12,13 +12,14 @@ const initialCardSettings = {
   level: 0,
   levels: '0,1,2,3,4,5',
   perPage: 20,
+  wordsFetched: {},
   amountOfWords: 5,
   amountOfCards: 30,
-  showWord: true,
+  showWord: false,
   showTranslation: true,
   showTranscription: false,
   addPronunciation: true,
-  addIllustration: false,
+  addIllustration: true,
   showDefenition: false,
   defenitionTranslation: false,
   defenitionPronunciation: false,
@@ -31,6 +32,14 @@ const initialCardSettings = {
   EASYbutton: true,
 }
 
+// wordsFetched: [
+//   {
+//     userWords: 0,
+//     page: 0
+//   },
+//
+// ]
+
 const currentCardSettings = {
   learnNew: false,
   repeatNew: false,
@@ -39,17 +48,14 @@ const currentCardSettings = {
   level: 0,
   levels: '0,1,2,3,4,5',
   perPage: 20,
-  wordsFetched: {
-    level: 0
-  },
-
+  wordsFetched: {},
   amountOfWords: 5,
   amountOfCards: 30,
-  showWord: true,
+  showWord: false,
   showTranslation: true,
   showTranscription: false,
   addPronunciation: true,
-  addIllustration: false,
+  addIllustration: true,
   showDefenition: false,
   defenitionTranslation: false,
   defenitionPronunciation: false,
@@ -68,7 +74,7 @@ const initialSort = {
 }
 
 const initialLearnProgress = {
-  total: 50,
+  total: 0,
   current: 0,
 }
 
@@ -90,6 +96,8 @@ const GlobalState = (props) => {
   const [learnProgress, setLearnProgress] = useState(initialLearnProgress)
   const [userData, setUserData] = useState({})
 
+  const wordsPage = useRef()
+
   // settings
   const [appSettings, setAppSettings] = useState(initialAppSettings)
 
@@ -107,9 +115,10 @@ const GlobalState = (props) => {
         if (!id || !token) resolve(false)
         isAuthenticated(id, token)
           .then((response) => {
-            setUserData({ ...userData, name: response.data.name })
+            console.log({response})
+            setUserData({ ...userData, name: response.data.name, email: response.data.email })
             setAppSettings({ ...appSettings, isAuthorized: true })
-            updateAppState()
+            // updateAppState()
             resolve(true)
           })
           .catch((err) => {
@@ -120,17 +129,65 @@ const GlobalState = (props) => {
     }
 
     const updateAppState = () => {
-      getAllUserWords().then(response => {
-        console.log('RESPONSE WORDS', response.data)
-      })
+      // setup initial state for application
+
       getStatistic().then((response) => {
         setAppStatistics({ ...appStatistics, ...response.data.optional })
-      })
+      }).catch(err => {})
       getSettings().then((response) => {
         console.log(response.data, 'APP SETTINGS')
         setCardSettings({ ...cardSettings, ...response.data.optional })
+        setLearnProgress({...learnProgress, total: response.data.optional.amountOfCards})
+
+         // FETCH WORDS LOGIC
+
+       fetchWords(response.data.optional.amountOfCards)
+      }).catch(err => {
+        fetchWords(response.data.optional.amountOfCards)
       })
     }
+
+    const fetchWords = (amountOfCards) => {
+      // getAllUserWords().then(response => {
+      aggregatedWords(cardSettings.level, amountOfCards).then(response => {
+        console.log('RESPONSE WORDS', response.data)
+
+        // if (response.data.length) {
+        if (response.data[0].paginatedResults.length) {
+          // смотрим хватает ли нам этих слов на сегодняшнее изучение
+          // setWords(response.data)
+          setWords(response.data[0].paginatedResults)
+        } else {
+          fetchWordsFromDB(cardSettings.level, getWordsPage()).then(response => {
+            console.log('WORDS FROM DB', response.data)
+            setWords(response.data)
+          })
+        }
+
+      })
+    }
+
+    const getWordsPage = () => {
+      // setCardSettings({...cardSettings, wordsFetched: {}})
+      // saveSettings({...cardSettings, wordsFetched: {}})
+      if (cardSettings.wordsFetched[cardSettings.level]) {
+        wordsPage.current = cardSettings.wordsFetched[cardSettings.level].page
+        return wordsPage.current
+      } else {
+        wordsPage.current = 0
+        const tempWordsFetchedObj = { ...cardSettings.wordsFetched }
+        tempWordsFetchedObj[cardSettings.level] = {
+          page: wordsPage.current
+        }
+        setCardSettings({...cardSettings, wordsFetched: tempWordsFetchedObj})
+        saveSettings({...cardSettings, wordsFetched: tempWordsFetchedObj})
+        return wordsPage.current
+      }
+    }
+
+    // navigate through pages in DB function
+
+
 
     const handleRouteChange = (url) => {
       if (url !== '/' && !appSettings.isAuthorized) {
@@ -199,3 +256,5 @@ const GlobalState = (props) => {
 }
 
 export default GlobalState
+
+

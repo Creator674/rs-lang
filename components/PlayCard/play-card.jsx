@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -7,8 +7,9 @@ import { CardText } from '../Dictionary'
 import { ProgressChart } from '../Progress'
 import { PlayImage, PlayFooter, PlayGuessField } from '.'
 import { getAudio } from 'lib/helpers'
+
 import { Context } from 'context'
-import { combineWordsForDictionary } from '../../lib/crud/auth'
+
 import './play-card.less'
 
 // const word = {
@@ -81,69 +82,48 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const PlayCard = (props) => {
+export const PlayCard = ({ word, next, updateWordsDB }) => {
   const {
-    cardSettings: { isMeaning },
+    cardSettings: { showDefenition, REPEATbutton, HARDbutton, SHOWANSWERbutton, EASYbutton, addIllustration, defenitionTranslation },
   } = useContext(Context)
   const classes = useStyles()
-
-  const [data, setData] = useState([])
-  const [count, setCount] = useState(0)
-  const [currentWord, setCurrentWord] = useState(null)
-
   const [audioWord, setAudioWord] = useState(null)
   const [audioMeaning, setAudioMeaning] = useState(null)
   const [audioExample, setAudioExample] = useState(null)
   const [isAudioLock, setAudioLock] = useState(true)
   const [isImageMinimized, setImageMinimized] = useState(false)
 
-  const [showTheAnswer, setShowAnswer] = useState(false)
   const [isGuessed, setIsGuessed] = useState(false)
 
   let isMounted = false
 
   useEffect(() => {
     isMounted = true
-    combineWordsForDictionary(1,1).then((res)=>{
-      console.log(res, isMounted)
-      isMounted && setData(res)
-      isMounted && setCurrentWord(res[0])
+    getAudio(word.audio).then((url) => {
+      isMounted && setAudioWord(url)
     })
+    showDefenition &&
+      getAudio(word.audioMeaning).then((url) => {
+        isMounted && setAudioMeaning(url)
+      })
+    getAudio(word.audioExample).then((url) => {
+      isMounted && setAudioExample(url)
+    })
+
     return () => {
       isMounted = false
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    if(data.length){
-      setCurrentWord(data[count])
-      setAudioWord(data[count].sound)
-      setAudioMeaning(data[count].audioMeaning)
-      setAudioExample(data[count].audioExample)
+    if (isGuessed === true) {
+      word.learnIndex = word.learnIndex + 20 <= 100 ?  word.learnIndex + 20 : 100
+      updateWordsDB(word)
+    } else if (isGuessed !== false) {
+      word.learnIndex = word.learnIndex - 20 > 0 ?  word.learnIndex - 20 : 0
+      updateWordsDB(word)
     }
-  }, [data])
-
-  useEffect(() => {
-    if(isGuessed){
-      setCount(count + 1)
-      return
-    }
-  }, [isGuessed]);
-
-  console.log(audioWord,audioMeaning, audioExample )
-// console.log(word)
-  const addToHardSection = () => {
-    console.log('haard')
-  }
-  const addToEasySection = () => {
-    console.log('easy')
-  }
-  const repeatWord = () => {
-    console.log('repeatWord')
-  }
-  const showAnswerClick = () => {
-    setShowAnswer(answer => !answer)
-  }
+  }, [isGuessed])
 
 
 
@@ -152,45 +132,36 @@ export const PlayCard = (props) => {
       <div className='card-box'>
         <div className={classes.btnRow}>
           <div className='btn-wrapper card-wrapper'>
-            <MuiButton themeName='hard'
-                       action={addToHardSection}>Hard</MuiButton>
-            <MuiButton themeName='repeat'
-                       action={repeatWord}>Repeat</MuiButton>
-            <MuiButton themeName='easy'
-                       action={addToEasySection}>Easy</MuiButton>
+            {HARDbutton && <MuiButton themeName='hard'>Hard</MuiButton> }
+            {REPEATbutton && <MuiButton themeName='repeat'>Repeat</MuiButton> }
+           {EASYbutton && <MuiButton themeName='easy'>Easy</MuiButton> }
           </div>
-          <MuiButton themeName='answer'
-                     action={showAnswerClick}>Answer</MuiButton>
-
+          { SHOWANSWERbutton && <MuiButton themeName='answer'>Answer</MuiButton> }
         </div>
         <div className='play-image'>
-          <PlayImage src={currentWord ? currentWord.image : ''} isImageMinimized={isImageMinimized}
-                     setImageMinimized={setImageMinimized} />
+          {addIllustration && <PlayImage src={word.image} isImageMinimized={isImageMinimized} setImageMinimized={setImageMinimized} /> }
         </div>
         <div className={`${classes.gameboard} card-wrapper`}>
-          <CardText className='border-top-0'
-                    outerStyles={classes.styleDictionary} index='textExample'
-                    word={currentWord? currentWord : null}>
+          <CardText className='border-top-0' outerStyles={classes.styleDictionary} index='textExample' word={word}>
             <PlayGuessField
-              showTheAnswer={showTheAnswer}
-              word={currentWord ? currentWord.word : null}
+              word={word.word.toLowerCase()}
               setAudioLock={setAudioLock}
               setIsGuessed={setIsGuessed}
               isGuessed={isGuessed}
             />
           </CardText>
-          {isMeaning ? (
-            <CardText className='second-row'
-                      outerStyles={classes.styleDictionary} index='textMeaning'
-                      word={currentWord? currentWord : ''} />
+          {showDefenition ? (
+            <CardText className='second-row' outerStyles={classes.styleDictionary} index='textMeaning' word={word} defenitionTranslation={defenitionTranslation} />
           ) : null}
           <PlayFooter
-            word={currentWord? currentWord : ''}
-            audio={isGuessed === true ? audioExample : [audioWord, isMeaning ? audioMeaning : null]}
+            word={word}
+            audio={isGuessed === true ? audioExample : [audioWord, showDefenition ? audioMeaning : null]}
             isAudioLock={isAudioLock}
             isGuessed={isGuessed}
+            getResult={() => isGuessed}
+            next={next}
           >
-            <ProgressChart width={'36px'} value={40} />
+            <ProgressChart width={'36px'} value={word.learnIndex} />
           </PlayFooter>
         </div>
       </div>

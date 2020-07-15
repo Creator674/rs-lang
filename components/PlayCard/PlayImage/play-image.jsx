@@ -35,7 +35,7 @@ export function PlayImage({ src, isImageMinimized, setImageMinimized }) {
           </Skeleton>
         </ThemeProvider>
       )}
-      <button onClick={() => setImageMinimized(!isImageMinimized)}>hide</button>
+      {/* <button onClick={() => setImageMinimized(!isImageMinimized)}>hide</button> */}
     </div>
   )
 }

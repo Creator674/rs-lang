@@ -1,4 +1,5 @@
 import React from 'react'
+import {redirectUser} from 'lib'
 
 function MainButton({ data: { type, text, link, icon, isBordered }, isShown, action }) {
   return (
@@ -9,7 +10,7 @@ function MainButton({ data: { type, text, link, icon, isBordered }, isShown, act
       <div
         className={`sub-menu logo ${isShown ? 'show' : ''}`}
         onClick={() => {
-          console.log('redirect to...')
+          redirectUser(null, '/')
         }}
       >
         RS<span className='lang'>Lang</span>

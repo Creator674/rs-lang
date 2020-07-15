@@ -59,25 +59,33 @@ export const PlayFooter = ({
   audio,
   isAudioLock,
   isGuessed,
+  getResult,
+  next
 }) => {
+  console.log({isGuessed})
   const classes = useStyle()
   const audioElement = useRef()
   const {
-    cardSettings: { isTranscription, isWordShown, isTranslation },
+    cardSettings: { showTranscription, showWord, showTranslation, defenitionPronunciation },
   } = useContext(Context)
 
   const playAudio = () => {
+
+    const playSecondAudio = () => {
+      if (isGuessed === true) return next()
+      if (!audio[1] || !defenitionPronunciation) return
+      audioElement.current.setAttribute('src', audio[1])
+      audioElement.current.removeEventListener('ended', playSecondAudio)
+      audioElement.current.play().catch((err) => err)
+    }
+
     if (Array.isArray(audio)) {
-      const playSecondAudio = () => {
-        if (!audio[1]) return
-        audioElement.current.setAttribute('src', audio[1])
-        audioElement.current.removeEventListener('ended', playSecondAudio)
-        audioElement.current.play().catch((err) => err)
-      }
+
       audioElement.current.setAttribute('src', audio[0])
       audioElement.current.addEventListener('ended', playSecondAudio)
       return audioElement.current.play().catch((err) => err)
     } else {
+      audioElement.current.addEventListener('ended', playSecondAudio)
       audioElement.current.setAttribute('src', audio)
       return audioElement.current.play().catch((err) => err)
     }
@@ -98,13 +106,13 @@ export const PlayFooter = ({
         ></i>
       </div>
       <div>
-        {isWordShown ? (
+        {showWord ? (
           <p className={classes.word} style={{ display: 'flex' }}>
             {word}
           </p>
         ) : null}
-        {isTranscription ? <p className={classes.transcription}>{transcription}</p> : null}
-        {isTranslation ? <p className={classes.translation}>{wordTranslate}</p> : null}
+        {showTranscription ? <p className={classes.transcription}>{transcription}</p> : null}
+        {showTranslation ? <p className={classes.translation}>{wordTranslate}</p> : null}
       </div>
       <div className='card-chart'>{children}</div>
       <audio ref={audioElement}></audio>
