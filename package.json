@@ -28,6 +28,7 @@
     "react-dom": "^16.13.1",
     "react-speech-recognition": "^2.0.4",
     "react-transition-group": "^4.4.1",
+    "react-waypoint": "^9.0.3",
     "reset-css": "^5.0.1",
     "yup": "^0.29.1"
   },
