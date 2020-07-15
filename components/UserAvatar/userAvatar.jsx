@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Gravatar from 'react-gravatar'
 import { DropdownMenu } from './DropdownMenu/dropdownMenu';
 import { makeStyles } from '@material-ui/core/styles';
 import { Context } from 'context';
@@ -73,7 +74,7 @@ export const UserAvatar = ({ userName }) => {
 
   return (
     <div className={classes.dropdownMenu}>
-      <div className={classes.container}>
+      <div className={classes.container} style={{paddingRight: '0 !important'}}>
         <div className='userAvatar'>Hi,&nbsp;{name}&nbsp;</div>
         <button className={classes.avatarBtn} onClick={handleClose}>
           <Gravatar email={email} className='avatar-img' />

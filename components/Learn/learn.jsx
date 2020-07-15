@@ -45,7 +45,7 @@ export const Learn = () => {
   }
 
   const updateWordsDB = (word) => {
-    if (isNew.current === true) {
+    if (word.learnIndex === undefined) {
         createUserWord(word).then(response => {
           console.log(response)
       }).catch(err => {})
