@@ -12,25 +12,28 @@ import { addToStatisticfunc, gamesMiniStatistic } from '../../../lib/helpers/sta
 
 import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
 
-
 const Savannah = (props) => {
   const [activeStep, setActiveStep] = useState(-1)
   const [playWord, setPlayWord] = useState(null)
   const [isResult, toggleResult] = useState(false)
   const [wordsList, setWordsList] = useState([])
-  const [gameEnd, setGameEnd] = useState(false) 
+  const [gameEnd, setGameEnd] = useState(false)
 
   const [mistakes, setMistakes] = useState(5)
   const [points, setPoints] = useState(0)
-  const [counter, setCounter] = useState(0)
 
   const [allnotGuessed, setallnotGuessed] = useState([])
   const [allGuessed, setAllGuessed] = useState([])
   const [showResults, setShowResults] = useState(false)
 
   const wordsDeck = useRef()
+  const Drop = useRef()
+  const Counter = useRef()
+  const isEnd = useRef()
 
-  
+  isEnd.current = false
+  Counter.current = 0
+
   const { appStatistics, setAppStatistics } = useContext(Context)
 
   const createStatistic = () => {
@@ -48,7 +51,6 @@ const Savannah = (props) => {
     setAppStatistics(newMiniGameStatistic)
     saveStatistic(newMiniGameStatistic)
   }
-
 
 
   const getRandomWord = () => {
@@ -87,42 +89,50 @@ const Savannah = (props) => {
     return word
   }
 
-  let timer 
+  let timer
 
   const startTheTimer = () => {
+    // Counter.current = 0
+    if (isEnd.current) return 
+    
+    clearInterval(timer)
     timer = setInterval(() => {
-      setCounter(counter + 0.5)
-      if(counter === 39.5){
+      if (!Drop.current ) return
+      Counter.current = Counter.current + 0.3
+      Drop.current.style.top = `${Counter.current}rem`
+      if (Counter.current >= 39) {
+        isEnd.current = true
         clearInterval(timer)
-        setResult(playWord.id, false)
+        if(mistakes){
+          toggleResult(false)
+          setResult(playWord.id, false)
+          Counter.current = 0
+          startTheTimer()
+        } else {
+          Counter.current = 0
+          return
+        }
       }
-    }, 80)
+    }, 30)
   }
 
   useEffect(() => {
     if (isResult) {
-      toggleResult(false)
-      clearInterval(timer)
-      startTheTimer()
-      setupPlayState()
+       toggleResult(false)
+       setupPlayState()
     }
   }, [isResult])
 
+
+  //  the end of game 
   useEffect(() => {
     if (!mistakes) {
       setGameEnd(true)
-      setCounter(null)
       clearInterval(timer)
+      Counter.current = null
       setShowResults(true)
-    }
-  }, [mistakes])
-
-  useEffect(()=>{
-    if(!mistakes){
-      setGameEnd(true)
-      setCounter(null)
-      clearTimeout(timer)
-      setShowResults(true)
+      setMistakes(1)
+      return
     }
   }, [mistakes])
 
@@ -143,35 +153,38 @@ const Savannah = (props) => {
     if (result) {
       word.right = true
       setPoints((points) => points + 1)
-      document.getElementById('yes').play()
-      setAllGuessed( gues => {
-          const wo = {};
-          wo.word = word.word
-          wo.transcription = word.transcription
-          wo.translate = word.wordTranslate
-          wo.id = word.id
-          return [...gues, wo]
-        }
-      )
-    } else {
-      setMistakes(mistakes - 1)
-      document.getElementById('no').play()
-      setallnotGuessed( gues => {
-        const wo = {};
+      document.getElementById('yes').play() // useRef instead of getElementById
+      setAllGuessed((gues) => {
+        const wo = {}
         wo.word = word.word
         wo.transcription = word.transcription
         wo.translate = word.wordTranslate
-        wo.id = word.id
-        return [...gues, wo]
-       }
-     )
+        if(!gues.find(el => el.word === word.word)){
+          return [...gues, wo]
+        }
+        return gues
+      })
+    } else {
+      if(!mistakes-1){
+        setMistakes(mistakes => mistakes - 1)
+      }
+      document.getElementById('no').play() // useRef instead of getElementById
+      setallnotGuessed((gues) => {
+        const wo = {}
+        wo.word = word.word
+        wo.transcription = word.transcription
+        wo.translate = word.wordTranslate
+        if(!gues.find(el => el.word === word.word)){
+          return [...gues, wo]
+        }
+        return gues
+      })
       word.wrong = true
     }
     setTimeout(() => {
       toggleResult(true)
     }, 500)
   }
-
 
   useEffect(() => {
     combineWords(1, 1)
@@ -182,11 +195,10 @@ const Savannah = (props) => {
       .catch((error) => error)
   }, [])
 
-
   return (
     <div className='savannah'>
       <GameStartModalWindow gameId={1} startTheTimer={startTheTimer} nameOfGame={'savanna'} />
-      {showResults && <StatisticGames allGuessed={allGuessed} allnotGuessed={allnotGuessed}/>}
+      {showResults && <StatisticGames allGuessed={allGuessed} allnotGuessed={allnotGuessed} />}
 
       <div className='savannah-main'>
         <div className='lifes'>
@@ -217,7 +229,7 @@ const Savannah = (props) => {
 
       <div className='drop'>
         {playWord ? (
-          <div className='drop-item' style={{ top: `${counter}rem` }}>
+          <div ref={Drop} className='drop-item'>
             <svg width='3rem' viewBox='0 0 30 42'>
               <path
                 fill='#9ec6ea'
