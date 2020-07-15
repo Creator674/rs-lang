@@ -169,7 +169,7 @@ const SignInForm = ({ className, switchRender, showInfo, closeInfo, closeModal }
           </div>
           <div className='form-group'>
             <Button type='submit' className='btn btn-primary mr-2' disabled={isLoading}>
-              Sign in
+              Log in
             </Button>
           </div>
           <div className='form-group'>
