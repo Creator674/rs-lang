@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext, useRef } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { MuiButton } from 'components'
+import { withInfo } from 'components/HOC/hoc'
 import { CardText } from '../Dictionary'
 import { ProgressChart } from '../Progress'
 import { PlayImage, PlayFooter, PlayGuessField } from '.'
@@ -83,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const PlayCard = ({ word, next, updateWordsDB }) => {
+const PlayCardComponent = ({ word, next, updateWordsDB, showInfo }) => {
   const {
     cardSettings: { showDefenition, REPEATbutton, HARDbutton, SHOWANSWERbutton, EASYbutton, addIllustration, defenitionTranslation },
   } = useContext(Context)
@@ -133,16 +134,31 @@ export const PlayCard = ({ word, next, updateWordsDB }) => {
     }
   }, [isGuessed, isGiveUp])
 
-
+  const showMessage = (type) => {
+    switch(type) {
+      case 'hard': showInfo({message: `Word added to the list of Hard Words`, type: 'success'})
+        break;
+      case 'repeat': showInfo({message: `Word added to the Repetition list`, type: 'success'})
+        break;
+      case 'ease': showInfo({message: `Word excluded from Learning list`, type: 'success'})
+        break;
+    }
+  }
 
   return (
     <div className='play-card'>
       <div className='card-box'>
         <div className={classes.btnRow}>
           <div className='btn-wrapper card-wrapper'>
-            {HARDbutton && <MuiButton themeName='hard'>Hard</MuiButton> }
-            {REPEATbutton && <MuiButton themeName='repeat'>Repeat</MuiButton> }
-           {EASYbutton && <MuiButton themeName='easy'>Easy</MuiButton> }
+            {HARDbutton && <MuiButton themeName='hard' action={()=>{
+              showMessage('hard')
+            }}>Hard</MuiButton> }
+            {REPEATbutton && <MuiButton themeName='repeat' action={()=>{
+              showMessage('repeat')
+            }}>Repeat</MuiButton> }
+           {EASYbutton && <MuiButton themeName='easy' action={()=>{
+              showMessage('ease')
+            }}>Easy</MuiButton> }
           </div>
           { SHOWANSWERbutton && <MuiButton themeName='answer' action={() => setIsGiveUp(true)}>Answer</MuiButton> }
         </div>
@@ -178,3 +194,5 @@ export const PlayCard = ({ word, next, updateWordsDB }) => {
     </div>
   )
 }
+
+export const PlayCard = withInfo(PlayCardComponent)
