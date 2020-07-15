@@ -40,9 +40,12 @@ export const PlayGuessField = ({ showTheAnswer, word, setAudioLock, setIsGuessed
   }
 
   useEffect(() => {
+    console.log({showTheAnswer})
     if(showTheAnswer){
       setIsCorrect(true)
-      setIsGuessed(true)
+      setAnswer(word)
+      setLearnProgress({ ...learnProgress, current: learnProgress.current + 1 })
+      // setIsGuessed(true)
     }
   }, [showTheAnswer])
 

@@ -59,6 +59,7 @@ export const PlayFooter = ({
   audio,
   isAudioLock,
   isGuessed,
+  showTheAnswer,
   getResult,
   next
 }) => {
@@ -73,6 +74,7 @@ export const PlayFooter = ({
 
     const playSecondAudio = () => {
       if (isGuessed === true) return next()
+      if (showTheAnswer === true) return next()
       if (!audio[1] || !defenitionPronunciation) return
       audioElement.current.setAttribute('src', audio[1])
       audioElement.current.removeEventListener('ended', playSecondAudio)
@@ -80,7 +82,7 @@ export const PlayFooter = ({
     }
 
     if (Array.isArray(audio)) {
-
+      console.log('play audio from give up')
       audioElement.current.setAttribute('src', audio[0])
       audioElement.current.addEventListener('ended', playSecondAudio)
       return audioElement.current.play().catch((err) => err)
@@ -93,8 +95,8 @@ export const PlayFooter = ({
 
   useEffect(() => {
     isAudioLock === false && isGuessed !== true && playAudio()
-    isGuessed === true && playAudio()
-  }, [isAudioLock, isGuessed])
+    if (isGuessed === true || showTheAnswer === true) playAudio()
+  }, [isAudioLock, isGuessed, showTheAnswer])
 
   return (
     <div className={`${classes.root} ${className}`}>

@@ -7,6 +7,7 @@ import { CardText } from '../Dictionary'
 import { ProgressChart } from '../Progress'
 import { PlayImage, PlayFooter, PlayGuessField } from '.'
 import { getAudio } from 'lib/helpers'
+import { getRepetitionTime } from 'lib'
 
 import { Context } from 'context'
 
@@ -94,6 +95,7 @@ export const PlayCard = ({ word, next, updateWordsDB }) => {
   const [isImageMinimized, setImageMinimized] = useState(false)
 
   const [isGuessed, setIsGuessed] = useState(false)
+  const [isGiveUp, setIsGiveUp] = useState(false)
 
   let isMounted = false
 
@@ -116,14 +118,20 @@ export const PlayCard = ({ word, next, updateWordsDB }) => {
   }, [])
 
   useEffect(() => {
-    if (isGuessed === true) {
+    if (isGiveUp) {
+      word.learnIndex = 0
+      word.nextRepeat = getRepetitionTime(word.learnIndex)
+      updateWordsDB(word)
+    } else if (isGuessed === true) {
       word.learnIndex = word.learnIndex + 20 <= 100 ?  word.learnIndex + 20 : 100
+      word.nextRepeat = getRepetitionTime(word.learnIndex)
       updateWordsDB(word)
     } else if (isGuessed !== false) {
       word.learnIndex = word.learnIndex - 20 > 0 ?  word.learnIndex - 20 : 0
+      word.nextRepeat = getRepetitionTime(word.learnIndex)
       updateWordsDB(word)
     }
-  }, [isGuessed])
+  }, [isGuessed, isGiveUp])
 
 
 
@@ -136,7 +144,7 @@ export const PlayCard = ({ word, next, updateWordsDB }) => {
             {REPEATbutton && <MuiButton themeName='repeat'>Repeat</MuiButton> }
            {EASYbutton && <MuiButton themeName='easy'>Easy</MuiButton> }
           </div>
-          { SHOWANSWERbutton && <MuiButton themeName='answer'>Answer</MuiButton> }
+          { SHOWANSWERbutton && <MuiButton themeName='answer' action={() => setIsGiveUp(true)}>Answer</MuiButton> }
         </div>
         <div className='play-image'>
           {addIllustration && <PlayImage src={word.image} isImageMinimized={isImageMinimized} setImageMinimized={setImageMinimized} /> }
@@ -148,6 +156,7 @@ export const PlayCard = ({ word, next, updateWordsDB }) => {
               setAudioLock={setAudioLock}
               setIsGuessed={setIsGuessed}
               isGuessed={isGuessed}
+              showTheAnswer={isGiveUp}
             />
           </CardText>
           {showDefenition ? (
@@ -155,9 +164,10 @@ export const PlayCard = ({ word, next, updateWordsDB }) => {
           ) : null}
           <PlayFooter
             word={word}
-            audio={isGuessed === true ? audioExample : [audioWord, showDefenition ? audioMeaning : null]}
+            audio={(isGuessed === true || isGiveUp === true) ? audioExample : [audioWord, showDefenition ? audioMeaning : null]}
             isAudioLock={isAudioLock}
             isGuessed={isGuessed}
+            showTheAnswer={isGiveUp}
             getResult={() => isGuessed}
             next={next}
           >
