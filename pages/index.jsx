@@ -20,6 +20,7 @@ const MainPage = ({ showInfo }) => {
     isAuthorized && showInfo({ message: 'Logged in successfully', type: 'success' })
     isAuthorized === false && showInfo({ message: 'Logged out', type: 'info' })
   }, [isAuthorized])
+  const { userData: {name, email} } = useContext(Context)
 
   const updateMenuState = (id) => {
     toggleBurger(false)
@@ -73,7 +74,7 @@ const MainPage = ({ showInfo }) => {
                     <SignInSignUpSwitcher />
                   </ButtonLogIn>
                 ) : (
-                  <UserAvatar />
+                  <UserAvatar name={name} email={email}/>
                 )}
               </div>
             </div>

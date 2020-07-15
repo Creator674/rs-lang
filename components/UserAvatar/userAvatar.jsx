@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatarBtn: {
     background: 'transparent',
-    border: `2px solid ${theme.palette.common.main}`,
+    // border: `2px solid ${theme.palette.common.main}`,
     borderRadius: '50%',
     width: '6rem',
     height: '6rem',
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const UserAvatar = ({ userName }) => {
-  const { userData } = useContext(Context);
+  const { userData: { name, email } } = useContext(Context);
   const [ isPopover, setIsPopover ] = React.useState(false);
   const [ anchorEl, setAnchorEl ] = React.useState(null);
   const classes = useStyles();
@@ -74,11 +74,10 @@ export const UserAvatar = ({ userName }) => {
   return (
     <div className={classes.dropdownMenu}>
       <div className={classes.container}>
-        <div className='userAvatar'>Hi,&nbsp;{userData.name}&nbsp;</div>
+        <div className='userAvatar'>Hi,&nbsp;{name}&nbsp;</div>
         <button className={classes.avatarBtn} onClick={handleClose}>
-          <i className='icon-github-circled' />
+          <Gravatar email={email} className='avatar-img' />
         </button>
-
         {
           isPopover ? <Popover
             classes={{

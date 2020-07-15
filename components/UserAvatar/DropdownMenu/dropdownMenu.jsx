@@ -4,6 +4,7 @@ import { saveSettings, getSettings, saveStatistic, getStatistic, setLocalStorage
 import { makeStyles } from '@material-ui/core/styles'
 import { AccountButton, Account, Statistics, SettingsModal } from 'components'
 
+
 const useStyle = makeStyles((theme) => ({
   root: {
     width: '9.6rem',
@@ -23,15 +24,17 @@ const useStyle = makeStyles((theme) => ({
   },
 }))
 
+
 export const DropdownMenu = ({ closePopover }) => {
   const styles = useStyle()
   const { appSettings, setAppSettings } = useContext(Context)
-
+  const { userData: {name, email} } = useContext(Context)
+  
   const logOut = () => {
     setLocalStorageProp('user', {})
     setAppSettings({ ...appSettings, isAuthorized: false })
   }
-
+  
   const items = ['Settings']
   const list = items.map((item, i) => {
     return (
@@ -52,7 +55,7 @@ export const DropdownMenu = ({ closePopover }) => {
         <SettingsModal />
       </AccountButton>
       <AccountButton closeParent={closePopover} name='Account'>
-        <Account />
+        <Account  name={name} email={email}/>
       </AccountButton>
       <div className={styles.root} onClick={logOut}>
         <div className='title' style={{ userSelect: 'none', lineHeight: '3.2rem', margin: '0 auto' }}>
