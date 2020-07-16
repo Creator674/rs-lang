@@ -26,7 +26,7 @@ export const Popup = ( props ) => {
 
   return (
     <div className='overlay' onMouseDown={closeModal}>
-      <div className={`modal ${className}`} data-aos='fade-up' data-aos-delay='300' style={{ overflow: isWithOverflow ? 'auto' : 'hidden' }}>
+      <div className={`modal ${className}`} data-aos='fade-up' data-aos-delay='300' style={{ overflow: isWithOverflow === false ? 'hidden' : 'auto' }}>
         <button className='close-btn' onClick={closeModal}>
           <i className='icon-cancel'></i>
         </button>
