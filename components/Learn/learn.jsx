@@ -5,7 +5,7 @@ import { createUserWord, updateUserWord } from 'lib'
 import './style.less'
 
 export const Learn = () => {
-  const { learnProgress, words, cardSettings: { amountOfCards, level } } = useContext( Context )
+  const { learnProgress, words, cardSettings: { amountOfCards, level, difficultOnly } } = useContext( Context )
   const [currIndex, setCurrIndex] = useState( 0 )
   const isNew = useRef()
 
@@ -32,6 +32,7 @@ export const Learn = () => {
     } else {
       if ( words[idx].learnIndex === undefined ) {
         words[idx].learnIndex = 20
+        words[idx].new = true
         isNew.current = true
       }
       words[idx].level = level
@@ -60,7 +61,9 @@ export const Learn = () => {
 
   return (
     <div className='wrapper-box'>
-      {words.length ? setNextCard( currIndex ) : null}
+      {words.length ? setNextCard( currIndex ) : difficultOnly ?
+      <div style={{    margin: '0 auto', fontSize: '3rem'}}>Your list of Hard words is empty</div>
+        : null}
       <ProgressBar {...learnProgress} total={amountOfCards} width='100%' />
     </div>
   )

@@ -12,6 +12,7 @@ import Box from '@material-ui/core/Box'
 
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
+import {getAllUserWords} from 'lib'
 
 import { Header } from './Header'
 import { Context, DictionaryContext } from '../../context'
@@ -130,11 +131,14 @@ const style = createMuiTheme( {
 
 export function Dictionary() {
   const {
-    words,
     cardSettings: { isTranslation, isTranscription },
   } = useContext( Context )
   const [value, setValue] = useState( 1 )
   const [wordsList, setWords] = useState( [] )
+  const [hardList, setHardList] = useState( [] )
+  const [learnList, setLearnList] = useState( [] )
+  const [easyList, setEasyList] = useState( [] )
+
   const [filteredList, setFilteredList] = useState( [] )
 
   const handleChange = ( event, newValue ) => {
@@ -142,12 +146,25 @@ export function Dictionary() {
   }
 
   useEffect( () => {
-    setWords( words.filter( word => word.optional ) )
+    getAllUserWords().then(response => {
+      console.log('dict', response.data)
+      setWords(response.data)
+      setHardList(response.data.filter(word => word.optional.status === 'hard'))
+      setEasyList(response.data.filter(word => word.optional.status === 'easy'))
+      setLearnList(response.data.filter(word => word.optional.status === undefined))
+    })
+    // setWords( words.filter( word => word.optional ) )
   }, [] )
 
   const classes = useStyles()
-  const Cards = ( filteredList.length ? filteredList : wordsList ).map( ( word ) => {
-    return <Card key={word.id || word._id} {...word.optional} />
+  const LearnCards = ( filteredList.length ? filteredList : learnList ).map( ( word ) => {
+    return <Card key={word.id || word._id} {...word.optional} wordObj={word} />
+  } )
+  const HardCards = ( filteredList.length ? filteredList : hardList ).map( ( word ) => {
+    return <Card key={word.id || word._id} {...word.optional} wordObj={word} />
+  } )
+  const EasyCards = ( filteredList.length ? filteredList : easyList ).map( ( word ) => {
+    return <Card key={word.id || word._id} {...word.optional} wordObj={word} />
   } )
 
   return (
@@ -156,6 +173,12 @@ export function Dictionary() {
         setFilteredList,
         setWords,
         isTranscription,
+        setEasyList,
+        setHardList,
+        setLearnList,
+        hardList,
+        learnList,
+        easyList
       }}
     >
       <Paper className={classes.paper} square>
@@ -169,13 +192,16 @@ export function Dictionary() {
         </MuiThemeProvider>
       </Paper>
       <TabPanel value={value} index={0}>
-        Tab 1
+        {/* hard */}
+        {HardCards}
       </TabPanel>
       <TabPanel value={value} index={1} className={classes.overflow}>
-        {Cards}
+        {/* learn */}
+        {LearnCards}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Tab 3
+        {/* easy */}
+        {EasyCards}
       </TabPanel>
     </DictionaryContext.Provider>
   )

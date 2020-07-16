@@ -140,17 +140,23 @@ const GlobalState = ( props ) => {
         // FETCH WORDS LOGIC
         const amountOfCards = response.data.optional ? response.data.optional.amountOfCards : cardSettings.amountOfCards
         const level = response.data.optional ? response.data.optional.level : cardSettings.level
-        fetchWords( amountOfCards, level )
+        const difficultOnly = response.data.optional ? response.data.optional.difficultOnly : cardSettings.difficultOnly
+        fetchWords( amountOfCards, level, difficultOnly )
       } ).catch( err => {
         console.log( err )
         fetchWords( cardSettings.amountOfCards, cardSettings.level )
       } )
     }
 
-    const fetchWords = ( amountOfCards, group ) => {
+    const fetchWords = ( amountOfCards, group, difficultOnly ) => {
 
       preFetchWords( amountOfCards, group ).then( response => {
-        setWords( response )
+        if (difficultOnly) {
+          const difficult = response.filter(word => word.optional && word.optional.status === 'hard')
+          setWords( difficult )
+        } else {
+          setWords( response )
+        }
       } )
     }
 
