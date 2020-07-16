@@ -121,10 +121,12 @@ const PlayCardComponent = ( { word, next, updateWordsDB, showInfo } ) => {
     if ( isGiveUp ) {
       word.learnIndex = 0
       word.nextRepeat = getRepetitionTime( word.learnIndex )
+      createStatistic(false)                                      //  ------------------wrong
       updateWordsDB( word )
     } else if ( isGuessed === true ) {
       word.learnIndex = word.learnIndex + 20 <= 100 ? word.learnIndex + 20 : 100
       word.nextRepeat = getRepetitionTime( word.learnIndex )
+      createStatistic(true)                                       //  ------------------guessed
       updateWordsDB( word )
     } else if ( isGuessed !== false ) {
       word.learnIndex = word.learnIndex - 20 > 0 ? word.learnIndex - 20 : 0
