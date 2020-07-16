@@ -25,18 +25,11 @@ export const ButtonsList = ({ list = [], playWord, isResult, handleClick }) => {
 
   const handleKeyPress = (e) => {
     if (isMounted) {
-      // if(list.length === 4){
-      //   if (e.key.toString().match(/^(1|2|3|4)$/)) {
-      //     refs.current[e.key - 1].current.click()
-      //   }
-      //   return true;
-      // }
       if (e.key.toString().match(/^(1|2|3|4|5)$/)) {
         refs.current[e.key - 1].current.click()
       }
     }
   }
-  // console.log(list, refs.current)
   buttons = list.map((item, i) => {
     const button = useRef()
     refs.current.push(button)

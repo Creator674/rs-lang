@@ -3,7 +3,7 @@ import { getAudio } from 'lib/helpers'
 import { makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
 
-import { DictionaryContext } from '../../../context'
+import { DictionaryContext, Context } from '../../../context'
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -52,6 +52,7 @@ const smallImg = { width: '4.8rem', height: '4.8rem' }
 export const Word = ({ src, word, transcription, wordTranslate, isLoaded, audio, audioMeaning, audioExample }) => {
   const classes = useStyle()
   const { isTranscription } = useContext(DictionaryContext)
+  const { cardSettings: { isGlobalSound } } = useContext(Context)
 
   const [audioWordSound, setAudioWord] = useState(null)
   const [audioMeaningSound, setAudioMeaning] = useState(null)
@@ -79,6 +80,8 @@ export const Word = ({ src, word, transcription, wordTranslate, isLoaded, audio,
   }, [])
 
   const playAudio = () => {
+    if (!isGlobalSound) return
+
     const playSecondAudio = () => {
       audioElement.current.setAttribute('src', audioMeaningSound)
       audioElement.current.removeEventListener('ended', playSecondAudio)
@@ -96,8 +99,6 @@ export const Word = ({ src, word, transcription, wordTranslate, isLoaded, audio,
       audioElement.current.setAttribute('src', audioWordSound)
       audioElement.current.addEventListener('ended', playSecondAudio)
       return audioElement.current.play().catch((err) => err)
-    } else {
-      console.log('Audio is not available')
     }
   }
 

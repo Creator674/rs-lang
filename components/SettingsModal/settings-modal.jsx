@@ -18,7 +18,6 @@ import './settings-modal.less'
 
 const SettingsModalComponent = ({showInfo}) => {
   const { cardSettings, setCardSettings, defaultCardSettings } = useContext(Context)
-  console.log(cardSettings)
   const { cardSettings: { level, levels } } = useContext(Context)
 
 
@@ -49,7 +48,6 @@ const SettingsModalComponent = ({showInfo}) => {
   const changeSetting = (e) => {
     const currValue = e.target.value
     localSettings[currValue] = localSettings[currValue] ? false : true
-    console.log(currValue, ' is ', localSettings[currValue])
     document.querySelectorAll(`input[value=${currValue}]`).forEach((elem) => {
       elem.checked = localSettings[currValue]
     })
@@ -67,7 +65,6 @@ const SettingsModalComponent = ({showInfo}) => {
   const applySettings = () => {
     setCardSettings({...cardSettings, ...localSettings})
     updateServerData()
-    console.log(localSettings)
   }
   const [inputNewValue, setInputNewValue] = useState(cardSettings.amountOfCards)
   const resetSettings = () => {

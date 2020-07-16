@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { Context } from './app-context'
-import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords, fetchWordsFromDB, aggregatedWords, saveSettings, preFetchWords } from 'lib' // getWords
-import { TramRounded, TrendingUpRounded } from '@material-ui/icons'
+import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords, fetchWordsFromDB, aggregatedWords, saveSettings, preFetchWords } from 'lib'
 
 const initialCardSettings = {
   learnNew: false,
@@ -30,15 +29,8 @@ const initialCardSettings = {
   HARDbutton: true,
   SHOWANSWERbutton: true,
   EASYbutton: true,
+  isGlobalSound: true,
 }
-
-// wordsFetched: [
-//   {
-//     userWords: 0,
-//     page: 0
-//   },
-//
-// ]
 
 const currentCardSettings = {
   learnNew: false,
@@ -66,6 +58,7 @@ const currentCardSettings = {
   HARDbutton: true,
   SHOWANSWERbutton: true,
   EASYbutton: true,
+  isGlobalSound: true,
 }
 
 const initialSort = {
@@ -117,18 +110,15 @@ const GlobalState = ( props ) => {
           .then( ( response ) => {
             setUserData( { ...userData, name: response.data.name, email: response.data.email } )
             setAppSettings( { ...appSettings, isAuthorized: true } )
-            // updateAppState()
             resolve( true )
           } )
           .catch( ( err ) => {
-            // console.log('error: ', err.response ? err.response.data : err.message)
             resolve( false )
           } )
       } )
     }
 
     const updateAppState = () => {
-      // setup initial state for application
 
       getStatistic().then( ( response ) => {
         setAppStatistics( { ...appStatistics, ...response.data.optional } )
@@ -140,23 +130,26 @@ const GlobalState = ( props ) => {
         // FETCH WORDS LOGIC
         const amountOfCards = response.data.optional ? response.data.optional.amountOfCards : cardSettings.amountOfCards
         const level = response.data.optional ? response.data.optional.level : cardSettings.level
-        fetchWords( amountOfCards, level )
+        const difficultOnly = response.data.optional ? response.data.optional.difficultOnly : cardSettings.difficultOnly
+        fetchWords( amountOfCards, level, difficultOnly )
       } ).catch( err => {
-        console.log( err )
         fetchWords( cardSettings.amountOfCards, cardSettings.level )
       } )
     }
 
-    const fetchWords = ( amountOfCards, group ) => {
+    const fetchWords = ( amountOfCards, group, difficultOnly ) => {
 
       preFetchWords( amountOfCards, group ).then( response => {
-        setWords( response )
+        if (difficultOnly) {
+          const difficult = response.filter(word => word.optional && word.optional.status === 'hard')
+          setWords( difficult )
+        } else {
+          setWords( response )
+        }
       } )
     }
 
     const getWordsPage = () => {
-      // setCardSettings({...cardSettings, wordsFetched: {}})
-      // saveSettings({...cardSettings, wordsFetched: {}})
       if ( cardSettings.wordsFetched[cardSettings.level] ) {
         wordsPage.current = cardSettings.wordsFetched[cardSettings.level].page
         return wordsPage.current
@@ -171,10 +164,6 @@ const GlobalState = ( props ) => {
         return wordsPage.current
       }
     }
-
-    // navigate through pages in DB function
-
-
 
     const handleRouteChange = ( url ) => {
       if ( url !== '/' && !appSettings.isAuthorized ) {

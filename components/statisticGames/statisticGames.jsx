@@ -15,10 +15,6 @@ export const StatisticGames = ({ allGuessed, allnotGuessed }) => {
     setHidden((hidden) => !hidden)
   }
 
-  // useEffect(() => {
-  //   console.log(allnotGuessed, allGuessed)
-  // }, [allnotGuessed, allGuessed])
-
   return (
     <div className={ishidden ? 'results_pop hidden' : 'results_pop '}>
       <div className='results_block'>
