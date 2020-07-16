@@ -16,7 +16,7 @@ import Tab from '@material-ui/core/Tab'
 import { Header } from './Header'
 import { Context, DictionaryContext } from '../../context'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles( {
   root: {
     minWidth: 275,
   },
@@ -25,6 +25,15 @@ const useStyles = makeStyles({
     margin: '0 2px',
     transform: 'scale(0.8)',
   },
+  paper: {
+    width: '100%',
+    backgroundColor: 'transparent'
+  },
+  overflow: {
+    overflow: 'auto',
+    maxHeight: '65vh'
+  },
+
   title: {
     fontSize: 14,
   },
@@ -37,9 +46,9 @@ const useStyles = makeStyles({
   rightBorder: {
     borderRight: `0.1rem solid ${theme.palette.common.success}`,
   },
-})
+} )
 
-function TabPanel(props) {
+function TabPanel( props ) {
   const { children, value, index, ...other } = props
 
   return (
@@ -59,8 +68,13 @@ function TabPanel(props) {
   )
 }
 
-const style = createMuiTheme({
+const style = createMuiTheme( {
   overrides: {
+    MuiPaper: {
+      root: {
+        width: '100%',
+      },
+    },
     MuiBox: {
       root: {
         padding: 0,
@@ -75,6 +89,7 @@ const style = createMuiTheme({
         minWidth: 0,
         color: theme.palette.common.success,
         fontSize: '2rem',
+        width: '100%',
       },
     },
 
@@ -86,7 +101,7 @@ const style = createMuiTheme({
         borderBottom: '0.1rem solid',
         borderColor: theme.palette.common.success,
         fontFamily: theme.props.mainFont,
-        backgroundColor: fade(theme.palette.background.success, 0.3),
+        backgroundColor: fade( theme.palette.background.success, 0.3 ),
         color: theme.palette.common.success,
         fontSize: '1.6rem',
         lineHeight: 1,
@@ -111,29 +126,29 @@ const style = createMuiTheme({
       selected: {},
     },
   },
-})
+} )
 
 export function Dictionary() {
   const {
     words,
     cardSettings: { isTranslation, isTranscription },
-  } = useContext(Context)
-  const [value, setValue] = useState(1)
-  const [wordsList, setWords] = useState([])
-  const [filteredList, setFilteredList] = useState([])
+  } = useContext( Context )
+  const [value, setValue] = useState( 1 )
+  const [wordsList, setWords] = useState( [] )
+  const [filteredList, setFilteredList] = useState( [] )
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue)
+  const handleChange = ( event, newValue ) => {
+    setValue( newValue )
   }
 
-  useEffect(() => {
-    setWords(words.filter(word => word.optional))
-  }, [])
+  useEffect( () => {
+    setWords( words.filter( word => word.optional ) )
+  }, [] )
 
   const classes = useStyles()
-  const Cards = (filteredList.length ? filteredList : wordsList).map((word) => {
+  const Cards = ( filteredList.length ? filteredList : wordsList ).map( ( word ) => {
     return <Card key={word.id || word._id} {...word.optional} />
-  })
+  } )
 
   return (
     <DictionaryContext.Provider
@@ -143,7 +158,7 @@ export function Dictionary() {
         isTranscription,
       }}
     >
-      <Paper square>
+      <Paper className={classes.paper} square>
         <Header setWords={setWords} words={wordsList} />
         <MuiThemeProvider theme={style}>
           <Tabs value={value} onChange={handleChange} variant='fullWidth' aria-label='icon label tabs example' centered>
@@ -156,7 +171,7 @@ export function Dictionary() {
       <TabPanel value={value} index={0}>
         Tab 1
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={value} index={1} className={classes.overflow}>
         {Cards}
       </TabPanel>
       <TabPanel value={value} index={2}>

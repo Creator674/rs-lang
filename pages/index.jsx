@@ -210,7 +210,7 @@ const MainPage = ({ showInfo }) => {
                   <li className='algorithm__item'>
                     Each level have different time interval for next repetition: 0&thinsp;&ndash;&thinsp;10&thinsp;sec,
                     20&thinsp;&ndash;&thinsp;5&nbsp;min, 40&thinsp;&ndash;&thinsp;20&thinsp;min,
-                    60&thinsp;&ndash;&thinsp;1&thinsp;day, 100&thinsp;&ndash;&thinsp;1&thinsp;week
+                    60&thinsp;&ndash;&thinsp;1&thinsp;day, 80&thinsp;&ndash;&thinsp;1&thinsp;week, 100&thinsp;&ndash;&thinsp;1&thinsp;month
                   </li>
                 </ul>
                 <p className='algorithm__text'>
