@@ -12,7 +12,7 @@ import Box from '@material-ui/core/Box'
 
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import {getAllUserWords} from 'lib'
+import { getAllUserWords } from 'lib'
 
 import { Header } from './Header'
 import { Context, DictionaryContext } from '../../context'
@@ -146,21 +146,21 @@ export function Dictionary() {
   }
 
   useEffect( () => {
-    if (filteredList.length) {
-      setHardList(filteredList.filter(word => word.optional.status === 'hard'))
-      setEasyList(filteredList.filter(word => word.optional.status === 'easy'))
-      setLearnList(filteredList.filter(word => word.optional.status === undefined))
-    } else if (wordsList.length) {
-      setHardList(wordsList.filter(word => word.optional.status === 'hard'))
-      setEasyList(wordsList.filter(word => word.optional.status === 'easy'))
-      setLearnList(wordsList.filter(word => word.optional.status === undefined))
+    if ( filteredList.length ) {
+      setHardList( filteredList.filter( word => word.optional.status === 'hard' ) )
+      setEasyList( filteredList.filter( word => word.optional.status === 'easy' ) )
+      setLearnList( filteredList.filter( word => word.optional.status === undefined ) )
+    } else if ( wordsList.length ) {
+      setHardList( wordsList.filter( word => word.optional.status === 'hard' ) )
+      setEasyList( wordsList.filter( word => word.optional.status === 'easy' ) )
+      setLearnList( wordsList.filter( word => word.optional.status === undefined ) )
     } else {
-      getAllUserWords().then(response => {
-        setWords(response.data)
-        setHardList(response.data.filter(word => word.optional.status === 'hard'))
-        setEasyList(response.data.filter(word => word.optional.status === 'easy'))
-        setLearnList(response.data.filter(word => word.optional.status === undefined))
-      })
+      getAllUserWords().then( response => {
+        setWords( response.data )
+        setHardList( response.data.filter( word => word.optional.status === 'hard' ) )
+        setEasyList( response.data.filter( word => word.optional.status === 'easy' ) )
+        setLearnList( response.data.filter( word => word.optional.status === undefined ) )
+      } )
     }
     // setWords( words.filter( word => word.optional ) )
   }, [wordsList] )
