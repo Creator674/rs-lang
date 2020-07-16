@@ -42,7 +42,7 @@ const WordBox = ({ word, image, src, isLoaded, ...restProps }) => {
       <Word {...{ src, word, ...restProps, isLoaded }} />
       <CardText outerStyles={classes.styleDictionary} index='textExample' word={restProps} />
       <CardText outerStyles={classes.styleDictionary} index='textMeaning' word={restProps} />
-      <Footer />
+      <Footer {...restProps} />
     </div>
   )
 }

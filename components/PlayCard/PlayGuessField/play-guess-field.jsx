@@ -23,7 +23,7 @@ export const PlayGuessField = ({ showTheAnswer, word, setAudioLock, setIsGuessed
 
   const handleKeyDown = (e) => {
     if (!e.key.match(/Tab|Shift|Ctrl|Alt|Esc|Caps/) && isGuessed !== true) {
-      input.current.focus()
+      // input.current.focus()
       isCorrect === isCorrect && setIsCorrect(null)
     }
     if (isPressed) return
@@ -40,9 +40,12 @@ export const PlayGuessField = ({ showTheAnswer, word, setAudioLock, setIsGuessed
   }
 
   useEffect(() => {
+    console.log({showTheAnswer})
     if(showTheAnswer){
       setIsCorrect(true)
-      setIsGuessed(true)
+      setAnswer(word)
+      setLearnProgress({ ...learnProgress, current: learnProgress.current + 1 })
+      // setIsGuessed(true)
     }
   }, [showTheAnswer])
 

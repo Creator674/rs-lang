@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import { Context } from 'context'
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles( ( theme ) => ( {
   root: {
     position: 'relative',
     display: 'flex',
@@ -50,51 +50,52 @@ const useStyle = makeStyles((theme) => ({
     marginTop: '0.4rem',
     color: theme.palette.common.text,
   },
-}))
+} ) )
 
-export const PlayFooter = ({
+export const PlayFooter = ( {
   word: { word, transcription, wordTranslate },
   children,
   className,
   audio,
   isAudioLock,
   isGuessed,
+  showTheAnswer,
   getResult,
   next
-}) => {
-  console.log({isGuessed})
+} ) => {
+  console.log( { isGuessed } )
   const classes = useStyle()
   const audioElement = useRef()
   const {
     cardSettings: { showTranscription, showWord, showTranslation, defenitionPronunciation },
-  } = useContext(Context)
+  } = useContext( Context )
 
   const playAudio = () => {
 
     const playSecondAudio = () => {
-      if (isGuessed === true) return next()
-      if (!audio[1] || !defenitionPronunciation) return
-      audioElement.current.setAttribute('src', audio[1])
-      audioElement.current.removeEventListener('ended', playSecondAudio)
-      audioElement.current.play().catch((err) => err)
+      if ( isGuessed === true ) return next()
+      if ( showTheAnswer === true ) return next()
+      if ( !audio[1] || !defenitionPronunciation ) return
+      audioElement.current.setAttribute( 'src', audio[1] )
+      audioElement.current.removeEventListener( 'ended', playSecondAudio )
+      audioElement.current.play().catch( ( err ) => err )
     }
 
-    if (Array.isArray(audio)) {
-
-      audioElement.current.setAttribute('src', audio[0])
-      audioElement.current.addEventListener('ended', playSecondAudio)
-      return audioElement.current.play().catch((err) => err)
+    if ( Array.isArray( audio ) ) {
+      audioElement.current.setAttribute( 'src', audio[0] )
+      audioElement.current.addEventListener( 'ended', playSecondAudio )
+      return audioElement.current.play().catch( ( err ) => err )
     } else {
-      audioElement.current.addEventListener('ended', playSecondAudio)
-      audioElement.current.setAttribute('src', audio)
-      return audioElement.current.play().catch((err) => err)
+      audioElement.current.addEventListener( 'ended', playSecondAudio )
+      audioElement.current.setAttribute( 'src', audio )
+      return audioElement.current.play().catch( ( err ) => err )
     }
   }
 
-  useEffect(() => {
+  useEffect( () => {
     isAudioLock === false && isGuessed !== true && playAudio()
-    isGuessed === true && playAudio()
-  }, [isAudioLock, isGuessed])
+    if ( isGuessed === true || showTheAnswer === true ) playAudio()
+  }, [isAudioLock, isGuessed, showTheAnswer] )
 
   return (
     <div className={`${classes.root} ${className}`}>

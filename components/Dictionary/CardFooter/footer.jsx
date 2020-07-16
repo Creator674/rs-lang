@@ -64,13 +64,13 @@ const createStatInfo = (props) => {
   ))
 }
 
-export const Footer = ({ wordInfo }) => {
+export const Footer = ({ wordInfo, learnIndex }) => {
   const context = useContext(DictionaryContext)
   const classes = useStyles()
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>
-        <ProgressChart width='4.8rem' value={52} />
+        <ProgressChart width='4.8rem' value={learnIndex} />
         <div className='info'>{createStatInfo(statistic)}</div>
       </div>
       <Button
