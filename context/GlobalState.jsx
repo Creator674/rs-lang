@@ -98,6 +98,7 @@ const GlobalState = ( props ) => {
 
   const [learnProgress, setLearnProgress] = useState( initialLearnProgress )
   const [userData, setUserData] = useState( {} )
+  const [isModal, setModal] = useState( false )
 
   const wordsPage = useRef()
 
@@ -234,6 +235,8 @@ const GlobalState = ( props ) => {
         setUserData,
         appStatistics,
         setAppStatistics,
+        isModal,
+        setModal
       }}
     >
       {pathname === '/' || ( pathname !== '/' && appSettings.isAuthorized ) ? props.children : null}

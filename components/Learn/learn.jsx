@@ -1,16 +1,21 @@
-import React, { useContext, useState, useRef } from 'react'
+import React, { useContext, useState, useRef, useEffect } from 'react'
 import { Context } from 'context'
 import { PlayCard, ProgressBar } from 'components'
 import { createUserWord, updateUserWord, saveSettings } from 'lib'
+import { withModal } from 'components/HOC/hoc'
 import './style.less'
 
-export const Learn = () => {
+const LearnComponent = ( { showModal } ) => {
   const { learnProgress, words, cardSettings: { amountOfCards, level, difficultOnly } } = useContext( Context )
-  const { cardSettings, setCardSettings } = useContext( Context )
+  const { isModal } = useContext( Context )
   const [currIndex, setCurrIndex] = useState( 0 )
   const isNew = useRef()
 
   const isWordOnLearning = words.indexOf( words.find( word => word.onLearning ) )
+
+  useEffect( () => {
+    if ( isModal === true ) showModal()
+  }, [isModal] )
 
   if ( isWordOnLearning !== -1 ) setCurrIndex( isWordOnLearning )
 
@@ -19,9 +24,6 @@ export const Learn = () => {
       console.log( 'End of learning' )
       return
     }
-    // const updatedSettings = { ...cardSettings, totalLearned: cardSettings.totalLearned + 1 }
-    // saveSettings( updatedSettings )
-    // setCardSettings( updatedSettings )
 
     if ( !words[idx] ) return
 
@@ -67,3 +69,5 @@ export const Learn = () => {
     </div>
   )
 }
+
+export const Learn = withModal( LearnComponent )

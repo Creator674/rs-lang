@@ -2,31 +2,31 @@ import React, { useEffect } from 'react'
 
 import './popup.less'
 
-export const Popup = (props) => {
-  const { children, toggleClose, className } = props
+export const Popup = ( props ) => {
+  const { children, toggleClose, className, isWithOverflow } = props
 
-  useEffect(() => {
-    document.addEventListener('keydown', closeModal)
+  useEffect( () => {
+    document.addEventListener( 'keydown', closeModal )
     return () => {
-      document.removeEventListener('keydown', closeModal)
+      document.removeEventListener( 'keydown', closeModal )
     }
-  }, [])
+  }, [] )
 
-  const closeModal = (e) => {
+  const closeModal = ( e ) => {
     if (
       // e.target.classList.contains('overlay') ||
-      e.target.classList.contains('close-btn') ||
-      e.target.classList.contains('icon-cancel')
+      e.target.classList.contains( 'close-btn' ) ||
+      e.target.classList.contains( 'icon-cancel' )
     ) {
       toggleClose()
-    } else if (e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27) {
+    } else if ( e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27 ) {
       toggleClose()
     }
   }
 
   return (
     <div className='overlay' onMouseDown={closeModal}>
-      <div className={`modal ${className}`} data-aos='fade-up' data-aos-delay='300'>
+      <div className={`modal ${className}`} data-aos='fade-up' data-aos-delay='300' style={{ overflow: isWithOverflow ? 'auto' : 'hidden' }}>
         <button className='close-btn' onClick={closeModal}>
           <i className='icon-cancel'></i>
         </button>
