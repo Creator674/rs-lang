@@ -68,7 +68,7 @@ export const PlayGuessField = ({ showTheAnswer, word, setAudioLock, setIsGuessed
       })
       !isMatch && setIsCorrect(false)
     }
-    input.current.blur()
+    input.current && input.current.blur()
     setValue('')
     setAnswer(result.trim())
     isPressed = false

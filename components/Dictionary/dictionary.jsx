@@ -146,14 +146,24 @@ export function Dictionary() {
   }
 
   useEffect( () => {
-    getAllUserWords().then(response => {
-      setWords(response.data)
-      setHardList(response.data.filter(word => word.optional.status === 'hard'))
-      setEasyList(response.data.filter(word => word.optional.status === 'easy'))
-      setLearnList(response.data.filter(word => word.optional.status === undefined))
-    })
+    if (filteredList.length) {
+      setHardList(filteredList.filter(word => word.optional.status === 'hard'))
+      setEasyList(filteredList.filter(word => word.optional.status === 'easy'))
+      setLearnList(filteredList.filter(word => word.optional.status === undefined))
+    } else if (wordsList.length) {
+      setHardList(wordsList.filter(word => word.optional.status === 'hard'))
+      setEasyList(wordsList.filter(word => word.optional.status === 'easy'))
+      setLearnList(wordsList.filter(word => word.optional.status === undefined))
+    } else {
+      getAllUserWords().then(response => {
+        setWords(response.data)
+        setHardList(response.data.filter(word => word.optional.status === 'hard'))
+        setEasyList(response.data.filter(word => word.optional.status === 'easy'))
+        setLearnList(response.data.filter(word => word.optional.status === undefined))
+      })
+    }
     // setWords( words.filter( word => word.optional ) )
-  }, [] )
+  }, [wordsList] )
 
   const classes = useStyles()
   const LearnCards = ( filteredList.length ? filteredList : learnList ).map( ( word ) => {
