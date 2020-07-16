@@ -14,9 +14,23 @@ import { Context } from 'context'
 
 import './play-card.less'
 
-import { saveStatistic } from 'lib'
-import { learnWordsStatistic } from 'lib/helpers/statisticHelp'
-import { getLocalStorageProp, setLocalStorageProp } from 'lib/localStorage'
+// const word = {
+//   id: '5e9f5ee35eb9e72bc21af4a0',
+//   group: 0,
+//   page: 0,
+//   word: 'alcohol',
+//   image: 'files/01_0002.jpg',
+//   audio: 'files/01_0002.mp3',
+//   audioMeaning: 'files/01_0002_meaning.mp3',
+//   audioExample: 'files/01_0002_example.mp3',
+//   textMeaning: '<i>Alcohol</i> is a type of drink that can make people drunk.',
+//   textExample: 'A person should not drive a car after he or she has been drinking <b>alcohol</b>.',
+//   transcription: '[ǽlkəhɔ̀ːl]',
+//   textExampleTranslate: 'Человек не должен водить машину после того, как он выпил алкоголь',
+//   textMeaningTranslate: 'Алкоголь - это тип напитка, который может сделать людей пьяными',
+//   wordTranslate: 'алкоголь',
+//   wordsPerExampleSentence: 15,
+// }
 
 const useStyles = makeStyles( ( theme ) => ( {
   btnRow: {
@@ -72,11 +86,8 @@ const useStyles = makeStyles( ( theme ) => ( {
 
 const PlayCardComponent = ( { word, next, updateWordsDB, showInfo } ) => {
   const {
-    appStatistics,
-    setAppStatistics,
-    cardSettings: { isMeaning, showDefenition, REPEATbutton, HARDbutton, SHOWANSWERbutton, EASYbutton, addIllustration, defenitionTranslation },
+    cardSettings: { showDefenition, REPEATbutton, HARDbutton, SHOWANSWERbutton, EASYbutton, addIllustration, defenitionTranslation },
   } = useContext( Context )
-
   const classes = useStyles()
   const [audioWord, setAudioWord] = useState( null )
   const [audioMeaning, setAudioMeaning] = useState( null )
@@ -88,15 +99,6 @@ const PlayCardComponent = ( { word, next, updateWordsDB, showInfo } ) => {
   const [isGiveUp, setIsGiveUp] = useState( false )
 
   let isMounted = false
-
-  
-//   ---------------------------------function for storing words into statistic 
-  const createStatistic = (bool) => {
-    const newStatistic = { ...appStatistics, id: learnWordsStatistic(appStatistics, word.id, bool) }
-    setAppStatistics(newStatistic)
-    saveStatistic(newStatistic)
-  }
-      
 
   useEffect( () => {
     isMounted = true
@@ -116,17 +118,14 @@ const PlayCardComponent = ( { word, next, updateWordsDB, showInfo } ) => {
     }
   }, [] )
 
-        
   useEffect( () => {
     if ( isGiveUp ) {
       word.learnIndex = 0
       word.nextRepeat = getRepetitionTime( word.learnIndex )
-      createStatistic(false)                                      //  ------------------wrong
       updateWordsDB( word )
     } else if ( isGuessed === true ) {
       word.learnIndex = word.learnIndex + 20 <= 100 ? word.learnIndex + 20 : 100
       word.nextRepeat = getRepetitionTime( word.learnIndex )
-      createStatistic(true)                                       //  ------------------guessed
       updateWordsDB( word )
     } else if ( isGuessed !== false ) {
       word.learnIndex = word.learnIndex - 20 > 0 ? word.learnIndex - 20 : 0
@@ -135,7 +134,6 @@ const PlayCardComponent = ( { word, next, updateWordsDB, showInfo } ) => {
     }
   }, [isGuessed, isGiveUp] )
 
-        
   const showMessage = ( type ) => {
     switch ( type ) {
       case 'hard': showInfo( { message: `Word added to the list of Hard Words`, type: 'success' } )
@@ -177,25 +175,15 @@ const PlayCardComponent = ( { word, next, updateWordsDB, showInfo } ) => {
               setAudioLock={setAudioLock}
               setIsGuessed={setIsGuessed}
               isGuessed={isGuessed}
-              createStatistic={createStatistic}
               showTheAnswer={isGiveUp}
             />
           </CardText>
-
           {showDefenition ? (
-            <CardText 
-              className='second-row' 
-              outerStyles={classes.styleDictionary} 
-              index='textMeaning' 
-              word={word} 
-              defenitionTranslation={defenitionTranslation} 
-            />
+            <CardText className='second-row' outerStyles={classes.styleDictionary} index='textMeaning' word={word} defenitionTranslation={defenitionTranslation} />
           ) : null}
-        
           <PlayFooter
             word={word}
             audio={( isGuessed === true || isGiveUp === true ) ? audioExample : [audioWord, showDefenition ? audioMeaning : null]}
-
             isAudioLock={isAudioLock}
             isGuessed={isGuessed}
             showTheAnswer={isGiveUp}
