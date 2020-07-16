@@ -1,15 +1,21 @@
-import React, { useContext, useState, useRef } from 'react'
+import React, { useContext, useState, useRef, useEffect } from 'react'
 import { Context } from 'context'
 import { PlayCard, ProgressBar } from 'components'
-import { createUserWord, updateUserWord } from 'lib'
+import { createUserWord, updateUserWord, saveSettings } from 'lib'
+import { withModal } from 'components/HOC/hoc'
 import './style.less'
 
-export const Learn = () => {
+const LearnComponent = ( { showModal } ) => {
   const { learnProgress, words, cardSettings: { amountOfCards, level, difficultOnly } } = useContext( Context )
+  const { isModal } = useContext( Context )
   const [currIndex, setCurrIndex] = useState( 0 )
   const isNew = useRef()
 
   const isWordOnLearning = words.indexOf( words.find( word => word.onLearning ) )
+
+  useEffect( () => {
+    if ( isModal === true ) showModal()
+  }, [isModal] )
 
   if ( isWordOnLearning !== -1 ) setCurrIndex( isWordOnLearning )
 
@@ -57,9 +63,11 @@ export const Learn = () => {
   return (
     <div className='wrapper-box'>
       {words.length ? setNextCard( currIndex ) : difficultOnly ?
-      <div style={{    margin: '0 auto', fontSize: '3rem'}}>Your list of Hard words is empty</div>
+        <div style={{ margin: '0 auto', fontSize: '3rem' }}>Your list of Hard words is empty</div>
         : null}
       <ProgressBar {...learnProgress} total={amountOfCards} width='100%' />
     </div>
   )
 }
+
+export const Learn = withModal( LearnComponent )

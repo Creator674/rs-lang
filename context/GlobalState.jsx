@@ -30,6 +30,11 @@ const initialCardSettings = {
   SHOWANSWERbutton: true,
   EASYbutton: true,
   isGlobalSound: true,
+  totalLearned: 0,
+  todayLearned: {
+    date: null,
+    count: 0
+  }
 }
 
 const currentCardSettings = {
@@ -59,6 +64,11 @@ const currentCardSettings = {
   SHOWANSWERbutton: true,
   EASYbutton: true,
   isGlobalSound: true,
+  totalLearned: 0,
+  todayLearned: {
+    date: null,
+    count: 0
+  }
 }
 
 const initialSort = {
@@ -88,6 +98,7 @@ const GlobalState = ( props ) => {
 
   const [learnProgress, setLearnProgress] = useState( initialLearnProgress )
   const [userData, setUserData] = useState( {} )
+  const [isModal, setModal] = useState( false )
 
   const wordsPage = useRef()
 
@@ -140,8 +151,8 @@ const GlobalState = ( props ) => {
     const fetchWords = ( amountOfCards, group, difficultOnly ) => {
 
       preFetchWords( amountOfCards, group ).then( response => {
-        if (difficultOnly) {
-          const difficult = response.filter(word => word.optional && word.optional.status === 'hard')
+        if ( difficultOnly ) {
+          const difficult = response.filter( word => word.optional && word.optional.status === 'hard' )
           setWords( difficult )
         } else {
           setWords( response )
@@ -224,6 +235,8 @@ const GlobalState = ( props ) => {
         setUserData,
         appStatistics,
         setAppStatistics,
+        isModal,
+        setModal
       }}
     >
       {pathname === '/' || ( pathname !== '/' && appSettings.isAuthorized ) ? props.children : null}

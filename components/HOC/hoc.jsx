@@ -4,25 +4,25 @@ import MuiAlert from '@material-ui/lab/Alert'
 import { Popup } from 'components'
 
 // error, warning, info, success
-function Alert(props) {
+function Alert( props ) {
   return <MuiAlert elevation={6} variant='filled' {...props} />
 }
 
-export const withInfo = (WrappedComponent) => {
-  const NewComponent = (props) => {
-    const [info, setInfo] = useState({ message: false, type: null })
+export const withInfo = ( WrappedComponent ) => {
+  const NewComponent = ( props ) => {
+    const [info, setInfo] = useState( { message: false, type: null } )
     const lastType = useRef()
 
-    const updateState = ({ message, type }) => {
+    const updateState = ( { message, type } ) => {
       lastType.current = type
-      setInfo({ message, type })
+      setInfo( { message, type } )
     }
 
-    const handleClose = (event, reason) => {
-      if (reason === 'clickaway') {
+    const handleClose = ( event, reason ) => {
+      if ( reason === 'clickaway' ) {
         return
       }
-      setInfo({ ...info, message: false })
+      setInfo( { ...info, message: false } )
     }
     return (
       <>
@@ -38,22 +38,23 @@ export const withInfo = (WrappedComponent) => {
   return NewComponent
 }
 
-export const withModal = (WrappedComponent) => {
-  const NewComponent = ({ closeParent, ...props }) => {
-    const [showModal, toggleModal] = useState(false)
-    const updateChildrenWithProps = React.Children.map(props.children, (child, i) => {
-      return React.cloneElement(child, {
-        closeModal: () => toggleModal(null),
-      })
-    })
+export const withModal = ( WrappedComponent ) => {
+  const NewComponent = ( { closeParent, isOverflow, ...props } ) => {
+    const [showModal, toggleModal] = useState( false )
+    const updateChildrenWithProps = React.Children.map( props.children, ( child, i ) => {
+      return React.cloneElement( child, {
+        closeModal: () => toggleModal( null ),
+      } )
+    } )
 
     return (
       <>
-        <WrappedComponent {...props} showModal={() => toggleModal(true)} />
+        <WrappedComponent {...props} showModal={() => toggleModal( true )} />
         {showModal && (
           <Popup
+            isWithOverflow={isOverflow}
             toggleClose={() => {
-              toggleModal(null)
+              toggleModal( null )
               closeParent && closeParent()
             }}
           >
@@ -67,17 +68,17 @@ export const withModal = (WrappedComponent) => {
   return NewComponent
 }
 
-export const withSwitcher = (FirstComponent, SecondComponent) => {
-  const NewComponent = (props) => {
-    const [isRender, setRender] = useState(true)
+export const withSwitcher = ( FirstComponent, SecondComponent ) => {
+  const NewComponent = ( props ) => {
+    const [isRender, setRender] = useState( true )
 
     return (
       <>
         {isRender ? (
-          <FirstComponent {...props} switchRender={() => setRender(false)} />
+          <FirstComponent {...props} switchRender={() => setRender( false )} />
         ) : (
-          <SecondComponent {...props} />
-        )}
+            <SecondComponent {...props} />
+          )}
       </>
     )
   }
