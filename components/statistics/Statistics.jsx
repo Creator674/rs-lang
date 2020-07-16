@@ -121,7 +121,8 @@ export function Statistics() {
   const [value, setValue] = useState(1)
 
   const [amountOfWords, setAmountOfWords] = useState(0)
-  const [allWords, setAllWords] = useState([])
+  const [allcorrectAnswers, setCorrectAnswers] = useState(0)
+  const [datesArray, setDatesArray] = useState([])
 
   const [savannah, setSavannah] = useState([])
   const [speakit, setSpeakit] = useState([])
@@ -129,12 +130,12 @@ export function Statistics() {
   const [audiocall, setAudiocall] = useState([])
   const [hangman, setHangman] = useState([])
   const [puzzle, setPuzzle] = useState([])
-
+  const classes = useStyles()
 
   const {
-    appSettings: { userID, userName },
     appStatistics,
     setAppStatistics,
+    userData,
   } = useContext(Context)
 
   const handleChange = (event, newValue) => {
@@ -143,26 +144,60 @@ export function Statistics() {
 
   useEffect(()=>{
     getStatistic().then((res) => {
-      setAppStatistics({ ...appStatistics, ...res.data.optional })
+      if(res.data.optional){
+        setAppStatistics({ ...appStatistics, ...res.data.optional })
+        // console.log(  Object.entries(res.data.optional)  )
 
-      setAmountOfWords(  Object.entries(res.data.optional).reduce((acc, el) => {
-        if(el[0].length > 20){
-          acc += 1
-        }
-        return acc
-      }, 0) )
 
-      setSavannah(  Object.entries(res.data.optional).filter((el) => el[0] == 'savannah'))
-      setSpeakit(  Object.entries(res.data.optional).filter((el) => el[0] == 'speakit'))
-      setSprint(  Object.entries(res.data.optional).filter((el) => el[0] == 'sprint'))
-      setAudiocall((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'audiocall'))
-      setHangman((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'hangman'))
-      setPuzzle((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'puzzle'))
+        //    just amount of all words, ---  Num
+        setAmountOfWords(  Object.entries(res.data.optional).reduce((acc, el) => {
+          if(el[0].length > 20){
+            acc += 1
+          }
+          return acc
+        }, 0) )
 
+        //   array of Dates ---  ['Monday July 13', {...},  'Monday July 14', {...},]
+        setDatesArray(  Object.entries(res.data.optional).reduce((acc, el) => {
+          if(el[0].length > 20){
+            const entries = Object.entries(el[1])
+            // console.log( entries )
+            entries.forEach((el) => {
+              if(/\d/.test(el[0])){
+                // console.log(el)
+                acc.push(el)
+              }
+            })
+          }
+          return acc.sort()
+        }, []) )
+
+        //    all correct answers from Dates ---- Num
+        setCorrectAnswers(  Object.entries(res.data.optional).reduce((acc, el) => {
+          if(el[0].length > 20){
+            const entries = Object.entries(el[1])
+            // console.log( entries )
+            entries.forEach((el) => {
+              if(/\d/.test(el[0])){
+                acc += el[1].guessed ? el[1].guessed : 0;
+              }
+            })
+          }
+          return acc
+        }, 0) )
+
+
+        //    data for each game
+        setSavannah(  Object.entries(res.data.optional).filter((el) => el[0] == 'savannah')) 
+        setSpeakit(  Object.entries(res.data.optional).filter((el) => el[0] == 'speakit')) 
+        setSprint(  Object.entries(res.data.optional).filter((el) => el[0] == 'sprint')) 
+        setAudiocall((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'audiocall')) 
+        setHangman((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'hangman')) 
+        setPuzzle((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'puzzle')) 
+      } 
     })
   }, [])
 
-  const classes = useStyles()
 
   return (
     <div style={{ width: '100%', diplay: 'flex', flexDirection: 'column' }}>
@@ -175,40 +210,26 @@ export function Statistics() {
           </Tabs>
         </MuiThemeProvider>
       </Paper>
+
       <TabPanel value={value} index={0}>
         <СardToday
-          newCards={50}
-          winrate={79}
-          totalCards={150}
-          studyTime={49}
-          strike={210}
-          repeat={15}
-          userName={'Olga'}
+          newCards={amountOfWords}
+          winrate={allcorrectAnswers}
+          totalCards={amountOfWords}
+          studyTime={datesArray ? datesArray[0] ? datesArray[0][0] : datesArray[0] : 'today'}   
+                           // just the last time you was here learning
+          strike={amountOfWords / allcorrectAnswers}
+          repeat={''}
+          userName={userData.name}
         />
       </TabPanel>
+
       <TabPanel value={value} index={1}>
-        <СardArchive learntWords={553} day1={30} day2={40} day3={55} day4={10} day5={7} day6={30} day7={40} />
+        <СardArchive learntWords={amountOfWords} days={datesArray} />
       </TabPanel>
+
       <TabPanel value={value} index={2}>
         <СardGames
-          game={'Super Mario'}
-          learntWords={553}
-          correctCount={80}
-          mistakesCount={15}
-          day1={30}
-          day2={40}
-          day3={55}
-          day4={10}
-          day5={7}
-          day6={30}
-          day7={40}
-          playedGame0={23}
-          playedGame1={15}
-          playedGame2={17}
-          playedGame3={32}
-          playedGame4={10}
-          playedGame5={51}
-
           savannah={savannah}
           speakit={speakit}
           sprint={sprint}

@@ -10,7 +10,7 @@ const attrs = {
   spellCheck: false,
 }
 
-export const PlayGuessField = ({ showTheAnswer, word, setAudioLock, setIsGuessed, isGuessed }) => {
+export const PlayGuessField = ({ createStatistic, showTheAnswer, word, setAudioLock, setIsGuessed, isGuessed }) => {
   const { learnProgress, setLearnProgress } = useContext(Context)
 
   const [value, setValue] = useState('')
@@ -59,9 +59,11 @@ export const PlayGuessField = ({ showTheAnswer, word, setAudioLock, setIsGuessed
     if (result.toLowerCase() === word.toLowerCase()) {
       setIsCorrect(true)
       setIsGuessed(true)
+      createStatistic(true)
       setLearnProgress({ ...learnProgress, current: learnProgress.current + 1 })
     } else {
-      setIsGuessed(Date.now())
+      setIsGuessed(Date.now()) 
+      createStatistic(false)
       let isMatch = false
       word.split('').map((letter, i) => {
         if (letter === result[i]) isMatch = true
