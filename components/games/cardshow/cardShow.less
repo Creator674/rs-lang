@@ -1,0 +1,131 @@
+.column {
+  flex: 0 0 50%;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  .cardShow-picture-cont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .cardShow-picture {
+      width: 30rem;
+      height: 30rem;
+      overflow: hidden;
+      margin: 0 auto;
+      border-radius: 6rem;
+      border: 0.3rem solid #ffffff;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+}
+
+  .cardShow-translation {
+    margin: 1rem 0 0.2rem;
+    line-height: 2.7rem;
+    height: 3rem;
+    text-align: center;
+    display: block;
+    font-family: 'Martel';
+    font-size: 2.3rem;
+    display: block;
+  }
+
+  input[type='text'].cardShow-input {
+    background: transparent;
+    border: none;
+    border-bottom: 0.15rem solid #7AB4CC;
+    width: 28rem;
+    height: 3rem;
+    margin: 0.8rem auto 0.2rem;
+    padding: 0.5rem 0.2rem 0.5rem 4rem;
+    font-size: 2rem;
+    color: #1F658A;
+    text-align: center;
+    position: relative;
+    background-image: url(../../../public/images/speakit/microphone.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left;
+    &.go{
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0.76);
+      animation: pulse 2s infinite;
+    }
+   
+  }
+
+  @-webkit-keyframes pulse {
+    0% {
+      -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.76);
+    }
+    70% {
+        -webkit-box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.76);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.76);
+    }
+  }
+  @keyframes pulse {
+    0% {
+      -moz-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.76);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.76);
+    }
+    70% {
+        -moz-box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.76);
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.76);
+    }
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.76);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.76);
+    }
+  }
+  .cardShow-btns-container {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 4rem;
+    text-align: center;
+    text-align: -webkit-center;
+
+    .btn {
+      width: 20rem;
+      padding: 0.8rem 3rem;
+      font-size: 2rem;
+      font-weight: 500;
+      font-family: 'Martel';
+      background-color: #D3E8ED;
+      border: 1px solid #5379904a;
+      border-radius: 1.5rem;
+      color: #1F658A;
+      text-shadow: 0.1rem 0.1rem 1.2rem lightblue;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.5s ease;
+      margin-top: 2rem;
+      box-shadow: 0.05rem 0.05rem 0.8rem rgba(0, 0, 0, 0.23);
+
+      &:hover {
+        background-color: #f7ffff;
+        box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1), -0.1rem -0.1rem 0.5rem rgba(0, 0, 0, 0.1);
+      }
+    } 
+    .cardShow-speak {
+      background-color: #f7ffff; 
+      position: relative;
+      width: 31rem;
+      text-align: center;
+      padding: 1.5rem 4rem;
+    }
+    .cardShow-speak.speakPls {
+      width: 34rem;
+      background-color: #0099db7d;
+      color: aliceblue;
+    }
+  }
+}

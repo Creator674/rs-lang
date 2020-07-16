@@ -1,0 +1,66 @@
+.puzzle-header{
+   display: flex;
+   flex-direction: row;
+   width: 100%;
+   height: 8rem;  
+
+   .puzzle_column{
+      flex: 0 0 45%;
+      max-width: 45%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &.row{
+         justify-content: center;
+         flex-direction: row;
+
+          button{
+            border-radius: 10%;
+            border: none;
+            width: 6rem;
+            height: 5rem;
+            margin: 1.5rem 1rem 0 0; 
+            font-size: 3rem;
+            color: #FFFBF4; 
+            text-shadow: 0.2rem 0.2rem 1.8rem #81a29f;
+            background-color: #667c63;
+            outline: none; 
+            text-align: center;
+            overflow: hidden;
+            cursor: pointer;
+         
+            &.clicked{
+               opacity: 0.4;
+            } 
+            img{
+               width: 100%;
+               height: 100%;
+               object-fit: cover;
+            }
+          }
+       }
+    
+      .puzzle_title{
+         font-size: 5rem;
+         text-align: center;
+         font-family: 'Sacramento', sans-serif;
+         font-weight: 600;
+         padding: 3rem 0;
+         color: #1b5c1b;
+         text-shadow: 0.1rem 0.1rem 0.5rem #c9e5ef;
+         position: relative;
+         &::after{
+            position: absolute;
+            content: '';
+            width: 5rem;
+            height: 5rem;
+            background: url(../../../public/images/puzzle/puz.png);
+            background-size: cover;
+            background-position: center;
+            top: 1rem;
+            transform: rotate(35deg);
+         }
+      }
+   }
+}

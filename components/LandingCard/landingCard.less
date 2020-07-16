@@ -1,0 +1,84 @@
+@import '../../styles/variables.less';
+
+.landing-card__link {
+  color: @color-text;
+}
+
+.landing-card__wrapper {
+  position: relative;
+  height: 31.8rem;
+  .landing-card__bottom,
+  .landing-card__top {
+    display: inline-block;
+    width: calc(100% - 2.4rem);
+    height: 27.2rem;
+    border-radius: 1.6rem;
+  }
+  .landing-card__bottom {
+    z-index: 2;
+    p {
+      font-family: 'Source Sans Pro';
+      font-style: normal;
+      font-weight: bold;
+      font-size: 1.4rem;
+      line-height: 1.8rem;
+      text-align: right;
+      margin-top: 1.6rem;
+      margin-right: 1.6rem;
+    }
+  }
+  .landing-card__top {
+    position: absolute;
+    top: 4.6rem;
+    left: 2.4rem;
+    background: #fffbf4;
+    box-shadow: 0.2rem 0.5rem 2.5rem rgba(0, 0, 0, 0.2);
+    color: #2c3e50;
+    h3 {
+      font-family: 'Source Sans Pro';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 3.6rem;
+      line-height: 4.5rem;
+      text-transform: capitalize;
+      margin-left: 2.4rem;
+      margin-top: 5.2rem;
+    }
+    p {
+      position: absolute;
+      font-family: 'Source Sans Pro';
+      font-style: normal;
+      font-weight: 300;
+      font-size: 1.8rem;
+      line-height: 2.3rem;
+      display: flex;
+      align-items: flex-end;
+      left: 2.4rem;
+      right: 2.4rem;
+      bottom: 3.6rem;
+    }
+  }
+  .landing-card__image {
+    position: absolute;
+    width: 8rem;
+    height: 8rem;
+    background: #ffffff;
+    border: 0.2rem solid rgba(115, 136, 145, 0.7);
+    border-radius: 50%;
+    z-index: 3;
+    left: 4.9rem;
+    top: 1.6rem;
+    text-align: center;
+    img {
+      padding-top: 0.6rem;
+      width: 92%;
+      height: 92%;
+    }
+  }
+}
+
+.games__card:first-child img {
+  padding-top: 0.4rem;
+  width: 85%;
+  height: 85%;
+}

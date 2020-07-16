@@ -1,0 +1,95 @@
+export const data = {
+  mainButtons: [
+    {
+      text: 'RSLang',
+      type: 'burger',
+      link: '/',
+      icon: 'icon-arrow-right',
+      styling: '__burger',
+    },
+  ],
+  navButtons: [
+    {
+      id: 0,
+      type: 'game',
+      text: 'Learn Words',
+      link: '/learn',
+      icon: 'images/landing/kidaha-01.svg',
+      isBordered: true,
+    },
+    {
+      id: 1,
+      type: 'game',
+      text: 'Speak It',
+      link: '/games/speakit',
+      icon: 'images/landing/kidaha-03.svg',
+    },
+    {
+      id: 2,
+      type: 'game',
+      text: 'Puzzle English',
+      link: '/games/puzzle',
+      icon: 'images/landing/kidaha-11.svg',
+    },
+    {
+      id: 3,
+      type: 'game',
+      text: 'Savannah',
+      link: '/games/savannah',
+      icon: 'images/landing/kidaha-07.svg',
+    },
+    {
+      id: 4,
+      type: 'game',
+      text: 'Sprint',
+      link: '/games/sprint',
+      icon: 'images/landing/kidaha-05.svg',
+    },
+    {
+      id: 5,
+      type: 'game',
+      text: 'Audiocall',
+      link: '/games/audiocall',
+      icon: 'images/landing/kidaha-10.svg',
+    },
+    {
+      id: 6,
+      type: 'game',
+      text: 'Hangman',
+      link: '/games/hangman',
+      icon: 'images/landing/kidaha-09.svg',
+    },
+    {
+      id: 7,
+      type: 'modal-dictionary',
+      text: 'Dictionary',
+      icon: 'images/landing/dictionary.svg',
+      link: '/dict',
+      styling: '__dict',
+      isBordered: true,
+      subClass: 'light-bg',
+    },
+  ],
+  statisticButtons: [
+    {
+      type: 'counter',
+      text: 'Words for repetition',
+      subClass: 'light-bg',
+    },
+    {
+      type: 'counter-new',
+      text: 'New words',
+      subClass: 'light-bg',
+      styling: '__new',
+    },
+  ],
+  footerButtons: [
+    {
+      type: 'switch',
+      text: 'Audio on/off',
+      icon: 'audio',
+      isBordered: true,
+      subClass: 'light-bg',
+    },
+  ],
+}

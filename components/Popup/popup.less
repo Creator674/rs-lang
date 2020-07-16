@@ -1,0 +1,67 @@
+@import '../../styles/variables';
+.overlay {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 10vh;
+  position: fixed;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 1;
+  background: rgba(31, 101, 138, 0.5);
+  animation: fadeIn 0.1s ease-in;
+  animation-fill-mode: backwards;
+}
+
+.toast-container {
+  position: absolute;
+  width: 100%;
+  max-width: 250px;
+  right: 20px;
+}
+
+.modal {
+  display: flex;
+  background: #fff;
+  border-radius: 5px;
+  position: relative;
+  max-height: 90%;
+  overflow: auto;
+}
+
+/* custom scrooll */
+/* --------------------------- */
+// .modal::-webkit-scrollbar {
+//   width: 0.4rem;
+// }
+// .modal::-webkit-scrollbar-track {
+//   box-shadow: inset 0 0 0.1rem grey;
+// }
+// .modal::-webkit-scrollbar-thumb {
+//   background: #1f658a;
+//   border-radius: 0.4rem;
+// }
+/* --------------------------- */
+
+.close-btn {
+  position: absolute;
+  z-index: 100;
+  right: 20px;
+  top: 20px;
+  background: transparent;
+  font-size: 2rem;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

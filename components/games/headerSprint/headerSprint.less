@@ -1,0 +1,70 @@
+.sprint-header{
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   width: 100%; 
+   padding-bottom: 2rem;
+
+      & p{
+         font-size: 3rem !important;
+         color: seagreen;
+      }
+
+      .sprint_title{ 
+         text-align: center; 
+         position: relative; 
+         font-size: 6rem;
+         font-family: 'Sacramento', sans-serif;
+         font-weight: 600;
+         color: #423434; 
+         padding: 4rem 8rem; 
+      }
+
+
+      //  timer-----------
+
+      #countdown {
+         position: relative;
+         margin: 0 auto;  
+         text-align: right;
+         width: 100%; 
+         max-width: 30rem;
+         margin-bottom: 6.5rem;
+       }
+       
+       #countdown-number {
+         position: absolute;
+         color: #030406;
+         font-weight: bold;
+         display: inline-block;
+         line-height: 5rem;
+         font-size: 2rem !important;
+         top: 2.6rem; 
+         margin-left: 3.8rem;
+       }
+       
+       svg {
+         position: absolute; 
+         width: 8.6rem;
+         height: 8.6rem;
+         transform: rotateY(-180deg) rotateZ(-90deg);
+       }
+       
+       svg circle {
+         stroke-dasharray: 21.3rem;
+         stroke-dashoffset: 0px;
+         stroke-linecap: round;
+         stroke-width: 0.5rem;
+         fill: none;
+         animation: countdown 90s linear infinite forwards;
+       }
+       
+       @keyframes countdown {
+         from {
+           stroke-dashoffset: 0px;
+         }
+         to {
+           stroke-dashoffset: 21.3rem;
+         }
+       } 
+}

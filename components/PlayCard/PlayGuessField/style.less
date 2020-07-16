@@ -1,0 +1,71 @@
+.context-container {
+  .input-container {
+    position: relative;
+    opacity: 1;
+
+    .background {
+      background: rgba(115, 136, 145, 0.25);
+      border-radius: 2px;
+      padding: 0 5px;
+      font-weight: 600;
+
+      &.correct {
+        background: rgba(56, 173, 169, 0.3);
+      }
+      &.incorrect {
+        background: #ffe0ca;
+      }
+    }
+
+    &.fade-out > .word-container {
+      opacity: 0.3;
+      transition: all 0.5s ease-in-out;
+      transition-delay: 1s;
+    }
+    &.change-color-text > .word-container del {
+      color: #055b67;
+      transition: all 0.5s ease-in-out;
+      transition-delay: 1s;
+    }
+    &.change-color-text > .background {
+      background: rgba(115, 136, 145, 0.25);
+      transition: all 0.5s ease-in-out;
+      transition-delay: 1s;
+    }
+  }
+  .hidden {
+    visibility: hidden;
+  }
+
+  .word-container {
+    position: absolute;
+    left: 0;
+    padding: 0 5px;
+    font-weight: 600;
+    color: #055b67;
+    opacity: 1;
+
+    & del {
+      color: #f05d2f;
+      text-decoration: none;
+      transition: all 0.3s ease-in-out;
+      transition-delay: 1s;
+    }
+  }
+
+  .answer-input {
+    display: inline;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    color: #055b67;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    font-family: 'Martel';
+    background: transparent;
+    padding: 0 5px;
+    font-weight: 600;
+  }
+}

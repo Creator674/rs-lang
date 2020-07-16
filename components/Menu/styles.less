@@ -1,0 +1,281 @@
+@import '../../styles/variables.less';
+
+.main-menu {
+  position: fixed;
+  left: 0;
+  z-index: 10;
+  & * {
+    box-sizing: content-box;
+  }
+
+  & .link {
+    color: @color-text;
+    text-decoration: none;
+  }
+
+  & .item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  & .sub-menu {
+    transition: all 0.4s linear;
+  }
+
+  & .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.8rem;
+    height: 4.8rem;
+    background-color: @color-main;
+    transition: all 0.4s linear;
+    z-index: 1;
+  }
+
+  & .image {
+    text-align: center;
+    width: 3.2rem;
+    height: 3.2rem;
+    transition: all 0.4s linear;
+  }
+
+  & .tooltip {
+    position: absolute;
+    left: -12rem;
+    padding: 0.6rem 1.6rem;
+    text-align: center;
+    color: @color-text;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+    background: @color-btn-middle;
+    border-radius: 1.4rem;
+    transition: all 0.4s linear;
+  }
+
+  & .tooltip::before {
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 99%;
+    top: calc(50% - 0.4rem);
+    border-top: 0.4rem solid transparent;
+    border-right: 1.2rem solid @color-btn-middle;
+    border-bottom: 0.4rem solid transparent;
+  }
+
+  & .item:hover .tooltip {
+    left: 6.5rem;
+  }
+
+  & .item:hover .icon,
+  & .item:hover .sub-menu {
+    background-color: @color-bg-main;
+  }
+
+  & .item:hover .image {
+    transform: scale(1.2);
+    color: @color-btn-middle;
+  }
+
+  & .sub-menu {
+    position: absolute;
+    left: -15.2rem;
+    width: 17.6rem;
+    padding: 1.2rem 0.6rem 1.2rem 1.8rem;
+    color: @color-text;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 2rem;
+    line-height: 2.4rem;
+    background-color: @color-btn-middle;
+    transition: all 0.4s linear;
+  }
+
+  & .sub-menu.show {
+    left: 4.8rem;
+  }
+
+  & .light-bg {
+    background: @color-btn-light;
+  }
+
+  & .sub-menu.logo {
+    background-color: @color-bg-success;
+  }
+
+  /* BURGER */
+  & .logo {
+    font-weight: bold;
+  }
+
+  & .lang {
+    color: @color-success;
+  }
+
+  & .burger {
+    background-color: @color-bg-success;
+  }
+
+  & .rotate {
+    transform: rotate(180deg);
+  }
+
+  & .image__burger {
+    background-color: transparent;
+    width: 0;
+    height: 0;
+    border-top: 1.2rem solid transparent;
+    border-left: 2rem solid @color-success;
+    border-bottom: 1rem solid transparent;
+  }
+
+  & .item:hover .image__burger {
+    background-color: transparent;
+  }
+
+  & .rotate {
+    transform: rotate(180deg);
+  }
+
+  /* DICTIONARY */
+  & .icon__dict {
+    background-color: @color-btn-light;
+  }
+
+  & .image__dict {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & .tooltip__dict {
+    background-color: @color-bg-success;
+  }
+
+  & .tooltip__dict::before {
+    border-right: 1.2rem solid @color-bg-success;
+  }
+
+  & .item:hover .icon_dict {
+    background-color: @color-bg-main;
+  }
+
+  & .nav-item:nth-child(8) .item:hover .sub-menu {
+    background-color: @color-bg-success;
+  }
+
+  & .item:hover .icon__dict {
+    background-color: @color-bg-success;
+  }
+
+  /* NAVIGATION */
+  & .nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  & .nav-item:first-child .icon,
+  & .nav-item:last-child .icon {
+    border-top: 0.2rem solid @color-main;
+  }
+
+  & .sub-menu__bordered {
+    border-top: 0.2rem solid @color-main;
+  }
+
+  /* STATISTIC */
+  & .statistic {
+    font-family: 'Source Sans Pro';
+    font-weight: bold;
+    font-size: 1.8rem;
+    line-height: 2.3rem;
+    text-align: right;
+  }
+
+  & .statistic:hover .icon {
+    cursor: default;
+  }
+  & .active {
+    background-color: @color-bg-main;
+  }
+  & .icon_statistic {
+    color: @color-main;
+    background-color: @color-btn-light;
+  }
+
+  & .icon_statistic__new {
+    color: @color-add-dark;
+  }
+
+  & .sub-menu__small {
+    font-weight: bold;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    text-align: left;
+  }
+
+  & .item:active .icon {
+    background-color: @color-bg-main;
+  }
+
+  /* AUDIO */
+  & .icon__audio {
+    background-color: @color-btn-light;
+    border-top: 0.2rem solid @color-main;
+  }
+
+  & .image__audio {
+    background-color: transparent;
+    color: @color-main;
+    font-size: 2rem;
+    line-height: 3rem;
+  }
+
+  &.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 57.6rem;
+    height: 100vh;
+    background: @color-btn-light;
+    width: 4.8rem;
+    transition: all 0.4s linear;
+  }
+
+  &.sidebar.show {
+    width: 24.8rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .main-menu {
+    &.sidebar {
+      margin-top: 0.8rem;
+      height: calc(100vh - 0.8rem);
+      transform: translateX(-4.8rem);
+    }
+    & .item__mobile {
+      position: absolute;
+      left: 4.8rem;
+      top: 0;
+      transition: all 0.4s linear;
+    }
+    & .nav {
+      margin-top: 4.8rem;
+    }
+    &.sidebar.sidebar__mobile {
+      transform: translateX(0);
+      & > .nav-wrapper div:first-child {
+        left: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,139 @@
+@import '../../styles/variables.less';
+html {
+  font-size: 10px;
+}
+.required {
+  color: @color-add-dark;
+}
+.error-container {
+  min-height: 1.8rem;
+}
+.register-form {
+  padding: 6rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100%;
+  background: @color-bg-add;
+  box-shadow: 0.4rem 0.4rem 0.8rem rgba(0, 0, 0, 0.25);
+  border-radius: 0.4em;
+}
+.action-form-login,
+.action-form {
+  padding: 0 3.2rem 5.6rem;
+}
+.action-form-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+.action-form {
+  height: 100%;
+  margin: 0 auto;
+}
+.form-group {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.label-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.label-group input:first-child {
+  flex-grow: 1;
+}
+.label-group button {
+  width: 3.2rem;
+  height: 3.2rem;
+  background: @color-bg-add;
+  border: 0.1rem solid @color-main;
+  border-radius: 0.4rem;
+}
+.label-group input {
+  height: 3.2rem;
+}
+.label-group button:focus {
+  border: 0.1rem solid @color-main;
+  border-radius: 0.4rem;
+}
+i.icon-eye {
+  color: @color-main;
+}
+i.icon-eye-off {
+  color: @color-main;
+}
+.form-control {
+  width: 100%;
+  height: 3.2rem;
+  background: @color-bg-main;
+  border: 0.1rem solid @color-main;
+  box-sizing: border-box;
+  border-radius: 0.4rem;
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.7rem;
+  line-height: 2.3rem;
+  color: @color-text;
+  padding: 1rem;
+}
+.form-control:focus {
+  border: 0.1rem solid @color-main;
+}
+button,
+input,
+input:active,
+input:focus,
+button:active,
+button:focus {
+  outline: none;
+  border: none;
+}
+.btn-primary {
+  width: 100%;
+  height: 4rem;
+  background: @color-btn-middle;
+  border-radius: 2rem;
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.8rem;
+  line-height: 2.3rem;
+  color: @color-btn-white;
+  margin-top: 1rem;
+}
+.is-invalid {
+  background: @color-bg-error;
+  border: 0.1rem solid @color-error;
+  box-sizing: border-box;
+  border-radius: 0.4rem;
+  color: @color-error;
+}
+.is-invalid:focus {
+  border: 0.1rem solid @color-error;
+}
+label {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 1.8rem;
+  line-height: 2.3rem;
+}
+.invalid-feedback {
+  color: @color-error;
+  font-size: 1.2rem;
+  padding: 0.5rem 0 0.5rem 0;
+  max-width: 25rem;
+}
+
+@media (min-width: 375px) {
+  .action-form-login,
+  .action-form {
+    width: 375px;
+  }
+}
