@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { Context } from './app-context'
-import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords } from 'lib' // getWords
-import { TramRounded, TrendingUpRounded } from '@material-ui/icons'
+import { isAuthenticated, getLocalStorageProp, getStatistic, getSettings, getAllUserWords, fetchWordsFromDB, aggregatedWords, saveSettings, preFetchWords } from 'lib'
 
 const initialCardSettings = {
   learnNew: false,
@@ -12,13 +11,14 @@ const initialCardSettings = {
   level: 0,
   levels: '0,1,2,3,4,5',
   perPage: 20,
+  wordsFetched: {},
   amountOfWords: 5,
   amountOfCards: 30,
-  showWord: true,
+  showWord: false,
   showTranslation: true,
   showTranscription: false,
   addPronunciation: true,
-  addIllustration: false,
+  addIllustration: true,
   showDefenition: false,
   defenitionTranslation: false,
   defenitionPronunciation: false,
@@ -29,6 +29,7 @@ const initialCardSettings = {
   HARDbutton: true,
   SHOWANSWERbutton: true,
   EASYbutton: true,
+  isGlobalSound: true,
 }
 
 const currentCardSettings = {
@@ -39,17 +40,14 @@ const currentCardSettings = {
   level: 0,
   levels: '0,1,2,3,4,5',
   perPage: 20,
-  wordsFetched: {
-    level: 0
-  },
-
+  wordsFetched: {},
   amountOfWords: 5,
   amountOfCards: 30,
-  showWord: true,
+  showWord: false,
   showTranslation: true,
   showTranscription: false,
   addPronunciation: true,
-  addIllustration: false,
+  addIllustration: true,
   showDefenition: false,
   defenitionTranslation: false,
   defenitionPronunciation: false,
@@ -60,6 +58,7 @@ const currentCardSettings = {
   HARDbutton: true,
   SHOWANSWERbutton: true,
   EASYbutton: true,
+  isGlobalSound: true,
 }
 
 const initialSort = {
@@ -68,7 +67,7 @@ const initialSort = {
 }
 
 const initialLearnProgress = {
-  total: 50,
+  total: 0,
   current: 0,
 }
 
@@ -76,94 +75,128 @@ const initialAppSettings = {
   isAuthorized: null,
 }
 
-const GlobalState = (props) => {
+const GlobalState = ( props ) => {
   const { pathname, events } = useRouter()
-  const [path, setPath] = useState('/')
+  const [path, setPath] = useState( '/' )
 
-  const [words, setWords] = useState([])
-  const [sort, setSort] = useState(initialSort)
-  const [activeMenu, setActiveMenu] = useState(0)
-  const [toRepeatWords, setToRepeatWords] = useState(0)
-  const [newWords, setNewWords] = useState(0)
-  const [isAudioOn, setAudio] = useState(true)
+  const [words, setWords] = useState( [] )
+  const [sort, setSort] = useState( initialSort )
+  const [activeMenu, setActiveMenu] = useState( 0 )
+  const [toRepeatWords, setToRepeatWords] = useState( 0 )
+  const [newWords, setNewWords] = useState( 0 )
+  const [isAudioOn, setAudio] = useState( true )
 
-  const [learnProgress, setLearnProgress] = useState(initialLearnProgress)
-  const [userData, setUserData] = useState({})
+  const [learnProgress, setLearnProgress] = useState( initialLearnProgress )
+  const [userData, setUserData] = useState( {} )
+
+  const wordsPage = useRef()
 
   // settings
-  const [appSettings, setAppSettings] = useState(initialAppSettings)
+  const [appSettings, setAppSettings] = useState( initialAppSettings )
 
-  const [defaultCardSettings] = useState(initialCardSettings)
-  const [cardSettings, setCardSettings] = useState(currentCardSettings)
+  const [defaultCardSettings] = useState( initialCardSettings )
+  const [cardSettings, setCardSettings] = useState( currentCardSettings )
 
   // statistic
-  const [appStatistics, setAppStatistics] = useState({})
+  const [appStatistics, setAppStatistics] = useState( {} )
 
-  useEffect(() => {
-    const { id, token } = getLocalStorageProp('user') || {}
+  useEffect( () => {
+    const { id, token } = getLocalStorageProp( 'user' ) || {}
 
     const isLogged = () => {
-      return new Promise((resolve, reject) => {
-        if (!id || !token) resolve(false)
-        isAuthenticated(id, token)
-          .then((response) => {
-            setUserData({ ...userData, name: response.data.name })
-            setAppSettings({ ...appSettings, isAuthorized: true })
-            updateAppState()
-            resolve(true)
-          })
-          .catch((err) => {
-            // console.log('error: ', err.response ? err.response.data : err.message)
-            resolve(false)
-          })
-      })
+      return new Promise( ( resolve, reject ) => {
+        if ( !id || !token ) resolve( false )
+        isAuthenticated( id, token )
+          .then( ( response ) => {
+            setUserData( { ...userData, name: response.data.name, email: response.data.email } )
+            setAppSettings( { ...appSettings, isAuthorized: true } )
+            resolve( true )
+          } )
+          .catch( ( err ) => {
+            resolve( false )
+          } )
+      } )
     }
 
     const updateAppState = () => {
-      getAllUserWords().then(response => {
-        console.log('RESPONSE WORDS', response.data)
-      })
-      getStatistic().then((response) => {
-        setAppStatistics({ ...appStatistics, ...response.data.optional })
-      })
-      getSettings().then((response) => {
-        console.log(response.data, 'APP SETTINGS')
-        setCardSettings({ ...cardSettings, ...response.data.optional })
-      })
+
+      getStatistic().then( ( response ) => {
+        setAppStatistics( { ...appStatistics, ...response.data.optional } )
+      } ).catch( err => { } )
+      getSettings().then( ( response ) => {
+        setCardSettings( { ...cardSettings, ...response.data.optional } )
+        setLearnProgress( { ...learnProgress, total: response.data.optional ? response.data.optional.amountOfCards : cardSettings.amountOfCards } )
+
+        // FETCH WORDS LOGIC
+        const amountOfCards = response.data.optional ? response.data.optional.amountOfCards : cardSettings.amountOfCards
+        const level = response.data.optional ? response.data.optional.level : cardSettings.level
+        const difficultOnly = response.data.optional ? response.data.optional.difficultOnly : cardSettings.difficultOnly
+        fetchWords( amountOfCards, level, difficultOnly )
+      } ).catch( err => {
+        fetchWords( cardSettings.amountOfCards, cardSettings.level )
+      } )
     }
 
-    const handleRouteChange = (url) => {
-      if (url !== '/' && !appSettings.isAuthorized) {
-        isLogged().then((result) => {
-          if (!result) window.location.href = '/'
-        })
+    const fetchWords = ( amountOfCards, group, difficultOnly ) => {
+
+      preFetchWords( amountOfCards, group ).then( response => {
+        if (difficultOnly) {
+          const difficult = response.filter(word => word.optional && word.optional.status === 'hard')
+          setWords( difficult )
+        } else {
+          setWords( response )
+        }
+      } )
+    }
+
+    const getWordsPage = () => {
+      if ( cardSettings.wordsFetched[cardSettings.level] ) {
+        wordsPage.current = cardSettings.wordsFetched[cardSettings.level].page
+        return wordsPage.current
+      } else {
+        wordsPage.current = 0
+        const tempWordsFetchedObj = { ...cardSettings.wordsFetched }
+        tempWordsFetchedObj[cardSettings.level] = {
+          page: wordsPage.current
+        }
+        setCardSettings( { ...cardSettings, wordsFetched: tempWordsFetchedObj } )
+        saveSettings( { ...cardSettings, wordsFetched: tempWordsFetchedObj } )
+        return wordsPage.current
       }
     }
 
-    if (pathname !== '/' && appSettings.isAuthorized === null) {
-      isLogged().then((result) => {
-        if (!result) window.location.href = '/'
-      })
+    const handleRouteChange = ( url ) => {
+      if ( url !== '/' && !appSettings.isAuthorized ) {
+        isLogged().then( ( result ) => {
+          if ( !result ) window.location.href = '/'
+        } )
+      }
     }
 
-    if (!appSettings.isAuthorized && pathname !== '/') {
-      isLogged().then((result) => {
-        if (!result) window.location.href = '/'
-      })
+    if ( pathname !== '/' && appSettings.isAuthorized === null ) {
+      isLogged().then( ( result ) => {
+        if ( !result ) window.location.href = '/'
+      } )
+    }
+
+    if ( !appSettings.isAuthorized && pathname !== '/' ) {
+      isLogged().then( ( result ) => {
+        if ( !result ) window.location.href = '/'
+      } )
     } else {
-      isLogged().then((result) => {
-        if (!result && pathname !== '/') window.location.href = '/'
-        else if (result) {
+      isLogged().then( ( result ) => {
+        if ( !result && pathname !== '/' ) window.location.href = '/'
+        else if ( result ) {
           updateAppState()
         }
-      })
+      } )
     }
 
-    events.on('routeChangeStart', handleRouteChange)
+    events.on( 'routeChangeStart', handleRouteChange )
     return () => {
-      events.off('routeChangeStart', handleRouteChange)
+      events.off( 'routeChangeStart', handleRouteChange )
     }
-  }, [appSettings.isAuthorized])
+  }, [appSettings.isAuthorized] )
 
   return (
     <Context.Provider
@@ -193,9 +226,11 @@ const GlobalState = (props) => {
         setAppStatistics,
       }}
     >
-      {pathname === '/' || (pathname !== '/' && appSettings.isAuthorized) ? props.children : null}
+      {pathname === '/' || ( pathname !== '/' && appSettings.isAuthorized ) ? props.children : null}
     </Context.Provider>
   )
 }
 
 export default GlobalState
+
+

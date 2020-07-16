@@ -23,7 +23,7 @@ export const PlayGuessField = ({ createStatistic, showTheAnswer, word, setAudioL
 
   const handleKeyDown = (e) => {
     if (!e.key.match(/Tab|Shift|Ctrl|Alt|Esc|Caps/) && isGuessed !== true) {
-      input.current.focus()
+      // input.current.focus()
       isCorrect === isCorrect && setIsCorrect(null)
     }
     if (isPressed) return
@@ -42,10 +42,12 @@ export const PlayGuessField = ({ createStatistic, showTheAnswer, word, setAudioL
   useEffect(() => {
     if(showTheAnswer){
       setIsCorrect(true)
-      setIsGuessed(true)
+      setAnswer(word)
+      setLearnProgress({ ...learnProgress, current: learnProgress.current + 1 })
+      // setIsGuessed(true)
     }
   }, [showTheAnswer])
-  
+
   const checkResult = (result) => {
     if (!value.length) {
       isPressed = false
@@ -54,7 +56,7 @@ export const PlayGuessField = ({ createStatistic, showTheAnswer, word, setAudioL
     result = result.trim().toLowerCase()
     setAudioLock(false)
     setIsCorrect(null)
-    if (result === word) {
+    if (result.toLowerCase() === word.toLowerCase()) {
       setIsCorrect(true)
       setIsGuessed(true)
       createStatistic(true)

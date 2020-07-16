@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import { Context } from 'context'
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles( ( theme ) => ( {
   root: {
     position: 'relative',
     display: 'flex',
@@ -50,43 +50,55 @@ const useStyle = makeStyles((theme) => ({
     marginTop: '0.4rem',
     color: theme.palette.common.text,
   },
-}))
+} ) )
 
-export const PlayFooter = ({
+export const PlayFooter = ( {
   word: { word, transcription, wordTranslate },
   children,
   className,
   audio,
   isAudioLock,
   isGuessed,
-}) => {
+  showTheAnswer,
+  getResult,
+  next
+} ) => {
   const classes = useStyle()
   const audioElement = useRef()
   const {
-    cardSettings: { isTranscription, isWordShown, isTranslation },
-  } = useContext(Context)
+    cardSettings: { showTranscription, showWord, showTranslation, defenitionPronunciation, isGlobalSound },
+  } = useContext( Context )
 
   const playAudio = () => {
-    if (Array.isArray(audio)) {
-      const playSecondAudio = () => {
-        if (!audio[1]) return
-        audioElement.current.setAttribute('src', audio[1])
-        audioElement.current.removeEventListener('ended', playSecondAudio)
-        audioElement.current.play().catch((err) => err)
-      }
-      audioElement.current.setAttribute('src', audio[0])
-      audioElement.current.addEventListener('ended', playSecondAudio)
-      return audioElement.current.play().catch((err) => err)
+
+    if (!isGlobalSound) {
+      if ( isGuessed === true ) return next()
+      return
+    }
+    const playSecondAudio = () => {
+      if ( isGuessed === true ) return next()
+      if ( showTheAnswer === true ) return next()
+      if ( !audio[1] || !defenitionPronunciation ) return
+      audioElement.current.setAttribute( 'src', audio[1] )
+      audioElement.current.removeEventListener( 'ended', playSecondAudio )
+      audioElement.current.play().catch( ( err ) => err )
+    }
+
+    if ( Array.isArray( audio ) ) {
+      audioElement.current.setAttribute( 'src', audio[0] )
+      audioElement.current.addEventListener( 'ended', playSecondAudio )
+      return audioElement.current.play().catch( ( err ) => err )
     } else {
-      audioElement.current.setAttribute('src', audio)
-      return audioElement.current.play().catch((err) => err)
+      audioElement.current.addEventListener( 'ended', playSecondAudio )
+      audioElement.current.setAttribute( 'src', audio )
+      return audioElement.current.play().catch( ( err ) => err )
     }
   }
 
-  useEffect(() => {
+  useEffect( () => {
     isAudioLock === false && isGuessed !== true && playAudio()
-    isGuessed === true && playAudio()
-  }, [isAudioLock, isGuessed])
+    if ( isGuessed === true || showTheAnswer === true ) playAudio()
+  }, [isAudioLock, isGuessed, showTheAnswer] )
 
   return (
     <div className={`${classes.root} ${className}`}>
@@ -98,13 +110,13 @@ export const PlayFooter = ({
         ></i>
       </div>
       <div>
-        {isWordShown ? (
+        {showWord ? (
           <p className={classes.word} style={{ display: 'flex' }}>
             {word}
           </p>
         ) : null}
-        {isTranscription ? <p className={classes.transcription}>{transcription}</p> : null}
-        {isTranslation ? <p className={classes.translation}>{wordTranslate}</p> : null}
+        {showTranscription ? <p className={classes.transcription}>{transcription}</p> : null}
+        {showTranslation ? <p className={classes.translation}>{wordTranslate}</p> : null}
       </div>
       <div className='card-chart'>{children}</div>
       <audio ref={audioElement}></audio>

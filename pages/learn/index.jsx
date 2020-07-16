@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {Context} from 'context'
 import axios from 'lib/crud/api'
 import { AppLayout } from 'layouts'
@@ -10,12 +10,13 @@ const StartLearn = () => {
 
     // axios.get('https://afternoon-falls-25894.herokuapp.com/users')
   });
+  const { userData: {name, email} } = useContext(Context)
 
   return (
     <AppLayout>
       <div className='wrapper-main-page'>
         <Menu />
-        <UserAvatar />
+        <UserAvatar name={name} email={email}/>
         <Learn />
       </div>
     </AppLayout>

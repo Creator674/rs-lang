@@ -35,14 +35,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const WordBox = ({ word, image, src, isLoaded, ...restProps }) => {
+const WordBox = ({ word, image, src, isLoaded, wordObj, ...restProps }) => {
   const classes = useStyles()
   return (
     <div className={`card-box ${classes.root}`}>
       <Word {...{ src, word, ...restProps, isLoaded }} />
       <CardText outerStyles={classes.styleDictionary} index='textExample' word={restProps} />
       <CardText outerStyles={classes.styleDictionary} index='textMeaning' word={restProps} />
-      <Footer />
+      <Footer word={wordObj} {...restProps} />
     </div>
   )
 }
@@ -65,5 +65,5 @@ export function Card(props) {
     }
   }, [])
 
-  return <WordBox isLoaded={isLoaded} src={src} {...props} />
+  return <WordBox isLoaded={isLoaded} src={src} {...props} wordObj={props.wordObj} />
 }

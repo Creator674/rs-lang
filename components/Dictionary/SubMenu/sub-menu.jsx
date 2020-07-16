@@ -47,15 +47,15 @@ const indicator = (direction) => {
 }
 
 function descSort(a, b) {
-  if (a.word > b.word) return 1
-  if (b.word > a.word) return -1
+  if (a.optional.word > b.optional.word) return 1
+  if (b.optional.word > a.optional.word) return -1
 
   return 0
 }
 
 function ascSort(a, b) {
-  if (a.word > b.word) return -1
-  if (b.word > a.word) return 1
+  if (a.optional.word > b.optional.word) return -1
+  if (b.optional.word > a.optional.word) return 1
 
   return 0
 }
@@ -81,10 +81,10 @@ function sort(array, direction, field) {
   }
 }
 
-export default function subMenu() {
+export default function subMenu({words}) {
   const styles = useStyle()
   const {
-    words,
+    // words,
     setSort,
     sort: { field, direction },
   } = useContext(Context)

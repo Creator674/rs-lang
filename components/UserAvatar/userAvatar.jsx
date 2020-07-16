@@ -1,8 +1,9 @@
-import React, {useContext} from 'react'
-import { DropdownMenu } from './DropdownMenu/dropdownMenu'
-import { makeStyles } from '@material-ui/core/styles'
-import {Context} from 'context'
-import Popover from '../Dictionary/Popover/popover'
+import React, { useContext } from 'react';
+import Gravatar from 'react-gravatar'
+import { DropdownMenu } from './DropdownMenu/dropdownMenu';
+import { makeStyles } from '@material-ui/core/styles';
+import { Context } from 'context';
+import Popover from '../Dictionary/Popover/popover';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.props.mainFont,
     fontSize: '1.8rem',
     lineHeight: '2.3rem',
-    padding: '1.6rem',
+    // padding: '1.6rem',
     // padding: '0 3.2rem 1.6rem',
     '& i:before': {
       color: theme.palette.common.text,
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatarBtn: {
     background: 'transparent',
-    border: `2px solid ${theme.palette.common.main}`,
+    // border: `2px solid ${theme.palette.common.main}`,
     borderRadius: '50%',
     width: '6rem',
     height: '6rem',
@@ -54,29 +55,32 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.background.add,
     padding: '0.9rem',
   },
-}))
+}));
 
 export const UserAvatar = ({ userName }) => {
-  const {userData} = useContext(Context)
-  const [isPopover, setIsPopover] = React.useState(false)
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const classes = useStyles()
+  const { userData: { name, email } } = useContext(Context);
+  const [ isPopover, setIsPopover ] = React.useState(false);
+  const [ anchorEl, setAnchorEl ] = React.useState(null);
+  const classes = useStyles();
 
   const handleClose = ({ currentTarget }) => {
-    setAnchorEl(!isPopover ? currentTarget : null)
-    setIsPopover(!isPopover)
-  }
+    setAnchorEl(
+
+        !isPopover ? currentTarget :
+        null
+    );
+    setIsPopover(!isPopover);
+  };
 
   return (
     <div className={classes.dropdownMenu}>
-      <div className={classes.container}>
-        <div className='userAvatar'>Hi,&nbsp;{userData.name}&nbsp;</div>
+      <div className={classes.container} style={{paddingRight: '0 !important'}}>
+        <div className='userAvatar'>Hi,&nbsp;{name}&nbsp;</div>
         <button className={classes.avatarBtn} onClick={handleClose}>
-          <i className='icon-github-circled'></i>
+          <Gravatar email={email} className='avatar-img' />
         </button>
-
-        {isPopover ? (
-          <Popover
+        {
+          isPopover ? <Popover
             classes={{
               root: classes.popover,
               paper: classes.paper,
@@ -95,9 +99,9 @@ export const UserAvatar = ({ userName }) => {
             }}
           >
             <DropdownMenu closePopover={() => setIsPopover(false)} />
-          </Popover>
-        ) : null}
+          </Popover> :
+          null}
       </div>
     </div>
-  )
-}
+  );
+};

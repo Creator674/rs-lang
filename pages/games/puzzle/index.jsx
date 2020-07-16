@@ -37,7 +37,7 @@ const Puzzle = (props) => {
 
 
   const { appStatistics, setAppStatistics } = useContext(Context)
-  
+
   const createStatistic = () => {
     allGuessed.map(el => {
       const newStatistic = {...appStatistics, id: addToStatisticfunc(appStatistics, el.id, 'puzzle', 'guessed')}
@@ -62,11 +62,9 @@ const Puzzle = (props) => {
     setTranslat((translat) => !translat)
   }
   const pictureBtnClicked = () => {
-    // console.log('clicked picture show')
     setShowImage((showImage) => !showImage)
   }
   const autopronBtnClicked = () => {
-    // console.log('clicked autoPronunc')
     setAutoPronunc((autoPronunc) => !autoPronunc)
   }
 
@@ -83,7 +81,6 @@ const Puzzle = (props) => {
   }
 
   const checktheAnswer = (result) => {
-    // console.log(result)
     setReadyToCheck(true)
     const resultAnswer = result[0].join(' ')
     const word = {}
@@ -93,7 +90,6 @@ const Puzzle = (props) => {
     word.id = data[count].id
 
     if (resultAnswer === result[1].join(' ')) {
-      // console.log('You did it!!!')
       setGoToNext(true)
       setAllGuessed((guessed) => {
         if (guessed.some((el) => el.phrase === resultAnswer)){
@@ -126,7 +122,6 @@ const Puzzle = (props) => {
     setReadyToCheck(false)
     setCount(count + 1)
     if(count === 9){
-      // console.log('the end')
       setShowResults(true)
       createStatistic()
     }

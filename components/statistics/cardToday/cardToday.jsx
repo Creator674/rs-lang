@@ -2,8 +2,6 @@ import './cardToday.less'
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2'
 
-
-
 const СardToday = ({ newCards, winrate, totalCards, studyTime, strike, repeat, userName }) => {
   const data = {
     labels: ['New cards', 'Correct answers', 'Total cards'],

@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { ProgressChart } from '../../Progress'
 import Button from '@material-ui/core/Button'
 import { DictionaryContext } from '../../../context'
+import { createUserWord, updateUserWord } from 'lib'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,25 +65,41 @@ const createStatInfo = (props) => {
   ))
 }
 
-export const Footer = ({ wordInfo }) => {
-  const context = useContext(DictionaryContext)
+export const Footer = ({ word, wordInfo, learnIndex, status }) => {
+  const {setEasyList,
+    setHardList,
+    setLearnList,
+    hardList,
+    learnList,
+    easyList} = useContext(DictionaryContext)
   const classes = useStyles()
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>
-        <ProgressChart width='4.8rem' value={52} />
+        <ProgressChart width='4.8rem' value={learnIndex} />
         <div className='info'>{createStatInfo(statistic)}</div>
       </div>
-      <Button
+      {status !== undefined && <Button
         classes={{
           root: classes.button,
           outlined: classes.button,
         }}
         variant='outlined'
         disableElevation
+        onClick={() => {
+          if (status === 'hard') {
+            word.optional.status = undefined
+            updateUserWord(word)
+            setHardList(hardList.filter(el => word.id !== el.id))
+          } else if (status === 'easy') {
+            word.optional.status = undefined
+            updateUserWord(word)
+            setEasyList(easyList.filter(el => word.id !== el.id))
+          }
+        }}
       >
         RESTORE
-      </Button>
+      </Button> }
     </div>
   )
 }

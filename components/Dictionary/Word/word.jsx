@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
-
+import React, { useEffect, useContext, useState, useRef } from 'react'
+import { getAudio } from 'lib/helpers'
 import { makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
 
-import { DictionaryContext } from '../../../context'
+import { DictionaryContext, Context } from '../../../context'
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -49,9 +49,58 @@ const useStyle = makeStyles((theme) => ({
 const normalImg = { width: '7.2rem', height: '7.2rem' }
 const smallImg = { width: '4.8rem', height: '4.8rem' }
 
-export const Word = ({ src, word, transcription, wordTranslate, isLoaded }) => {
+export const Word = ({ src, word, transcription, wordTranslate, isLoaded, audio, audioMeaning, audioExample }) => {
   const classes = useStyle()
   const { isTranscription } = useContext(DictionaryContext)
+  const { cardSettings: { isGlobalSound } } = useContext(Context)
+
+  const [audioWordSound, setAudioWord] = useState(null)
+  const [audioMeaningSound, setAudioMeaning] = useState(null)
+  const [audioExampleSound, setAudioExample] = useState(null)
+
+  const audioElement = useRef()
+
+  let isMounted = false
+
+  useEffect(() => {
+    isMounted = true
+    getAudio(audio).then((url) => {
+      isMounted && setAudioWord(url)
+    })
+    getAudio(audioMeaning).then((url) => {
+      isMounted && setAudioMeaning(url)
+    })
+    getAudio(audioExample).then((url) => {
+      isMounted && setAudioExample(url)
+    })
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  const playAudio = () => {
+    if (!isGlobalSound) return
+
+    const playSecondAudio = () => {
+      audioElement.current.setAttribute('src', audioMeaningSound)
+      audioElement.current.removeEventListener('ended', playSecondAudio)
+      audioElement.current.addEventListener('ended', playThirdAudio)
+      audioElement.current.play().catch((err) => err)
+    }
+
+    const playThirdAudio = () => {
+      audioElement.current.setAttribute('src', audioExampleSound)
+      audioElement.current.removeEventListener('ended', playThirdAudio)
+      audioElement.current.play().catch((err) => err)
+    }
+
+    if (audioWordSound) {
+      audioElement.current.setAttribute('src', audioWordSound)
+      audioElement.current.addEventListener('ended', playSecondAudio)
+      return audioElement.current.play().catch((err) => err)
+    }
+  }
 
   return (
     <div className={classes.root}>
@@ -59,8 +108,9 @@ export const Word = ({ src, word, transcription, wordTranslate, isLoaded }) => {
         <p className={classes.word} style={{ display: 'flex' }}>
           {isLoaded ? word : <Skeleton animation='wave' variant='text' width={word.length * 9.6} />}&nbsp;&nbsp;
           <span>
-            <i className='icon-volume'></i>
+            <i className='icon-volume' onClick={playAudio}></i>
           </span>
+          <audio ref={audioElement}></audio>
         </p>
         {isTranscription ? (
           isLoaded ? (

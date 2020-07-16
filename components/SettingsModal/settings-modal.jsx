@@ -1,8 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 
 import { SettingsItem } from './components/SettingsItem'
-
-import { SelectListDifficulty } from './components/SelectListDifficulty'
 
 import { FormWrapper } from './components/FormWrapper'
 
@@ -20,16 +18,11 @@ import './settings-modal.less'
 
 const SettingsModalComponent = ({showInfo}) => {
   const { cardSettings, setCardSettings, defaultCardSettings } = useContext(Context)
-  console.log(cardSettings)
   const { cardSettings: { level, levels } } = useContext(Context)
 
 
   const [localSettings, setLocalSettings] = useState(cardSettings)
   const [selected, setSelected] = useState(level)
-
-  // useEffect(()=>{
-  //   setLocalSettings(cardSettings)
-  // }, [cardSettings])
 
   const findTrue = (obj) => {
     for (let val in obj) {
@@ -55,7 +48,6 @@ const SettingsModalComponent = ({showInfo}) => {
   const changeSetting = (e) => {
     const currValue = e.target.value
     localSettings[currValue] = localSettings[currValue] ? false : true
-    console.log(currValue, ' is ', localSettings[currValue])
     document.querySelectorAll(`input[value=${currValue}]`).forEach((elem) => {
       elem.checked = localSettings[currValue]
     })
@@ -73,7 +65,6 @@ const SettingsModalComponent = ({showInfo}) => {
   const applySettings = () => {
     setCardSettings({...cardSettings, ...localSettings})
     updateServerData()
-    console.log(localSettings)
   }
   const [inputNewValue, setInputNewValue] = useState(cardSettings.amountOfCards)
   const resetSettings = () => {
@@ -84,7 +75,6 @@ const SettingsModalComponent = ({showInfo}) => {
     document.querySelectorAll("input[type='radio'],input[type='checkbox']").forEach((elem) => {
       elem.checked = defaultCardSettings[elem.value]
     })
-    document.querySelector('.difficulty_select__single-value').innerHTML = defaultCardSettings.level
     document.querySelectorAll('.rangeInput').forEach((e) => {
       e.value = defaultCardSettings[e.id]
     })
@@ -107,13 +97,8 @@ const SettingsModalComponent = ({showInfo}) => {
               onClick={changeRadioSetting}
             />
             <SettingsItem labelText='auto sound play' value='autoSoundplay' onClick={changeSetting} />
-            {/* <SelectListDifficulty
-              localSettings={localSettings}
-              onChange={changeSetting}
-              setLocalSettings={setLocalSettings}
-            /> */}
             <li>
-              <select defaultValue={selected} onChange={({target: {value}}) => {
+              <select className="difficulty_select" defaultValue={selected} onChange={({target: {value}}) => {
                 setSelected(value)
                 setLocalSettings({...localSettings, level: +value})
                 setCardSettings({...localSettings, level: +value})

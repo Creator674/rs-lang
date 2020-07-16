@@ -117,7 +117,7 @@ const style = createMuiTheme({
 })
 
 export function Statistics() {
-  
+
   const [value, setValue] = useState(1)
 
   const [amountOfWords, setAmountOfWords] = useState(0)
@@ -147,7 +147,6 @@ export function Statistics() {
       if(res.data.optional){
         setAppStatistics({ ...appStatistics, ...res.data.optional })
         // console.log(  Object.entries(res.data.optional)  )
-
 
 
         //    just amount of all words, ---  Num

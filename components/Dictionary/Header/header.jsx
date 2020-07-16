@@ -92,14 +92,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export function Header() {
+export function Header({words}) {
   const [isPopover, setIsPopover] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [filter, setFilter] = React.useState('')
   const classes = useStyles()
 
   const { setFilteredList } = useContext(DictionaryContext)
-  const { words } = useContext(Context)
+  // const { words } = useContext(Context)
 
   const handleClose = ({ currentTarget }) => {
     setAnchorEl(!isPopover ? currentTarget : null)
@@ -107,7 +107,7 @@ export function Header() {
   }
 
   const applyFilter = (filter) => {
-    const filtered = [...words].filter((el) => el.word.includes(filter))
+    const filtered = [...words].filter((el) => el.optional && el.optional.word.includes(filter))
     setFilteredList(filter ? filtered : [])
   }
 
@@ -160,7 +160,7 @@ export function Header() {
               horizontal: 'left',
             }}
           >
-            <Menu />
+            <Menu words={words} />
           </Popover>
         ) : null}
       </div>
