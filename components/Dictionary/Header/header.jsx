@@ -7,7 +7,7 @@ import Popover from '../Popover/popover'
 import Menu from '../SubMenu/sub-menu'
 import { Context, DictionaryContext } from '../../../context'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles( ( theme ) => ( {
   root: {
     backgroundColor: theme.palette.background.paper,
   },
@@ -90,25 +90,26 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-}))
+} ) )
 
-export function Header({words}) {
-  const [isPopover, setIsPopover] = React.useState(false)
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const [filter, setFilter] = React.useState('')
+export function Header( { words } ) {
+  const [isPopover, setIsPopover] = React.useState( false )
+  const [anchorEl, setAnchorEl] = React.useState( null )
+  const [filter, setFilter] = React.useState( '' )
   const classes = useStyles()
 
-  const { setFilteredList } = useContext(DictionaryContext)
-  // const { words } = useContext(Context)
 
-  const handleClose = ({ currentTarget }) => {
-    setAnchorEl(!isPopover ? currentTarget : null)
-    setIsPopover(!isPopover)
+  const { setFilteredList } = useContext( DictionaryContext )
+  const { cardSettings: { totalLearned, todayLearned: { count } } } = useContext( Context )
+
+  const handleClose = ( { currentTarget } ) => {
+    setAnchorEl( !isPopover ? currentTarget : null )
+    setIsPopover( !isPopover )
   }
 
-  const applyFilter = (filter) => {
-    const filtered = [...words].filter((el) => el.optional && el.optional.word.includes(filter))
-    setFilteredList(filter ? filtered : [])
+  const applyFilter = ( filter ) => {
+    const filtered = [...words].filter( ( el ) => el.optional && el.optional.word.includes( filter ) )
+    setFilteredList( filter ? filtered : [] )
   }
 
   const ClearFiler = () => (
@@ -116,15 +117,15 @@ export function Header({words}) {
       className='icon-cancel-1'
       style={{ cursor: 'pointer' }}
       onClick={() => {
-        setFilter('')
-        applyFilter('')
+        setFilter( '' )
+        applyFilter( '' )
       }}
     ></i>
   )
   return (
     <div className={classes.header}>
       <div className={classes.learned}>
-        Learned words: <span>220 (84 today)</span>
+        Learned words: <span>{totalLearned} ({count} today)</span>
       </div>
       <div className={classes.container}>
         <div className='sort'>Sort&nbsp;by: &nbsp;</div>
@@ -135,9 +136,9 @@ export function Header({words}) {
           className={classes.input}
           shrink='false'
           value={filter}
-          onChange={({ target: { value } }) => {
-            setFilter(value)
-            applyFilter(value)
+          onChange={( { target: { value } } ) => {
+            setFilter( value )
+            applyFilter( value )
           }}
         />
         {filter ? <ClearFiler /> : <i className='icon-search'></i>}

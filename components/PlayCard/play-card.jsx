@@ -8,7 +8,7 @@ import { CardText } from '../Dictionary'
 import { ProgressChart } from '../Progress'
 import { PlayImage, PlayFooter, PlayGuessField } from '.'
 import { getAudio } from 'lib/helpers'
-import { getRepetitionTime } from 'lib'
+import { getRepetitionTime, saveSettings } from 'lib'
 
 import { Context } from 'context'
 
@@ -85,8 +85,8 @@ const useStyles = makeStyles( ( theme ) => ( {
 } ) )
 
 const PlayCardComponent = ( { word, next, updateWordsDB, showInfo } ) => {
-  const {
-    cardSettings: { showDefenition, REPEATbutton, HARDbutton, SHOWANSWERbutton, EASYbutton, addIllustration, defenitionTranslation },
+  const { cardSettings, setCardSettings,
+    cardSettings: { showDefenition, REPEATbutton, HARDbutton, SHOWANSWERbutton, EASYbutton, addIllustration, defenitionTranslation, totalLearned, todayLearned },
   } = useContext( Context )
   const classes = useStyles()
   const [audioWord, setAudioWord] = useState( null )
@@ -112,6 +112,20 @@ const PlayCardComponent = ( { word, next, updateWordsDB, showInfo } ) => {
     getAudio( word.audioExample ).then( ( url ) => {
       isMounted && setAudioExample( url )
     } )
+
+    // set total counter
+    const date = new Date( Date.now() ).toDateString()
+    const updatedTodayLearned = { ...todayLearned }
+    if ( updatedTodayLearned.date === date ) {
+      updatedTodayLearned.count = updatedTodayLearned.count + 1
+    } else {
+      updatedTodayLearned.date = date
+      updatedTodayLearned.count = 0
+    }
+
+    const updatedSettings = { ...cardSettings, totalLearned: totalLearned + 1, todayLearned: updatedTodayLearned }
+    setCardSettings( updatedSettings )
+    saveSettings( updatedSettings )
 
     return () => {
       isMounted = false

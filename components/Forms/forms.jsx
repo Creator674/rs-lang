@@ -56,34 +56,36 @@ const SignUpForm = ( { className, showInfo, closeInfo, toggleClose, closeModal }
               message: 'Created new user. Authorizing...',
               type: 'success',
             } );
-            setTimeout(() => {
+            setTimeout( () => {
               authenticateUser( email, password )
-          .then( ( response ) => {
-            closeModal();
-            setLocalStorageProp( 'user', {
-              refreshToken: response.data.refreshToken,
-              token: response.data.token,
-              id: response.data.userId,
-            } );
-            setAppSettings( { ...appSettings, isAuthorized: true } );
-            setUserData( { ...userData, name: response.data.name } );
-            getStatistic()
-              .then( ( res ) => {
-                setAppStatistics( { ...appStatistics, ...res.data.optional } );
-              } )
-              .catch( ( err ) => { } );
+                .then( ( response ) => {
+                  closeModal();
+                  setLocalStorageProp( 'user', {
+                    refreshToken: response.data.refreshToken,
+                    token: response.data.token,
+                    id: response.data.userId,
+                  } );
+                  setAppSettings( { ...appSettings, isAuthorized: true } );
+                  setUserData( { ...userData, name: response.data.name } );
+                  getStatistic()
+                    .then( ( res ) => {
+                      setAppStatistics( { ...appStatistics, ...res.data.optional } );
+                    } )
+                    .catch( ( err ) => { } );
+                } )
+                .catch( ( err ) => {
+                  setLoading( false );
+                  showInfo( {
+                    message:
+                      err.response ? err.response.data :
+                        err.message,
+                    type: 'error',
+                  } );
+                } );
+            }, 2000 )
           } )
           .catch( ( err ) => {
-            showInfo( {
-              message:
-                err.response ? err.response.data :
-                  err.message,
-              type: 'error',
-            } );
-          } );
-            }, 2000)
-          } )
-          .catch( ( err ) => {
+            setLoading( false );
             showInfo( { message: err.response.data, type: 'error' } );
           } );
         if ( isLoading ) return;
@@ -192,6 +194,7 @@ const SignInForm = ( {
               .catch( ( err ) => { } );
           } )
           .catch( ( err ) => {
+            setLoading( false );
             showInfo( {
               message:
                 err.response ? err.response.data :

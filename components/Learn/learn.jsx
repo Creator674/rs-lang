@@ -1,11 +1,12 @@
 import React, { useContext, useState, useRef } from 'react'
 import { Context } from 'context'
 import { PlayCard, ProgressBar } from 'components'
-import { createUserWord, updateUserWord } from 'lib'
+import { createUserWord, updateUserWord, saveSettings } from 'lib'
 import './style.less'
 
 export const Learn = () => {
   const { learnProgress, words, cardSettings: { amountOfCards, level, difficultOnly } } = useContext( Context )
+  const { cardSettings, setCardSettings } = useContext( Context )
   const [currIndex, setCurrIndex] = useState( 0 )
   const isNew = useRef()
 
@@ -18,6 +19,9 @@ export const Learn = () => {
       console.log( 'End of learning' )
       return
     }
+    // const updatedSettings = { ...cardSettings, totalLearned: cardSettings.totalLearned + 1 }
+    // saveSettings( updatedSettings )
+    // setCardSettings( updatedSettings )
 
     if ( !words[idx] ) return
 
@@ -57,7 +61,7 @@ export const Learn = () => {
   return (
     <div className='wrapper-box'>
       {words.length ? setNextCard( currIndex ) : difficultOnly ?
-      <div style={{    margin: '0 auto', fontSize: '3rem'}}>Your list of Hard words is empty</div>
+        <div style={{ margin: '0 auto', fontSize: '3rem' }}>Your list of Hard words is empty</div>
         : null}
       <ProgressBar {...learnProgress} total={amountOfCards} width='100%' />
     </div>
