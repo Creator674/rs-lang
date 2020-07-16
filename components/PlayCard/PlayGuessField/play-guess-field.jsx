@@ -40,7 +40,6 @@ export const PlayGuessField = ({ showTheAnswer, word, setAudioLock, setIsGuessed
   }
 
   useEffect(() => {
-    console.log({showTheAnswer})
     if(showTheAnswer){
       setIsCorrect(true)
       setAnswer(word)

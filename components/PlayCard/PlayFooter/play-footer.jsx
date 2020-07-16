@@ -63,15 +63,18 @@ export const PlayFooter = ( {
   getResult,
   next
 } ) => {
-  console.log( { isGuessed } )
   const classes = useStyle()
   const audioElement = useRef()
   const {
-    cardSettings: { showTranscription, showWord, showTranslation, defenitionPronunciation },
+    cardSettings: { showTranscription, showWord, showTranslation, defenitionPronunciation, isGlobalSound },
   } = useContext( Context )
 
   const playAudio = () => {
 
+    if (!isGlobalSound) {
+      if ( isGuessed === true ) return next()
+      return
+    }
     const playSecondAudio = () => {
       if ( isGuessed === true ) return next()
       if ( showTheAnswer === true ) return next()

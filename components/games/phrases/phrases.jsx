@@ -1,12 +1,11 @@
-import React from 'react';  
+import React from 'react';
 import { getWordsAndTranslationAndExamples } from '../../../lib/crud/auth';
 
 
 export const Phrases = () => {
-   
+
    return getWordsAndTranslationAndExamples(1,1)
        .then( (data) => {
-        //  console.log(data)
          const dataArray = [];
          const arrayOfWords = data.map((el) => el[0]);
          const arrayOfTranslations = data.map((el) => el[1]);
@@ -18,8 +17,7 @@ export const Phrases = () => {
          dataArray.push(arrayOfExamples);
          dataArray.push(arrayOfId);
          dataArray.push(arrayOfexamplesOriginal);
-         
-        //  console.log( dataArray )
+
          return dataArray;
         })
         .catch((error) => error);

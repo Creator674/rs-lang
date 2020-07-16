@@ -107,7 +107,6 @@ export function Header({words}) {
   }
 
   const applyFilter = (filter) => {
-    console.log('filter', words)
     const filtered = [...words].filter((el) => el.optional && el.optional.word.includes(filter))
     setFilteredList(filter ? filtered : [])
   }

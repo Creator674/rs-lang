@@ -147,7 +147,6 @@ export function Dictionary() {
 
   useEffect( () => {
     getAllUserWords().then(response => {
-      console.log('dict', response.data)
       setWords(response.data)
       setHardList(response.data.filter(word => word.optional.status === 'hard'))
       setEasyList(response.data.filter(word => word.optional.status === 'easy'))
@@ -193,7 +192,7 @@ export function Dictionary() {
       </Paper>
       <TabPanel value={value} index={0}>
         {/* hard */}
-        {HardCards}
+        {HardCards.length ? HardCards : <div className='card-box-1'><p>There is no words yet</p></div>}
       </TabPanel>
       <TabPanel value={value} index={1} className={classes.overflow}>
         {/* learn */}
@@ -201,7 +200,7 @@ export function Dictionary() {
       </TabPanel>
       <TabPanel value={value} index={2}>
         {/* easy */}
-        {EasyCards}
+        {EasyCards.length ? EasyCards : <div className='card-box-1'><p>There is no words yet</p></div>}
       </TabPanel>
     </DictionaryContext.Provider>
   )

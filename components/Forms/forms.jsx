@@ -20,7 +20,7 @@ import './forms.less';
 const PATTERN = `^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\+\\-_@$!%*?&#.,;:\\[\\]{}]).{8,}$`;
 const RegEx = new RegExp( PATTERN, 'g' );
 
-const SignUpForm = ( { className, showInfo, closeInfo, toggleClose } ) => {
+const SignUpForm = ( { className, showInfo, closeInfo, toggleClose, closeModal } ) => {
   const {
     appSettings: { userID, userName },
     setAppSettings,
@@ -36,8 +36,6 @@ const SignUpForm = ( { className, showInfo, closeInfo, toggleClose } ) => {
         name: '',
         email: '',
         password: '',
-        // email: 'japost1111@wp.pl',
-        // password: 'Qq12345&1111',
       }}
       validationSchema={Yup.object().shape( {
         name: Yup.string().max( 8, 'Max 8 characters name length is allowed' ),
@@ -58,17 +56,32 @@ const SignUpForm = ( { className, showInfo, closeInfo, toggleClose } ) => {
               message: 'Created new user. Authorizing...',
               type: 'success',
             } );
-            // authenticateUser(email, password)
-            //   .then((response) => {
-            //     toggleClose()
-            //     console.log(response)
-
-            //     setLoading(false)
-            //   })
-            //   .catch((err) => {
-            //     showInfo({ message: err.response ? err.response.data : err.message, type: 'error' })
-            //   })
-            console.log( response.data.id );
+            setTimeout(() => {
+              authenticateUser( email, password )
+          .then( ( response ) => {
+            closeModal();
+            setLocalStorageProp( 'user', {
+              refreshToken: response.data.refreshToken,
+              token: response.data.token,
+              id: response.data.userId,
+            } );
+            setAppSettings( { ...appSettings, isAuthorized: true } );
+            setUserData( { ...userData, name: response.data.name } );
+            getStatistic()
+              .then( ( res ) => {
+                setAppStatistics( { ...appStatistics, ...res.data.optional } );
+              } )
+              .catch( ( err ) => { } );
+          } )
+          .catch( ( err ) => {
+            showInfo( {
+              message:
+                err.response ? err.response.data :
+                  err.message,
+              type: 'error',
+            } );
+          } );
+            }, 2000)
           } )
           .catch( ( err ) => {
             showInfo( { message: err.response.data, type: 'error' } );
@@ -154,8 +167,6 @@ const SignInForm = ( {
       initialValues={{
         email: '',
         password: '',
-        // email: 'japost1111@wp.pl',
-        // password: 'Qq12345&1111',
       }}
       validationSchema={Yup.object().shape( {
         email: Yup.string().email( 'Email is invalid' ).required( 'Is required' ),
@@ -166,7 +177,6 @@ const SignInForm = ( {
         if ( isLoading ) return;
         authenticateUser( email, password )
           .then( ( response ) => {
-            console.log( response );
             closeModal();
             setLocalStorageProp( 'user', {
               refreshToken: response.data.refreshToken,
@@ -177,7 +187,6 @@ const SignInForm = ( {
             setUserData( { ...userData, name: response.data.name } );
             getStatistic()
               .then( ( res ) => {
-                console.log( res );
                 setAppStatistics( { ...appStatistics, ...res.data.optional } );
               } )
               .catch( ( err ) => { } );

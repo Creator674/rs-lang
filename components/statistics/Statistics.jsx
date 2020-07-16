@@ -117,7 +117,7 @@ const style = createMuiTheme({
 })
 
 export function Statistics() {
-  
+
   const [value, setValue] = useState(1)
 
   const [amountOfWords, setAmountOfWords] = useState(0)
@@ -143,31 +143,21 @@ export function Statistics() {
 
   useEffect(()=>{
     getStatistic().then((res) => {
-      console.log(res.data.optional)
       setAppStatistics({ ...appStatistics, ...res.data.optional })
-      
-      console.log(  Object.entries(res.data.optional)  )
+
       setAmountOfWords(  Object.entries(res.data.optional).reduce((acc, el) => {
         if(el[0].length > 20){
-          console.log(el)
           acc += 1
         }
         return acc
       }, 0) )
 
-      // setAllWords((all)=> Object.entries(res.data.optional).map(el => {
-      //   console.log(el[0])
-      //   if(/\d/g.test(el[0])){    // ---значит это дата
-      //      return el[0]  
-      //   }
-      // }))
-
-      setSavannah(  Object.entries(res.data.optional).filter((el) => el[0] == 'savannah')) 
-      setSpeakit(  Object.entries(res.data.optional).filter((el) => el[0] == 'speakit')) 
-      setSprint(  Object.entries(res.data.optional).filter((el) => el[0] == 'sprint')) 
-      setAudiocall((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'audiocall')) 
-      setHangman((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'hangman')) 
-      setPuzzle((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'puzzle')) 
+      setSavannah(  Object.entries(res.data.optional).filter((el) => el[0] == 'savannah'))
+      setSpeakit(  Object.entries(res.data.optional).filter((el) => el[0] == 'speakit'))
+      setSprint(  Object.entries(res.data.optional).filter((el) => el[0] == 'sprint'))
+      setAudiocall((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'audiocall'))
+      setHangman((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'hangman'))
+      setPuzzle((data) => Object.entries(res.data.optional).filter((el) => el[0] == 'puzzle'))
 
     })
   }, [])

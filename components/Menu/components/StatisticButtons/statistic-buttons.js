@@ -8,7 +8,6 @@ function StatisticButton({ data: { type, text, link, icon, isBordered, styling, 
     <div className='item statistic'>
       <div className={`icon icon_statistic ${styling ? `icon_statistic${styling}` : ''}`}>
         {type === 'counter-new' ? (() => {
-          console.log(words.filter(el => !el.new))
           return words.filter(el => !el.new).length
         })() : words.filter(el => el.optional && el.optional.nextRepeat < Date.now()).length}
       </div>

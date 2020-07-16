@@ -108,14 +108,12 @@ const Audiocall = () => {
     const word = wordsDeck.current[idx]
     word.used = true
 
-    // setUsedCount(usedCount + 1)
     setActiveStep(activeStep + 1)
     return word
   }
 
   const setResult = (id, result) => {
     const word = wordsDeck.current.find((item) => item.id === id)
-    // console.log(word)
     const addWord = {}
     addWord.word = word.word
     addWord.transcription = word.transcription
@@ -163,7 +161,6 @@ const Audiocall = () => {
   useEffect(() => {
       combineWords(1, 1)
         .then((data) => {
-          // console.log(data)
           wordsDeck.current = data
           setupPlayState()
         })
