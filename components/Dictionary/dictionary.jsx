@@ -32,7 +32,8 @@ const useStyles = makeStyles( {
   },
   overflow: {
     overflow: 'auto',
-    maxHeight: '65vh'
+    maxHeight: '65vh',
+    paddingBottom: '50px'
   },
 
   title: {
