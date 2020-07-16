@@ -127,12 +127,12 @@ export function Dictionary() {
   }
 
   useEffect(() => {
-    setWords(words)
+    setWords(words.filter(word => word.optional))
   }, [])
 
   const classes = useStyles()
   const Cards = (filteredList.length ? filteredList : wordsList).map((word) => {
-    return <Card key={word.word} {...word} />
+    return <Card key={word.id || word._id} {...word.optional} />
   })
 
   return (
@@ -144,7 +144,7 @@ export function Dictionary() {
       }}
     >
       <Paper square>
-        <Header setWords={setWords} />
+        <Header setWords={setWords} words={wordsList} />
         <MuiThemeProvider theme={style}>
           <Tabs value={value} onChange={handleChange} variant='fullWidth' aria-label='icon label tabs example' centered>
             <Tab className={classes.rightBorder} label='Hard' />

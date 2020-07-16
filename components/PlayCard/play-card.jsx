@@ -140,9 +140,12 @@ const PlayCardComponent = ({ word, next, updateWordsDB, showInfo }) => {
         break;
       case 'repeat': showInfo({message: `Word added to the Repetition list`, type: 'success'})
         break;
-      case 'ease': showInfo({message: `Word excluded from Learning list`, type: 'success'})
+      case 'easy': showInfo({message: `Word excluded from Learning list`, type: 'success'})
         break;
     }
+
+    word.status = type
+    updateWordsDB(word)
   }
 
   return (
@@ -157,7 +160,7 @@ const PlayCardComponent = ({ word, next, updateWordsDB, showInfo }) => {
               showMessage('repeat')
             }}>Repeat</MuiButton> }
            {EASYbutton && <MuiButton themeName='easy' action={()=>{
-              showMessage('ease')
+              showMessage('easy')
             }}>Easy</MuiButton> }
           </div>
           { SHOWANSWERbutton && <MuiButton themeName='answer' action={() => setIsGiveUp(true)}>Answer</MuiButton> }
