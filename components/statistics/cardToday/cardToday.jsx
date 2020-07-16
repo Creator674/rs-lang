@@ -1,7 +1,7 @@
 import './cardToday.less'
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2'
-
+import { red } from '@material-ui/core/colors'
 const СardToday = ({ newCards, winrate, totalCards, studyTime, strike, repeat, userName }) => {
   const data = {
     labels: ['New cards', 'Correct answers', 'Total cards'],
@@ -52,9 +52,9 @@ const СardToday = ({ newCards, winrate, totalCards, studyTime, strike, repeat, 
       </div>
 
       <div className='eagle'>
-        <p className='eagle__text eagle__text_left'>Correct answers persent</p>
+        <p className='eagle__text eagle__text_left'>Correct answers strike</p>
         <div className='eagle__digs'>
-          <p className='eagle__dig'>{Math.floor(strike)} % </p>
+          <p className='eagle__dig'>{strike}</p>
           <p className='eagle__dig eagle__dig_right-wing'>{repeat}</p>
         </div>
         <p className='eagle__text'>Words for repetition</p>
